@@ -10,12 +10,25 @@ class EntryRelationshipInline( admin.StackedInline ):
 
 
 class BaseClass( admin.ModelAdmin ):
+    
+    list_display = ('title', 'order')
+    list_editable = ['order']
+    
     inlines = [ EntryRelationshipInline ]                                 
+
+    def __unicode__(self):
+        self.title
 
     def queryset(self, request):
         qs = super( BaseClass, self ).queryset(request)
         qs = qs.filter( entry_type=self.type )
         return qs
+
+    class Media:
+        js = ( 'js/jquery-1.4.4.min.js',
+               'js/jquery-ui-1.8.9.custom.min.js',
+               'js/menu-sort.js', 
+               )
 
 class TypographyAdmin( BaseClass ):
 

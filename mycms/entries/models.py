@@ -12,6 +12,9 @@ class Image( models.Model ):
 
 class Entry( models.Model ):
 
+    def __unicode__( self ):
+        return self.title
+
     title = models.CharField( max_length=100 , blank=True )
     subtitle = models.CharField( max_length=100, blank=True ) 
     ENTRY_TYPE = (
@@ -23,7 +26,7 @@ class Entry( models.Model ):
     content = models.TextField( blank=True )
     sidebar = models.TextField( blank=True )
     images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
-    order = models.PositiveIntegerField( 'Order', blank=True, null=True )
+    order = models.PositiveIntegerField( 'Order',  default=1 )
     display = models.BooleanField( 'Is Displayed', default=1 )
     date = models.DateField( null=True, blank=True )
 
