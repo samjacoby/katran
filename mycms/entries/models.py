@@ -12,46 +12,49 @@ class Image( models.Model ):
 
 class Entry( models.Model ):
 
+    title = models.CharField( max_length=100 )
+    subtitle = models.CharField( max_length=100, blank=True ) 
+    ENTRY_TYPE = (
+            (0, 'Typography'),
+            (1, 'Book'),
+            (2, 'News'),
+            )
+    entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
+    content = models.TextField( blank=True )
+    sidebar = models.TextField( blank=True )
     images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
-    order = models.PostiiveIntegerField( 'Order', blank=True, null=True )
+    order = models.PositiveIntegerField( 'Order', blank=True, null=True )
     display = models.BooleanField( default=1 )
+    date = models.DateField( auto_now_add=True )
 
     class Meta:
-        abstract = True
         ordering = ['-order']
         verbose_name_plural = 'Entries'
 
 class Book ( Entry ):
 
-    title = models.CharField( max_length=100 )
-    subtitle = models.CharField( max_length=100, blank=True )
-    content = models.TextField( blank=True )
-    sidebar = models.TextField( blank=True )
-
-    class Meta( Entry.Meta ):
+    class Meta:
         verbose_name_plural = 'Books'
+        proxy = True
 
 class Typography ( Entry ):
     
-    title = models.CharField( max_length=100 )
-    subtitle = models.CharField( max_length=100, blank=True )
-    content = models.TextField( blank=True )
-    sidebar = models.TextField( blank=True )
-    
-    class Meta( Entry.Meta ):
+    class Meta:
+        verbose_name_plural = 'Typography'
+        proxy = True
+
 
 class News ( Entry ):
-
-    date = models.DateField( auto_now_add=True )
-    content = models.TextField( blank=True )
     
-    class Meta( Entry.Meta ):
+    class Meta:
+        verbose_name_plural = 'News'
+        proxy = True
 
 class EntryRelationship(models.Model):
     
     image = models.ForeignKey(Image)
     entry = models.ForeignKey(Entry)
-    cover = models.BooleanField( default=0 )
+    list_display = models.BooleanField( 'Front Image', default=0 )
 
     def __unicode__( self ):
         return 'Related Images'
