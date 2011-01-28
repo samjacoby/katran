@@ -12,7 +12,7 @@ class Image( models.Model ):
 
 class Entry( models.Model ):
 
-    title = models.CharField( max_length=100 )
+    title = models.CharField( max_length=100 , blank=True )
     subtitle = models.CharField( max_length=100, blank=True ) 
     ENTRY_TYPE = (
             (0, 'Typography'),
@@ -24,8 +24,8 @@ class Entry( models.Model ):
     sidebar = models.TextField( blank=True )
     images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
     order = models.PositiveIntegerField( 'Order', blank=True, null=True )
-    display = models.BooleanField( default=1 )
-    date = models.DateField( auto_now_add=True )
+    display = models.BooleanField( 'Is Displayed', default=1 )
+    date = models.DateField( null=True, blank=True )
 
     class Meta:
         ordering = ['-order']
@@ -58,4 +58,3 @@ class EntryRelationship(models.Model):
 
     def __unicode__( self ):
         return 'Related Images'
-
