@@ -89,7 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 CMS_TEMPLATES = (
-    ('example.html', 'Example Template'),
+    ('base.html', 'Base Page Template'),
 )
 
 ROOT_URLCONF = 'urls'
@@ -118,4 +118,5 @@ INSTALLED_APPS = (
     'cms.plugins.googlemap',
     'entries',
     'entries.plugins',
+    'utils',
 )

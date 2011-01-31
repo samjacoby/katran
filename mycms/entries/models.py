@@ -3,9 +3,6 @@ import os
 
 class EntryManager( models.Manager ):
 
-    def all(self):
-        return self.filter( entry_type=self.entry_type )
-
     def get_all_of_type(self, entry_type):
         return self.filter( entry_type=entry_type )
 
@@ -74,14 +71,15 @@ class Entry( models.Model ):
             return false
 
     def save(self, *args, **kwargs):
+        e = self.get_first_in_type()
         if e and not self.pk:
             self.order = e.order + 1
-            cn = type(e).__name__
-            if cn == 'Typography':
+            c = type(e).__name__
+            if c == 'Typography':
                 self.entry_type = 0
-            elif cn == 'Book':
+            elif c == 'Book':
                 self.entry_type = 1
-            elif cn == 'News':
+            elif c == 'News':
                 self.entry_type = 2
         super(Entry, self).save(*args, **kwargs)
 
