@@ -13,7 +13,8 @@ class BaseClass( admin.ModelAdmin ):
     
     list_display = ('title', 'order')
     list_editable = ['order']
-    
+    exclude = ('order', 'entry_type')
+
     inlines = [ EntryRelationshipInline ]                                 
 
     def __unicode__(self):
