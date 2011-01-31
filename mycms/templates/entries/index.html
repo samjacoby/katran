@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load entries_extra %}
+{% block main %}
+{% for e in list %}
+<div class="entry">
+    {% if e.get_list_display %}
+    <img src='{{ e.get_list_display|scale:'384x500' }}' />
+    {% endif %}
+    <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% load cms_tags %}
+{% load cache menu_tags %}
+<!doctype html>
+<head>
+  <title>{{ request.current_page.get_title }}</title>
+  {% plugins_media %}
+</head>
+
+<body>
+    <nav id='top-menu'>
+        <ul>
+            {% show_menu 0 100 100 100 %}
+        </ul>    
+    </nav>
+    {% placeholder "main" %}
+    {% block main %}{% endblock %}
+</body>
+</html>             
