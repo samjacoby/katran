@@ -134,7 +134,7 @@ class EntryRelationship(models.Model):
     
     image = models.ForeignKey(Image)
     entry = models.ForeignKey(Entry)
-    order = models.PositiveIntegerField( 'Order',  default=1 )
+    order = models.PositiveIntegerField( 'Order',  default=1, null=True, blank=True  )
 
     list_display = models.BooleanField( 'Front Image', default=0 )
 
