@@ -3,6 +3,15 @@ from django.forms import ModelForm
 from entries.models import Image, Book, Typography, News, EntryRelationship
 
 
+#class EntryForm( ModelForm ):
+#    model = EntryRelationship
+#    class = Media:
+#        js = ( 'js/jquery-1.4.4.min.js',
+#               'js/jquery-ui-1.8.9.custom.min.js',
+#               'js/menu-sort.js', 
+#               )
+
+
 class EntryRelationshipInline( admin.StackedInline ):
     model = EntryRelationship
     fk_name = 'entry'

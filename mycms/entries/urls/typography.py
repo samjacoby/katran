@@ -14,6 +14,6 @@ urlpatterns = patterns('',
             template_name = 'entries/index.html')),
     url(r'^(?P<order>\d+)/$'
         , 'entries.views.typography_detail'
-        , { 'entry_type': '1' }, name='book_detail'),
+        , { 'entry_type': '0' }, name='typography_detail'),
 
 )

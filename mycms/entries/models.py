@@ -78,7 +78,7 @@ class Entry( models.Model ):
         elif self.entry_type == 2:
             root = 'news'
         
-        return 'buttocks'
+        return 'thisiswrong'
 
         #return '/%s/%s/' %  ( root, self.order )
 
@@ -134,6 +134,8 @@ class EntryRelationship(models.Model):
     
     image = models.ForeignKey(Image)
     entry = models.ForeignKey(Entry)
+    order = models.PositiveIntegerField( 'Order',  default=1 )
+
     list_display = models.BooleanField( 'Front Image', default=0 )
 
     def __unicode__( self ):
