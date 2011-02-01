@@ -7,7 +7,7 @@ from entries.models import News
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^', ListView.as_view(
+    (r'^$', ListView.as_view(
            queryset=News.manager.get_all_news(),
            context_object_name = 'list',
            template_name = 'entries/index.html',

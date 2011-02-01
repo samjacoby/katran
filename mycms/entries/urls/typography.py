@@ -7,14 +7,13 @@ from entries.models import Typography
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^', 
+    url(r'^$', 
         ListView.as_view(
             queryset=Typography.manager.get_all_typography(),
             context_object_name = 'list',
-            template_name = 'entries/index.html'))
-)
+            template_name = 'entries/index.html')),
+    url(r'^(?P<order>\d+)/$'
+        , 'entries.views.typography_detail'
+        , { 'entry_type': '1' }, name='book_detail'),
 
-if settings.DEBUG:
-    urlpatterns = patterns('',
-        (r'^' + settings.MEDIA_URL.lstrip('/'), include('appmedia.urls')),
-    ) + urlpatterns
+)

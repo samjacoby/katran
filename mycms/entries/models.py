@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 import os
 
 class EntryManager( models.Manager ):
@@ -35,20 +36,19 @@ class Entry( models.Model ):
             (1, 'Book'),
             (2, 'News'),
             )
+
     entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
     content = models.TextField( blank=True )
     sidebar = models.TextField( blank=True )
+
     images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
     order = models.PositiveIntegerField( 'Order',  default=1 )
     display = models.BooleanField( 'Is Displayed', default=1 )
+
     date = models.DateField( null=True, blank=True )
     
     def __unicode__( self ):
         return self.title
-
-    class Meta:
-        ordering = ['-order']
-        verbose_name_plural = 'Entries'
 
     def get_first_in_type( self ):
         try:
@@ -70,6 +70,19 @@ class Entry( models.Model ):
         except Entry.DoesNotExist:
             return false
 
+    def get_absolute_url(self):
+        if self.entry_type == 0:
+            root = 'typography'
+        elif self.entry_type == 1:
+            root = 'books'
+        elif self.entry_type == 2:
+            root = 'news'
+        
+        return 'buttocks'
+
+        #return '/%s/%s/' %  ( root, self.order )
+
+    
     def save(self, *args, **kwargs):
         e = self.get_first_in_type()
         if e and not self.pk:
@@ -82,9 +95,18 @@ class Entry( models.Model ):
             elif c == 'News':
                 self.entry_type = 2
         super(Entry, self).save(*args, **kwargs)
+    
+    class Meta:
+        ordering = ['-order']
+        verbose_name_plural = 'Entries'
 
 
 class Book ( Entry ):
+    
+    def get_absolute_url(self):
+        return reverse('entries.views.book_detail'
+                , kwargs = { 'order': self.order }
+        )
 
     class Meta:
         verbose_name_plural = 'Books'
@@ -92,6 +114,11 @@ class Book ( Entry ):
 
 class Typography ( Entry ):
     
+    def get_absolute_url(self):
+        return reverse('entries.views.typography_detail'
+                , kwargs = { 'order': self.order }
+        )
+
     class Meta:
         verbose_name_plural = 'Typography'
         proxy = True
