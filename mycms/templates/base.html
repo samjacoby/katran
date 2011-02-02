@@ -12,11 +12,6 @@
             {% show_menu 0 100 100 100 %}
         </ul>
     </nav>
-    <nav id='sub-menu'>                                
-    <ul>
-        <li><h4>{{ request.current_page.get_title }}</h4></li>
-    </ul>
-    </nav>
     {% placeholder "main" %}
     {% block main %}{% endblock %}
 </body>

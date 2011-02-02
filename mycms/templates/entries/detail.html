@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load entries_extra %}
+{% load extra_tags %}
 {% block main %}
 <div class="detail">
     {% if e.get_list_display %}
@@ -8,4 +9,5 @@
     <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
     {% autoescape off %}{{ e.content }}{% endautoescape %}
 </div>
+{% get_next_prev_nav e children %}
 {% endblock %}

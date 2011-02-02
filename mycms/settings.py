@@ -92,6 +92,8 @@ CMS_TEMPLATES = (
     ('base.html', 'Base Page Template'),
 )
 
+CMS_MENU_TITLE_OVERWRITE = True
+
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
