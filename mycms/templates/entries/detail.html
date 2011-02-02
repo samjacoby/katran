@@ -4,8 +4,10 @@
 {% load placeholder_tags %}
 
 {% block main %}
-<div class="main-content">         
-    {% render_placeholder e.content %}
+<div class="detail-content">         
+    {% with "384" as width %}
+    {% render_placeholder e.content width %}
+    {% endwith %}
 </div>
 <div class="sidebar-content">
     {% render_placeholder e.sidebar %}

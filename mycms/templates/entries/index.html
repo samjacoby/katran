@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% load utils_tags %}
+{% load placeholder_tags %}
 {% block main %}
 {% for e in list %}
 <div class="entry">
-    {% if e.get_list_display %}
     <a href='{{ e.get_absolute_url }}'>
-        <img src='{{ e.get_list_display|scale:'384x500' }}' />
+        {% with "384" as width %}
+        {% render_placeholder e.cover width %} 
+        {% endwith %}
     </a>
-    {% endif %}
     <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
 </div>
 {% endfor %}

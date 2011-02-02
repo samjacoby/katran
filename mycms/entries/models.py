@@ -18,14 +18,6 @@ class EntryManager( models.Manager ):
     def get_all_news(self):
         return self.filter( entry_type=2 )
 
-class Image( models.Model ):
-
-    def __unicode__( self ):
-        return self.title
-
-    title = models.CharField( max_length=100 )
-    src = models.ImageField( upload_to='images' )
-
 class Entry( models.Model ):
 
     objects = models.Manager()
@@ -33,6 +25,7 @@ class Entry( models.Model ):
 
     title = models.CharField( max_length=100 , blank=True )
     subtitle = models.CharField( max_length=100, blank=True ) 
+
     ENTRY_TYPE = (
             (0, 'Typography'),
             (1, 'Book'),
@@ -41,13 +34,14 @@ class Entry( models.Model ):
 
     entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
 
-    content = PlaceholderField('main_content', related_name='main_content')
-    sidebar = PlaceholderField('sidebar', related_name='sidebar')
+    cover = PlaceholderField('list_display_content', related_name='list_display' )
+    content = PlaceholderField('detail_content', related_name='detail')
+    sidebar = PlaceholderField('sidebar_content', related_name='sidebar')
 
 
-    images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
+#    images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
     order = models.PositiveIntegerField( 'Order',  default=1 )
-    display = models.BooleanField( 'Is Displayed', default=1 )
+    display = models.BooleanField( 'Published', default=1 )
 
     date = models.DateField( null=True, blank=True )
     
@@ -88,16 +82,21 @@ class Entry( models.Model ):
 
     
     def save(self, *args, **kwargs):
-        e = self.get_first_in_type()
-        if e and not self.pk:
-            self.order = e.order + 1
-            c = type(e).__name__
+        
+        if not self.pk:
+            c = type(self).__name__
             if c == 'Typography':
                 self.entry_type = 0
             elif c == 'Book':
                 self.entry_type = 1
             elif c == 'News':
                 self.entry_type = 2
+
+        e = self.get_first_in_type()
+
+        if e and not self.pk:
+            self.order = e.order + 1
+
         super(Entry, self).save(*args, **kwargs)
     
     class Meta:
@@ -133,21 +132,3 @@ class News ( Entry ):
     class Meta:
         verbose_name_plural = 'News'
         proxy = True
-
-class EntryRelationship(models.Model):
-    
-    image = models.ForeignKey(Image)
-    entry = models.ForeignKey(Entry)
-    objects = models.Manager()
-    order = models.PositiveIntegerField( 'Order',  default=1, null=True, blank=True  )
-
-    list_display = models.BooleanField( 'Front Image', default=0 )
-
-    def __unicode__( self ):
-        return 'Related Images'
-
-    def save(self, *args, **kwargs):
-        e = EntryRelationship.objects.order_by('-order')[0]
-        if e and not self.pk:
-            self.order = e.order + 1
-        super(EntryRelationship, self).save(*args, **kwargs)
