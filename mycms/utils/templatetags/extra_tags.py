@@ -68,3 +68,4 @@ def get_next_prev_nav( element, nodes ):
     }
 register.inclusion_tag('menu/next_link.html')(get_next_prev_nav)
 
+

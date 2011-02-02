@@ -93,6 +93,17 @@ CMS_TEMPLATES = (
 )
 
 CMS_MENU_TITLE_OVERWRITE = True
+CMS_PLACEHOLDER_CONF = {
+        'main_content': {
+            'plugins': ('TextPlugin', 'PicturePlugin'),
+            'name': gettext('Main Content Column')
+            },
+        'sidebar': {
+            'plugins': ('TextPlugin', 'PicturePlugin'),
+            'name': gettext('Sidebar Column')
+            },
+        }
+
 
 ROOT_URLCONF = 'urls'
 
@@ -121,4 +132,5 @@ INSTALLED_APPS = (
     'entries',
     'entries.plugins',
     'utils',
+    'sorl.thumbnail',
 )

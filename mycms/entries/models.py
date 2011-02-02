@@ -1,6 +1,8 @@
+import os
 from django.db import models
 from django.core.urlresolvers import reverse
-import os
+from cms.models.fields import PlaceholderField
+
 
 class EntryManager( models.Manager ):
 
@@ -38,8 +40,10 @@ class Entry( models.Model ):
             )
 
     entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
-    content = models.TextField( blank=True )
-    sidebar = models.TextField( blank=True )
+
+    content = PlaceholderField('main_content', related_name='main_content')
+    sidebar = PlaceholderField('sidebar', related_name='sidebar')
+
 
     images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
     order = models.PositiveIntegerField( 'Order',  default=1 )
@@ -55,20 +59,20 @@ class Entry( models.Model ):
             e = Entry.objects.filter( entry_type=self.entry_type ).order_by('-order')[0]
             return e
         except IndexError:
-            return false
+            return False
 
     def get_last_in_type( self ):
         try:
             e = Entry.objects.filter( entry_type=self.entry_type ).order_by('order')[0]
             return e
         except IndexError:
-            return false
+            return False
     
     def get_list_display( self ):
         try:
             return self.images.get( entryrelationship__list_display=True ).src
         except Entry.DoesNotExist:
-            return false
+            return False
 
     def get_absolute_url(self):
         if self.entry_type == 0:

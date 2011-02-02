@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
-{% load entries_extra %}
+{% load utils_tags %}
 {% load extra_tags %}
+{% load placeholder_tags %}
+
 {% block main %}
-<div class="detail">
-    {% if e.get_list_display %}
-    <img src='{{ e.get_list_display|scale:'384x500' }}' />
-    {% endif %}
-    <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
-    {% autoescape off %}{{ e.content }}{% endautoescape %}
+<div class="main-content">         
+    {% render_placeholder e.content %}
+</div>
+<div class="sidebar-content">
+    {% render_placeholder e.sidebar %}
 </div>
 {% get_next_prev_nav e children %}
 {% endblock %}

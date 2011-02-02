@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.forms import ModelForm
+from cms.admin.placeholderadmin import PlaceholderAdmin
 from entries.models import Image, Book, Typography, News, EntryRelationship
 
 
@@ -21,7 +22,7 @@ class EntryRelationshipInline( admin.StackedInline ):
 
 
 from cms.plugins.text.widgets.wymeditor_widget import WYMEditor
-class BaseClass( admin.ModelAdmin ):
+class BaseClass( PlaceholderAdmin ):
     
     list_display = ('title', 'order')
     list_editable = ['order']
@@ -29,9 +30,9 @@ class BaseClass( admin.ModelAdmin ):
 
     inlines = [ EntryRelationshipInline ]                                 
 
-    formfield_overrides = {
-            models.TextField: { 'widget': WYMEditor },
-    }
+#    formfield_overrides = {
+#            models.TextField: { 'widget': WYMEditor },
+#    }
 
     def __unicode__(self):
         self.title
@@ -41,11 +42,11 @@ class BaseClass( admin.ModelAdmin ):
         qs = qs.filter( entry_type=self.type )
         return qs
 
-    class Media:
-        js = ( 'js/jquery-1.4.4.min.js',
-               'js/jquery-ui-1.8.9.custom.min.js',
-               'js/menu-sort.js', 
-               )
+#    class Media:
+#        js = ( 'js/jquery-1.4.4.min.js',
+#               'js/jquery-ui-1.8.9.custom.min.js',
+#               'js/menu-sort.js', 
+#               )
 
 class TypographyAdmin( BaseClass ):
 
