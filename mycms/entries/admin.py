@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db import models
 from django.forms import ModelForm
 from entries.models import Image, Book, Typography, News, EntryRelationship
 
@@ -16,8 +17,10 @@ class EntryRelationshipInline( admin.StackedInline ):
     model = EntryRelationship
     fk_name = 'entry'
     extra = 0
+    ordering = ('order',)
 
 
+from cms.plugins.text.widgets.wymeditor_widget import WYMEditor
 class BaseClass( admin.ModelAdmin ):
     
     list_display = ('title', 'order')
@@ -25,6 +28,10 @@ class BaseClass( admin.ModelAdmin ):
     exclude = ('order', 'entry_type')
 
     inlines = [ EntryRelationshipInline ]                                 
+
+    formfield_overrides = {
+            models.TextField: { 'widget': WYMEditor },
+    }
 
     def __unicode__(self):
         self.title

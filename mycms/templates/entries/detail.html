@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load entries_extra %}
+{% block main %}
+<div class="detail">
+    {% if e.get_list_display %}
+    <img src='{{ e.get_list_display|scale:'384x500' }}' />
+    {% endif %}
+    <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
+    {% autoescape off %}{{ e.content }}{% endautoescape %}
+</div>
+{% endblock %}

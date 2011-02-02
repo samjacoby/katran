@@ -134,9 +134,16 @@ class EntryRelationship(models.Model):
     
     image = models.ForeignKey(Image)
     entry = models.ForeignKey(Entry)
+    objects = models.Manager()
     order = models.PositiveIntegerField( 'Order',  default=1, null=True, blank=True  )
 
     list_display = models.BooleanField( 'Front Image', default=0 )
 
     def __unicode__( self ):
         return 'Related Images'
+
+    def save(self, *args, **kwargs):
+        e = EntryRelationship.objects.order_by('-order')[0]
+        if e and not self.pk:
+            self.order = e.order + 1
+        super(EntryRelationship, self).save(*args, **kwargs)
