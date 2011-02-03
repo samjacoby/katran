@@ -131,6 +131,6 @@ INSTALLED_APPS = (
     'cms.plugins.googlemap',
     'entries',
     'entries.plugins',
-    'utils',
+#    'utils',
     'sorl.thumbnail',
 )

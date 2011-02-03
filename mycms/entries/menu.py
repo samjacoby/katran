@@ -1,7 +1,11 @@
 from menus.base import Menu, NavigationNode
 from menus.menu_pool import menu_pool
-from cms.menu import CMSMenu
+from cms.menu import CMSMenu, CMSAttachMenu
 from django.utils.translation import ugettext_lazy as _
+
+class NewMenu( CMSAttachMenu ):
+    def get_nodes(self, request):
+        nodes = []
 
 class TestCMSMenu( CMSMenu ):
     def get_next_prev(selected_node):

@@ -38,8 +38,6 @@ class Entry( models.Model ):
     content = PlaceholderField('detail_content', related_name='detail')
     sidebar = PlaceholderField('sidebar_content', related_name='sidebar')
 
-
-#    images = models.ManyToManyField( Image, through='EntryRelationship', blank=True )
     order = models.PositiveIntegerField( 'Order',  default=1 )
     display = models.BooleanField( 'Published', default=1 )
 
@@ -77,8 +75,6 @@ class Entry( models.Model ):
             root = 'news'
         
         return 'thisiswrong'
-
-        #return '/%s/%s/' %  ( root, self.order )
 
     
     def save(self, *args, **kwargs):

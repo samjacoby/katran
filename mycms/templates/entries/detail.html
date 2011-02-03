@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load utils_tags %}
 {% load extra_tags %}
 {% load placeholder_tags %}
 
@@ -12,5 +11,4 @@
 <div class="sidebar-content">
     {% render_placeholder e.sidebar %}
 </div>
-{% get_next_prev_nav e children %}
 {% endblock %}
