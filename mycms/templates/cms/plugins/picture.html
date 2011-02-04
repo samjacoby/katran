@@ -1,0 +1,8 @@
+{% load thumbnail %}
+{% spaceless %}
+{% if picture.url %}<a href="{{ picture.url }}">{% endif %}
+{% thumbnail picture.image width as im %}
+<img src="{{ im.url }}" {% if picture.alt %}alt="{{ picture.alt }}" {% endif %}/>
+{% endthumbnail %}
+{% if picture.url %}</a>{% endif %}
+{% endspaceless %}

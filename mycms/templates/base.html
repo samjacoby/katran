@@ -1,6 +1,6 @@
 {% load cms_tags %}
 {% load cache menu_tags %}
-{% load extra_tags %
+{% load extra_tags %}
 <!doctype html>
 <head>
   <title>{{ request.current_page.get_title }}</title>
@@ -8,16 +8,21 @@
 </head>
 
 <body>
-    <nav id='top-menu'>
-        <ul>
-        {% show_menu 0 100 100 100 %}
-        </ul>
+    <nav class='menu' id='top-menu'>
+    <ul>
+    {% top_nav %}
+    </ul>
     </nav>
-    <nav>
-        <ul>
-        </ul>
+    <nav class='menu' id='sub-menu'>
+    <ul>
+    {% show_sub 1 %}
+    </ul>
     </nav>
-
     {% block main %}{% endblock %}
+    <nav class='menu' id='foot-menu'>
+    <ul>
+        {% show_sub 1 %}
+    </ul>
+    </nav>
 </body>
 </html>             

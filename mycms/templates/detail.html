@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags %}
+{% load extra_tags %}
+{% load placeholder_tags %}
+
+{% block main %}
+{% placeholder "teaser" %}
+<div class="detail-content">         
+    {% with "384" as width %}
+    {% comment %}    {% render_placeholder e.content width %} {% endcomment %}
+    {% endwith %}
+</div>
+{% if e.sidebar %}
+<div class="sidebar-content">
+    {% render_placeholder e.sidebar %}
+{% endif %}
+</div>
+{% endblock %}

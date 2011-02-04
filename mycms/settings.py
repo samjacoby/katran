@@ -89,7 +89,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 CMS_TEMPLATES = (
-    ('base.html', 'Base Page Template'),
+    ('index.html', 'Base Index Template'),
+    ('detail.html', 'Base Book Template'),
 )
 
 CMS_MENU_TITLE_OVERWRITE = True
@@ -125,6 +126,7 @@ INSTALLED_APPS = (
     'south',
     'cms.plugins.text',
     'cms.plugins.picture',
+    'cms.plugins.teaser',
     'cms.plugins.link',
     'cms.plugins.file',
     'cms.plugins.snippet',
