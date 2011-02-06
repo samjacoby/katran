@@ -35,10 +35,20 @@ class NewsList( EntryList ):
 
 class BookPlugin( CMSPluginBase ):
     model = BookPluginModel
-    name = 'Book Plugin'
-    render_template = 'entries/plugins/book.html'
+    name = 'Book Plugin'                            
+    type = 1 
+    render_template = 'entries/detail.html'
+
+    def formfield_for_foreignkey( self, db_field, request, **kwargs ):
+        if db_field.name == 'book':
+            kwargs['queryset'] = Entry.manager.get_all_books()
+            return db_field.formfield(**kwargs)
+        return super( BookPlugin, self).formfield_for_foreignkey( db_field, request, **kwargs )
+
+#admin.site.register(BookPlugin, BookPluginAdmin)
 
     def render( self, context, instance, placeholder):
+#        e = Book.manager.get_all_of_type( self.type )
         context.update( {'instance':instance} )
         return context
 
