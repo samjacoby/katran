@@ -1,13 +1,16 @@
 from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
+#from plugins.menu import EntryMenu, BookMenu, TypographyMenu
 
 class BookHook( CMSApp ):
     name = 'Book Application'
     urls = ['entries.urls.books']
+#    menu = [BookMenu]
 
 class TypographyHook( CMSApp ):
-    name = 'Typography  Application'
+    name = 'Typography Application'
     urls = ['entries.urls.typography']
+#    menu = [TypographyMenu]
 
 class NewsHook( CMSApp ):
     name = 'News Application'

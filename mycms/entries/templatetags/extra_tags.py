@@ -332,5 +332,113 @@ class TopNav( InclusionTag ):
 
 register.tag( TopNav )
 
+class PrevNext( InclusionTag ):
+    name = 'prev_next_links'
+    template = 'menu/prev_next_links.html'
+
+    options = Options(
+        IntegerArgument('from_level', default=0, required=False),
+        IntegerArgument('to_level', default=1, required=False),
+        Argument('template', default='menu/prev_next_links.html', required=False),
+        Argument('namespace', default=None, required=False),
+        Argument('root_id', default=None, required=False),
+    )
+
+    def get_context(self, context, template, from_level, to_level,  root_id, namespace ):
+        try:
+            request = context['request']
+        except KeyError:
+            return { 'template': 'menu/empty.html' }
+        
+        nodes = menu_pool.get_nodes( request, namespace, root_id )
+        
+        current_index = None
+
+        for node in nodes:
+            if node.selected or node.ancestor:
+                current_index = nodes.index(node)
+                break
+        
+        try:
+            next_link = nodes[current_index + 1]
+            if next_link.level is not 0:
+                next_link = False
+                #next_link = next_link.parent
+        except IndexError:
+            next_link = None
+        try:
+            prev_link = nodes[current_index - 1]
+            if prev_link.level is not 0:
+                prev_link = False
+        except IndexError:
+            prev_link = None
+        
+        if current_index is 0:
+            prev_link = None 
+
+        try:
+            context = {  'index': current_index, 'selected': node,'next': next_link, 'prev': prev_link }
+
+            #context = {  'next': next_link, 'prev': False }
+#            context = {  'next': 'what', 'prev': 'whao' }
+        except:
+            context = { 'template': template}
+            
+        return context
+register.tag( PrevNext )
 
 
+class PrevNextInternal( InclusionTag ):
+    name = 'prev_next_links_internal'
+    template = 'menu/prev_next_links.html'
+
+    options = Options(
+        IntegerArgument('from_level', default=0, required=False),
+        IntegerArgument('to_level', default=1, required=False),
+        Argument('template', default='menu/prev_next_links.html', required=False),
+        Argument('namespace', default=None, required=False),
+        Argument('root_id', default=None, required=False),
+    )
+
+    def get_context(self, context, template, from_level, to_level,  root_id, namespace ):
+        try:
+            request = context['request']
+        except KeyError:
+            return { 'template': 'menu/empty.html' }
+        
+        nodes = menu_pool.get_nodes( request, namespace, root_id )
+        
+        current_index = None
+
+        for node in nodes:
+            if node.selected:# or node.ancestor:
+                current_index = nodes.index(node)
+                break
+        
+        try:
+            next_link = nodes[current_index + 1]
+#            if next_link.level is 0:
+#                next_link = False
+#                next_link = next_link.parent
+        except IndexError:
+            next_link = None
+        try:
+            prev_link = nodes[current_index - 1]
+            if prev_link.level is 0:
+                prev_link = False
+        except IndexError:
+            prev_link = None
+        
+        if current_index is 0:
+            prev_link = None 
+
+        try:
+            context = {  'index': current_index, 'selected': node,'sub_next': next_link, 'sub_prev': prev_link }
+
+            #context = {  'next': next_link, 'prev': False }
+#            context = {  'next': 'what', 'prev': 'whao' }
+        except:
+            context = { 'template': template}
+            
+        return context
+register.tag( PrevNextInternal )

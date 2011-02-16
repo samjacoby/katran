@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.conf import settings
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from entries.models import Typography
 
 admin.autodiscover()
@@ -17,3 +17,4 @@ urlpatterns = patterns('',
         , { 'entry_type': '0' }, name='typography_detail'),
 
 )
+
