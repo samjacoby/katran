@@ -103,7 +103,9 @@ class Entry( models.Model ):
 class Book ( Entry ):
     
     def get_absolute_url(self):
-        return self.order
+        return reverse('entries.views.book_detail'
+                , kwargs = { 'order': self.order }
+        )
 
     class Meta:
         verbose_name_plural = 'Books'

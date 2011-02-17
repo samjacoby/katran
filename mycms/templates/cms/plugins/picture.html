@@ -1,8 +1,12 @@
 {% load thumbnail %}
 {% spaceless %}
 {% if picture.url %}<a href="{{ picture.url }}">{% endif %}
+{% ifequal placeholder 'list_display_content' %}
 {% thumbnail picture.image width as im %}
+<a href="{{ e.get_absolute_url }}">
 <img src="{{ im.url }}" {% if picture.alt %}alt="{{ picture.alt }}" {% endif %}/>
+</a>
 {% endthumbnail %}
+{% endifequal %}
 {% if picture.url %}</a>{% endif %}
 {% endspaceless %}

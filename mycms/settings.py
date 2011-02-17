@@ -91,7 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 CMS_TEMPLATES = (
     ('standard_root.html', 'Base Root Template'),
     ('header_footer_base.html', 'Header Footer Template'),
-    ('index.html', 'Base Index Template'),
+    ('entries/index.html', 'Base Index Template'),
     ('detail.html', 'Base Book Template'),
 )
 
