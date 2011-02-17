@@ -59,279 +59,6 @@ def cut_levels(nodes, from_level, to_level, extra_inactive, extra_active):
                 final.remove(node)
     return final
 
-def get_second_level_menu_linkss( selected_node ):
-    current_index = selected_node.parent.children.index(selected_node)
-    try:
-        next = selected_node.children[current_index + 1]
-    except IndexError:
-        next = None
-    try:
-        prev = selected_node.children[current_index - 1]
-    except IndexError:
-        prev = None
-
-    return { 'next':next, 'prev':prev }
-
-def get_second_level_menu_links( selected_node ):
-    current_index = selected_node.parent.children.index(selected_node)
-    try:
-        next = selected_node.children[current_index + 1]
-    except IndexError:
-        next = None
-    try:
-        prev = selected_node.children[current_index - 1]
-    except IndexError:
-        prev = None
-
-    return { 'next':next, 'prev':prev }
-register.inclusion_tag('menu/menu_links.html')(get_second_level_menu_links)
-
-
-def get_top_level_menu_links( nodes ):  
-    ''' This is nice, because it doesn't call any queries.'''    
-    current_index = 0
-    for node in nodes:
-        if node.selected:
-            current_index = nodes.index(node)
-
-    try:
-        next = nodes[current_index + 1]
-    except IndexError:
-        next = None
-    try:
-        prev = nodes[current_index - 1]
-    except IndexError:
-        prev = None
-    
-    # A negative index wraps around, so do a manual check here, to avoid that.
-    if current_index is 0:
-        prev = None
-
-    return { 'next': next, 'prev': prev }
-
-register.inclusion_tag('menu/menu_links.html')(get_top_level_menu_links)
-
-from entries.models import Entry
-
-def get_next_prev_nav( element, nodes ):
-
-    links = get_next_prev( nodes )
-
-    # Get total order to compare it to current element.
-    max_order = Entry.manager.get_all_of_type( element.entry_type ).count()
-    
-    # Otherwise, we're somewhere in the middle of list, and should increment order.
-    if element.entry_type == 0:
-        prev = '/%s/%s/' % ('typography', element.order - 1)
-        next = '/%s/%s/' % ('typography', element.order + 1)
-    elif element.entry_type == 1:
-        prev = '/%s/%s/' % ('books', element.order - 1)
-        next = '/%s/%s/' % ('books', element.order + 1)
- 
- # Just use original index, if we're at the beginning or the end of something.
-    if element.order == max_order: # we're at the end of the list
-        next = links['next']          
-    elif element.order == 1: # we're at the beginning of the list
-        prev = links['prev']
-    return {
-        'next': next,
-        'prev': prev,
-    }
-register.inclusion_tag('menu/next_link.html')(get_next_prev_nav)
-
-def find_ancestor( node ):
-    if hasattr(node, 'selected'):
-        return node
-    if node.parent:
-        result = find_selected(node.children)
-        if result:
-            return result
-
-class SSubNav( InclusionTag ):
-    name = 'sub_nav'
-    template = 'menu/dummy.html'
-
-    options = Options(                     
-            IntegerArgument('levels', default=2, required=False),
-            Argument('template', default='menu/sub_menu.html', required=False))
-            
-    def get_context(self, context, levels, template):
-        try:
-            request = context['request']
-        except KeyError:
-            return { 'template': 'menu/empty.html' }
-
-        nodes = menu_pool.get_nodes( request )
-        children = []
-        
-        for node in nodes:
-            if node.selected:
-                cut_after( node, levels, [])
-                cut_after(node, levels, [])
-                children = node.children
-                for child in children:
-                    child.parent = None
-                children = menu_pool.apply_modifiers(children, request, post_cut=True)
-        
-        for child in nodes:
-            if child.selected or child.ancestor:
-                current_index = nodes.index(node)
-        try:
-            next = children[current_index + 1]
-        except IndexError:
-            next = None
-        try:
-            prev = children[current_index - 1]
-        except IndexError:
-            prev = None
-        
-        if current_index is 0:
-            prev = None
-
-        try:
-            context.update ({ 'next': next, 'prev': prev })
-        except:
-            pass
-
-        children = nodes
-
-        context.update({ 'children':children, 'template':template })
-        return context
-
-class SubMenu(InclusionTag):
-    """
-    show the sub menu of the current nav-node.
-    -levels: how many levels deep
-    -temlplate: template used to render the navigation
-    """
-    name = 'show_sub'
-    template = 'menu/dummy.html'
-    
-    options = Options(
-        IntegerArgument('levels', default=100, required=False),
-        Argument('template', default='menu/sub_menu.html', required=False),
-    )
-    
-    def get_context(self, context, levels, template):
-        try:
-            # If there's an exception (500), default context_processors may not be called.
-            request = context['request']
-        except KeyError:
-            return {'template': 'menu/empty.html'}
-        nodes = menu_pool.get_nodes(request)
-        
-        
-        for node in nodes:
-            if node.selected or node.ancestor:
-                current_index = nodes.index(node)
-
-        try:
-            next = nodes[current_index + 1]
-        except IndexError:
-            next = None
-        try:
-            prev = nodes[current_index - 1]
-        except IndexError:
-            prev = None
-        #nodes = cut_levels(nodes, from_level, to_level, extra_inactive, extra_active)
-        
-        # A negative index wraps around, so do a manual check here, to avoid that.
-        if current_index is 0:
-            prev = None
-
-        try:
-            context.update ({ 'template': template, 'next': next, 'prev': prev })
-        except:
-            pass
-        
-        
-        children = []
-        for node in nodes:
-            if node.selected:
-                cut_after(node, levels, [])
-                children = node.children
-                for child in children:
-                    child.parent = None
-                children = menu_pool.apply_modifiers(children, request, post_cut=True)
-
-        context.update({
-            'children':False,
-            'template':template,
-            'from_level':0,
-            'to_level':0,
-            'extra_inactive':0,
-            'extra_active':0
-        })
-        return context        
-register.tag(SubMenu)
-
-
-class TopNav( InclusionTag ):
-    name = 'top_nav'
-    template = 'menu/dummy.html'
-
-    options = Options(
-        IntegerArgument('from_level', default=0, required=False),
-        IntegerArgument('to_level', default=1, required=False),
-        Argument('template', default='menu/menu.html', required=False),
-        Argument('namespace', default=None, required=False),
-        Argument('root_id', default=None, required=False),
-    )
-
-    def get_context(self, context, template, from_level, to_level,  root_id, namespace ):
-        try:
-            request = context['request']
-        except KeyError:
-            return { 'template': 'menu/empty.html' }
-        
-        nodes = menu_pool.get_nodes( request, namespace, root_id )
-        
-        current_index = False
-        final = []
-        
-        extra_inactive = 0
-        extra_active = 1000
-        for node in nodes:        
-            if not node.visible:
-                nodes.remove(node)
-        nodes = cut_levels(nodes, from_level, to_level, extra_inactive, extra_active)
-        nodes = menu_pool.apply_modifiers(nodes, request)
-
-        for node in nodes:
-            if node.selected or node.ancestor:
-                current_index = nodes.index(node)
-
-        try:
-            next = nodes[current_index + 1]
-        except IndexError:
-            next = None
-        try:
-            prev = nodes[current_index - 1]
-        except IndexError:
-            prev = None
-        #nodes = cut_levels(nodes, from_level, to_level, extra_inactive, extra_active)
-        
-        # A negative index wraps around, so do a manual check here, to avoid that.
-        if current_index is 0:
-            prev = None
-
-        try:
-            context.update ({ 'c': current_index, 'top_next': next, 'top_prev': prev })
-        except:
-            pass
-
-        children = nodes
-
-        try:
-            context.update ({ 'children': children,
-                              'template': template,
-                              'namespace': namespace })
-        except:
-            context = { 'template': template }
-        return context
-
-register.tag( TopNav )
-
 class PrevNext( InclusionTag ):
     name = 'prev_next_links'
     template = 'menu/prev_next_links.html'
@@ -353,34 +80,37 @@ class PrevNext( InclusionTag ):
         nodes = menu_pool.get_nodes( request, namespace, root_id )
         
         current_index = None
+        
+        for node in nodes:
+            if not node.visible:
+                nodes.remove(node)
 
         for node in nodes:
-            if node.selected or node.ancestor:
+            if node.level != 0: # We're only interested in root-level nodes
+                nodes.remove(node)
+            elif node.selected or node.ancestor: # If we're at root, this is okay
                 current_index = nodes.index(node)
                 break
         
         try:
             next_link = nodes[current_index + 1]
-            if next_link.level is not 0:
-                next_link = False
-                #next_link = next_link.parent
+            if next_link.level is not 0: # This is only the top level menu
+                next_link = None
         except IndexError:
             next_link = None
         try:
             prev_link = nodes[current_index - 1]
             if prev_link.level is not 0:
-                prev_link = False
+                prev_link = None
         except IndexError:
             prev_link = None
         
-        if current_index is 0:
+        if current_index == 0:
             prev_link = None 
 
         try:
             context = {  'index': current_index, 'selected': node,'next': next_link, 'prev': prev_link }
 
-            #context = {  'next': next_link, 'prev': False }
-#            context = {  'next': 'what', 'prev': 'whao' }
         except:
             context = { 'template': template}
             
@@ -390,7 +120,7 @@ register.tag( PrevNext )
 
 class PrevNextInternal( InclusionTag ):
     name = 'prev_next_links_internal'
-    template = 'menu/prev_next_links.html'
+    template = 'menu/prev_next_links_internal.html'
 
     options = Options(
         IntegerArgument('from_level', default=0, required=False),
@@ -411,32 +141,59 @@ class PrevNextInternal( InclusionTag ):
         current_index = None
 
         for node in nodes:
+            if not node.visible:
+                nodes.remove(node)
+
+        for node in nodes:
+            #if node.level < from_level or node.level > to_level:
+            #  nodes.remove(node)
+                
             if node.selected:# or node.ancestor:
                 current_index = nodes.index(node)
                 break
-        
-        try:
-            next_link = nodes[current_index + 1]
-#            if next_link.level is 0:
-#                next_link = False
-#                next_link = next_link.parent
-        except IndexError:
-            next_link = None
-        try:
-            prev_link = nodes[current_index - 1]
-            if prev_link.level is 0:
-                prev_link = False
-        except IndexError:
-            prev_link = None
-        
-        if current_index is 0:
-            prev_link = None 
+#            if not node.visible:
+#                nodes.remove(node)
 
+        # Handle index pages
+        if node.level == 0: # We're at the root level
+            try:
+                if node.children: # It's got children
+                    next_link = node.children[0] # The next one is the first
+                    assert next_link.level != node.level
+                else: 
+                    next_link = nodes[current_index + 1] # Next root level item
+                    if next_link.level != node.level: # Non-sequential indices
+                        next_link = None
+            except IndexError:
+                next_link = None
+            try:
+                prev_link = nodes[current_index - 1]
+                if prev_link.level != node.level:
+                    prev_link = None
+                elif prev_link.children:
+                    prev_link = prev_link.children[-1]
+            except IndexError:
+                prev_link = None
+        # We're somewhere in the menu tree (not an index)
+        else: 
+            try:
+                next_link = nodes[current_index + 1]
+                if next_link.level != node.level:
+                    next_link =  nodes[nodes.index(node.parent) + 1]
+            except IndexError:
+                next_link = nodes[nodes.index(node.parent) + 1] 
+            try:
+                if current_index == 0:
+                    prev_link = node.parent
+                else:
+                    prev_link = nodes[current_index - 1]
+                if prev_link.level != node.level:
+                    prev_link =  node.parent
+            except IndexError:
+                prev_link = None
+        
         try:
             context = {  'index': current_index, 'selected': node,'sub_next': next_link, 'sub_prev': prev_link }
-
-            #context = {  'next': next_link, 'prev': False }
-#            context = {  'next': 'what', 'prev': 'whao' }
         except:
             context = { 'template': template}
             
