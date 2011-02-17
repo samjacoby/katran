@@ -1,5 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'entries/base.html' %}
+{% load extra_tags %}
 {% load placeholder_tags %}
+
 {% block main %}
 {% for e in list %}
 <div class="entry">

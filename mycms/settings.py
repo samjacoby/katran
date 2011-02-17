@@ -89,6 +89,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 CMS_TEMPLATES = (
+    ('standard_root.html', 'Base Root Template'),
+    ('header_footer_base.html', 'Header Footer Template'),
     ('index.html', 'Base Index Template'),
     ('detail.html', 'Base Book Template'),
 )
@@ -104,16 +106,6 @@ CMS_PLACEHOLDER_CONF = {
             'name': gettext('Main Entry Content')
             },
         }
-#THUMBNAIL_PROCESSORS = (
-#    'easy_thumbnails.processors.colorspace',
-#    'easy_thumbnails.processors.autocrop',
-#    'easy_thumbnails.processors.scale_and_crop',
-    #'filer.thumbnail_processors.scale_and_crop_with_subject_location',
-#    'easy_thumbnails.processors.filters',
-#)
-
-
-
 
 ROOT_URLCONF = 'urls'
 
@@ -142,8 +134,5 @@ INSTALLED_APPS = (
     'cms.plugins.googlemap',
     'entries',
     'entries.plugins',
-#    'utils',
     'sorl.thumbnail',
-#    'easy_thumbnails',
-#    'filer',
 )

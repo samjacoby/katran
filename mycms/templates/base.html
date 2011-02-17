@@ -3,7 +3,7 @@
 {% load extra_tags %}
 <!doctype html>
 <head>
-  <title>{{ request.current_page.get_title }}</title>
+  <title>{{ request.current_page.get_menu_title|capfirst }}</title>
   {% plugins_media %}
 </head>
 
@@ -14,13 +14,11 @@
     {% prev_next_links %}
     </ul>
     </nav>
-    <nav class='menu' id='sub-menu'>
-    <ul>
-    {% prev_next_links_internal %}
-    </ul>
-    </nav>
+    {% block sub-menu %}{% endblock %}
+    {% show_placeholder "master-header" "header_footer" %}
     {% block main %}{% endblock %}
     <nav class='menu' id='foot-menu'>
-    </nav>
+    </nav>                            
+    {% show_placeholder "master-footer" "header_footer"  %}
 </body>
 </html>             
