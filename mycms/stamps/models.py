@@ -3,7 +3,8 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.forms import ModelForm
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safs -- in a basically louysy way.
+from cms.models.fields import PlaceholderField
 
 class DesignerManager(models.Manager):
 
@@ -45,7 +46,7 @@ class Designer(models.Model):
         return self.name
 
     def _get_full_name(self):
-        "Returns the person's full name."
+        '''Returns the person's full name.'''
         return '%s %s' % (self.first_name, self.last_name)
     _get_full_name.admin_order_by = 'last_name'
 
@@ -149,25 +150,3 @@ class Stamp(models.Model):
         return '<img height="200" src="%s%s"/>' % (settings.STATIC_URL, self.img)
     admin_image.allow_tags = True
     # Build next and previous links.
-    
-    def get_link(self): 
-        stamp_list = Stamp.objects.all().order_by('stamp_family__designer__designer_class','stamp_family__designer__last_name_id','stamp_family__order','order')
-        found = False
-        prev = None
-        for i, stamp in enumerate(stamp_list, start=1):
-            next = stamp
-            if found:
-                if not prev:
-                    return {'next':next.get_absolute_url() }
-                elif not next:
-                    return {'prev':prev.get_absolute_url() }
-                else:
-                    return {'prev':prev.get_absolute_url(), 'next':next.get_absolute_url() }
-            if stamp.id == self.id:
-                found = True
-                if i == len(stamp_list):
-                    return {'prev':prev.get_absolute_url() }
-            if not found:                   
-                prev = stamp
-    class Meta:
-        ordering = ('order',)

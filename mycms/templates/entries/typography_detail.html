@@ -1,0 +1,14 @@
+{% extends 'entries/base.html' %}
+{% load extra_tags %}
+{% load placeholder_tags %}
+
+{% block main %}
+<div class="detail-content">         
+    {% with "384" as width %}
+    {% render_placeholder e.content width %}
+    {% endwith %}
+</div>
+<div class="sidebar-content">
+    {% render_placeholder e.sidebar %}
+</div>
+{% endblock %}
