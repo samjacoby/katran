@@ -1,6 +1,5 @@
 from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
-#from plugins.menu import EntryMenu, BookMenu, TypographyMenu
 
 class BookHook( CMSApp ):
     name = 'Book Application'

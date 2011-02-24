@@ -68,4 +68,4 @@ class EntryModifier(Modifier):
 #               nodes.remove(node)
         return nodes
 
-menu_pool.register_modifier(EntryModifier)
+#menu_pool.register_modifier(EntryModifier)
