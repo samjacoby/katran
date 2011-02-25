@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 from cms.models.fields import PlaceholderField
 
 class Sponsor(models.Model):
@@ -34,8 +35,13 @@ class Designer(models.Model):
 
     sponsor = generic.GenericRelation(Sponsor)
     
-    def __unicode__( self ):
+    def __unicode__(self):
         return self.display_name
+    def get_absolute_url(self):
+        return reverse('stamps.urls.detail', 
+                        kwargs = {'designer': self.normalized_name})
+
+
     class Meta:
         ordering = ['normalized_name']
 
@@ -43,7 +49,7 @@ class Family(models.Model):
     designer  = models.ForeignKey(Designer, related_name='families')
     is_published = models.BooleanField(help_text='Controls whether or not family is published to site.')
     in_navigation = models.BooleanField(help_text='Whether or not family appears in menus.')
-    name = models.CharField(max_length=100, blank=True, help_text="If left blank, stamp's name will be used.")
+    name = models.CharField(max_length=100, help_text="Cannot be blank, but can be overriden by stamp name.")
     country = models.CharField(max_length=60, blank=True, help_text="If left blank, stamp's country will be used.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="If left blank, stamp's year will be used.")
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
@@ -51,7 +57,10 @@ class Family(models.Model):
     
     def __unicode__( self ):
         return self.name
-
+    def get_absolute_url(self):
+        return reverse('stamps.urls.detail', 
+                        kwargs = {'designer': self.designer.normalized_name, 
+                                  'family': self.order})
     class Meta:
         ordering = ['-order']
         verbose_name_plural = 'Families'
@@ -71,5 +80,10 @@ class Stamp(models.Model):
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
     sponsor = generic.GenericRelation(Sponsor)
 
+    def get_absolute_url(self):
+        return reverse('stamps.urls.detail', 
+                        kwargs = {'designer': self.family.designer.normalized_name, 
+                                  'family': self.family.order,
+                                  'stamp': self.order })
     class Meta:
         ordering = ['-order'] 
