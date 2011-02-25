@@ -8,6 +8,7 @@ class FamilyInline(admin.StackedInline):
 
 class StampInline(admin.StackedInline):
     model = Stamp
+    exclude = ('picture', 'info', 'footer')
     extra = 0
 
 class DesignerAdmin(PlaceholderAdmin):
