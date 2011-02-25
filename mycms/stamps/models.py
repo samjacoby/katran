@@ -38,7 +38,7 @@ class Designer(models.Model):
     def __unicode__(self):
         return self.display_name
     def get_absolute_url(self):
-        return reverse('stamps.urls.detail', 
+        return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.normalized_name})
 
 
@@ -58,7 +58,7 @@ class Family(models.Model):
     def __unicode__( self ):
         return self.name
     def get_absolute_url(self):
-        return reverse('stamps.urls.detail', 
+        return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.designer.normalized_name, 
                                   'family': self.order})
     class Meta:
@@ -81,7 +81,7 @@ class Stamp(models.Model):
     sponsor = generic.GenericRelation(Sponsor)
 
     def get_absolute_url(self):
-        return reverse('stamps.urls.detail', 
+        return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.family.designer.normalized_name, 
                                   'family': self.family.order,
                                   'stamp': self.order })
