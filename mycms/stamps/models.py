@@ -70,14 +70,16 @@ class Stamp(models.Model):
     is_published = models.BooleanField(help_text='Controls whether or not stamp is published to site.')
     in_navigation = models.BooleanField(help_text='Whether or not stamp appears in menus.')
     url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible <em>only</em> through this url. In this case, order will be ignored. The url cannot be a number but can be nested.")
-    name = models.CharField(max_length=100, blank=True, help_text="Will override stamp family name.")
-    picture = PlaceholderField('Stamp Image', related_name='stamp_picture')
+    name = models.CharField(max_length=100, blank=True, help_text="If entered, will override stamp family name.")
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
     value = models.CharField(max_length=30, blank=True)
+    picture = PlaceholderField('Stamp Image', related_name='stamp_picture')
     info = PlaceholderField('Stamp Info', related_name='stamp_info')
     footer = PlaceholderField('Stamp Footer', related_name='stamp_footer')
+    # Order with which stamp appears in family
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
+    
     sponsor = generic.GenericRelation(Sponsor)
 
     def get_absolute_url(self):
