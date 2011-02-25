@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load menu_tags %}
+{% load extra_tags %}
+{% load stamp_tags %}
+{% load placeholder_tags %}
+
+{% block sub-menu %}
+{% prev_next_links_internal %}
+{% endblock %}
+{% block main %}
+This is stamps/detail.html
+<ul>
+{% stamp_menu 'designer' %}
+</ul>
+<ul>
+{% stamp_menu 'family' %}
+</ul>
+<ul>
+{% stamp_menu 'stamp' %}
+</ul>
+
+<div class="detail-content">         
+    {% with "384" as width %}
+    {% render_placeholder e.content width %}
+    {% endwith %}
+</div>
+<div class="sidebar-content">
+    {% render_placeholder e.sidebar %}
+</div>
+{% endblock %}
+
