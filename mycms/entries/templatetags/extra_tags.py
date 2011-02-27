@@ -82,25 +82,29 @@ class PrevNext( InclusionTag ):
         current_index = None
         
         for node in nodes:
-            if not node.visible:
-                nodes.remove(node)
-
-        for node in nodes:
             if node.level != 0: # We're only interested in root-level nodes
                 nodes.remove(node)
-            elif node.selected or node.ancestor: # If we're at root, this is okay
+            
+        for node in nodes:
+            if node.selected or node.ancestor: # If we're at root, this is okay
                 current_index = nodes.index(node)
                 break
         
+        for n in nodes:
+            if not n.visible:
+                nodes.remove(n)
+        
         try:
             next_link = nodes[current_index + 1]
-            if next_link.level is not 0: # This is only the top level menu
-                next_link = None
+            i = current_index + 2
+            while next_link.level != node.level: # We're not at the top level
+                next_link = nodes[i]
+                i = i + 1
         except IndexError:
             next_link = None
         try:
             prev_link = nodes[current_index - 1]
-            if prev_link.level is not 0:
+            if prev_link.level != 0:
                 prev_link = None
         except IndexError:
             prev_link = None
@@ -141,21 +145,18 @@ class PrevNextInternal( InclusionTag ):
         current_index = None
 
         for node in nodes:
-            if not node.visible:
-                nodes.remove(node)
-
-        for node in nodes:
-            #if node.level < from_level or node.level > to_level:
-            #  nodes.remove(node)
-                
             if node.selected:# or node.ancestor:
                 current_index = nodes.index(node)
                 break
-#            if not node.visible:
-#                nodes.remove(node)
 
+        assert current_index != None
+
+        for n in nodes:
+            if not n.visible:
+                nodes.remove(n)
+        
         # Handle index pages
-        if node.level == 0: # We're at the root level
+        if node.children: # We're at an index (not a leaf)
             try:
                 if node.children: # It's got children
                     next_link = node.children[0] # The next one is the first
@@ -164,6 +165,7 @@ class PrevNextInternal( InclusionTag ):
                     next_link = nodes[current_index + 1] # Next root level item
                     if next_link.level != node.level: # Non-sequential indices
                         next_link = None
+                    assert next_link.level == 0 or next_link == None
             except IndexError:
                 next_link = None
             try:
@@ -174,26 +176,34 @@ class PrevNextInternal( InclusionTag ):
                     prev_link = prev_link.children[-1]
             except IndexError:
                 prev_link = None
-        # We're somewhere in the menu tree (not an index)
+        # We're at a leaf -- a node without any children -- it could be top level, though.
         else: 
             try:
                 next_link = nodes[current_index + 1]
-                if next_link.level != node.level:
-                    next_link =  nodes[nodes.index(node.parent) + 1]
+                if next_link.level != node.level or next_link.parent_namespace != node.parent_namespace:
+                    if not node.parent:
+                        next_link = None
+                    else:
+                        next_link =  nodes[nodes.index(node.parent) + 1]
             except IndexError:
                 next_link = nodes[nodes.index(node.parent) + 1] 
             try:
-                if current_index == 0:
-                    prev_link = node.parent
-                else:
-                    prev_link = nodes[current_index - 1]
-                if prev_link.level != node.level:
-                    prev_link =  node.parent
+                #if current_index == 0: # handles first item in list
+                #  if node.parent:
+                #       prev_link = node.parent
+                ### else:
+                #prev_link = None
+                #else:
+                prev_link = nodes[current_index - 1]
+                if prev_link.level != node.level or prev_link.parent_namespace != node.parent_namespace:
+                    
+                    prev_link = prev_link.children[-1]
+               #    prev_link =  node.parent
             except IndexError:
                 prev_link = None
         
         try:
-            context = {  'index': current_index, 'selected': node,'sub_next': next_link, 'sub_prev': prev_link }
+            context = { 'index':current_index, 'level':node.parent_namespace, 'sub_next': next_link, 'sub_prev': prev_link }
         except:
             context = { 'template': template}
             

@@ -13,15 +13,16 @@ class BookMenu(CMSAttachMenu):
         This method is used to build the menu tree.
         """
         nodes = []
+        namespace = 'book'
         for book in Book.manager.get_all_books():
-            # the menu tree consists of NavigationNode instances
-            # Each NavigationNode takes a label as first argument, a URL as
-            # second argument and a (for this tree) unique id as third
-            # argument.
             node = NavigationNode(
                 book.order,                                          
-                '/%s%s' % ( 'books', reverse('book_detail', urlconf='entries.urls.books', args=[ book.order ] )),
-                book.order
+                '/%s%s' % ('books', 
+                            reverse('book_detail', 
+                                    urlconf='entries.urls.books', 
+                                    args=[book.order])),
+                book.order,
+                parent_namespace=namespace
             )
             nodes.append(node)
         return nodes
@@ -36,16 +37,16 @@ class TypographyMenu(CMSAttachMenu):
         This method is used to build the menu tree.
         """
         nodes = []
+        namespace = 'typography'
         for book in Typography.manager.get_all_typography():
-            # the menu tree consists of NavigationNode instances
-            # Each NavigationNode takes a label as first argument, a URL as
-            # second argument and a (for this tree) unique id as third
-            # argument.
             node = NavigationNode(
                 book.order,                                          
                 '/%s%s' % ( 'typography', 
-                    reverse('book_detail', urlconf='entries.urls.books', args=[ book.order ] )),
-                book.order
+                            reverse('book_detail', 
+                                    urlconf='entries.urls.books', 
+                                            args=[ book.order])),
+                book.order,
+                parent_namespace=namespace
             )
             nodes.append(node)
         return nodes
