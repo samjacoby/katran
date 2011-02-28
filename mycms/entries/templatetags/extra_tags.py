@@ -155,28 +155,28 @@ class PrevNextInternal( InclusionTag ):
             if not n.visible:
                 nodes.remove(n)
         
-        # Handle index pages
-        if node.children: # We're at an index (not a leaf)
+        # Handle index pages and intermediary pages with children
+        if node.children: 
             try:
-                if node.children: # It's got children
-                    next_link = node.children[0] # The next one is the first
-                    assert next_link.level != node.level
-                else: 
-                    next_link = nodes[current_index + 1] # Next root level item
-                    if next_link.level != node.level: # Non-sequential indices
-                        next_link = None
-                    assert next_link.level == 0 or next_link == None
+                next_link = node.children[0] # The next one is the first
+                assert next_link.level != node.level
+                if next_link.level > node.level and next_link.level >= 2:
+                    while next_link.children:
+                        next_link = next_link.children[0]
+                #V
+                #   next_link = nodes[current_index + 1] # Next root level item
+                #   if next_link.level != node.level: # Non-sequential indices
+                ##      next_link = None
+                #    assert next_link.level == 0 or next_link == None
             except IndexError:
                 next_link = None
             try:
                 prev_link = nodes[current_index - 1]
-                if prev_link.level != node.level:
-                    prev_link = None
-                elif prev_link.children:
+                while prev_link.children:
                     prev_link = prev_link.children[-1]
             except IndexError:
                 prev_link = None
-        # We're at a leaf -- a node without any children -- it could be top level, though.
+        # We're at a childrenless page, an index or a leaf
         else: 
             try:
                 next_link = nodes[current_index + 1]
@@ -186,19 +186,35 @@ class PrevNextInternal( InclusionTag ):
                     else:
                         next_link =  nodes[nodes.index(node.parent) + 1]
             except IndexError:
-                next_link = nodes[nodes.index(node.parent) + 1] 
+                # No next page. Check for parents or end-of-tree.
+                if node.parent:
+                    next_link = node.parent
+                    while next_link.parent:
+                        next_link = next_link.parent
+                else:
+                    next_link = None
             try:
-                #if current_index == 0: # handles first item in list
-                #  if node.parent:
-                #       prev_link = node.parent
-                ### else:
-                #prev_link = None
-                #else:
                 prev_link = nodes[current_index - 1]
-                if prev_link.level != node.level or prev_link.parent_namespace != node.parent_namespace:
-                    
-                    prev_link = prev_link.children[-1]
-               #    prev_link =  node.parent
+                if prev_link.level != node.level:
+                    if node.parent:
+                        prev_link = node.parent
+                        while prev_link.parent:
+                            prev_link = prev_link.parent
+                    else:
+                        prev_link = None
+                else:
+                    while prev_link.children:
+                        prev_link = prev_link.children[-1]
+           #    if prev_link.level != node.level or prev_link.parent_namespace != node.parent_namespace:
+           #        if node.parent:
+           #            prev_link = node.parent
+           #            while prev_link.parent:
+           #                prev_link = prev_link.parent
+           #        else:
+           #            prev_link = node
+           #    else:
+           #       while prev_link.children:
+           #           prev_link = prev_link.children[-1]
             except IndexError:
                 prev_link = None
         
