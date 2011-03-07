@@ -5,10 +5,15 @@ from stamps.models import Designer, Family, Stamp, Sponsor
 class FamilyInline(admin.StackedInline):
     model = Family
     extra = 0
+    fieldsets = (
+        (None, {
+            'fields': ['name', ('is_published', 'in_navigation')]
+        }),
+        )
 
 class StampInline(admin.StackedInline):
     model = Stamp
-    exclude = ('picture', 'info', 'footer')
+    exclude = ('info', 'footer')
     extra = 0
 
 class DesignerAdmin(PlaceholderAdmin):

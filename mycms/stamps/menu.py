@@ -21,7 +21,8 @@ class StampMenu(CMSAttachMenu):
             designer_node = NavigationNode(d.display_name, 
                                            d.get_absolute_url(), 
                                            designer_key,
-                                           parent_namespace=namespace)
+                                           parent_namespace=namespace,
+                                           attr={'type':'designer'})
             nodes.append(designer_node)
         
             for f in Family.objects.filter(is_published=True, 
@@ -32,14 +33,23 @@ class StampMenu(CMSAttachMenu):
                                              f.get_absolute_url(), 
                                              family_key, 
                                              designer_key, 
-                                             parent_namespace=namespace)
+                                             parent_namespace=namespace,
+                                             attr={'type':'family'})
                 families.append(family_node)
         
                 for s in Stamp.objects.filter(is_published=True, 
                                               in_navigation=True, 
                                               family = f):
                     stamp_key = '%s-%s' % (family_key, s.order)
-                    stamps.append(NavigationNode(s.order, s.get_absolute_url(), stamp_key, family_key, parent_namespace=namespace))
+                    stamps.append(
+                        NavigationNode(
+                            s.order, 
+                            s.get_absolute_url(), 
+                            stamp_key, 
+                            family_key, 
+                            parent_namespace=namespace,
+                            attr={'type':'stamp'})
+                        )
         
         nodes.extend(families)
         nodes.extend(stamps)

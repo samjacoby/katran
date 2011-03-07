@@ -6,59 +6,6 @@ from menus.menu_pool import menu_pool
 
 register = template.Library()        
 
-def cut_after(node, levels, removed):
-    """
-    given a tree of nodes cuts after N levels
-    """
-    if levels == 0:
-        removed.extend(node.children)
-        node.children = []
-    else:
-        for n in node.children:
-            cut_after(n, levels - 1, removed)
-
-def remove(node, removed):
-    removed.append(node)
-    if node.parent:
-        if node in node.parent.children:
-            node.parent.children.remove(node)
-
-def cut_levels(nodes, from_level, to_level, extra_inactive, extra_active):
-    """
-    cutting nodes away from menus
-    """
-    final = []
-    removed = []
-    selected = None
-    for node in nodes: 
-        if not hasattr(node, 'level'):
-            # remove and ignore nodes that don't have level information
-            remove(node, removed)
-            continue
-        if node.level == from_level:
-            # turn nodes that are on from_level into root nodes
-            final.append(node)
-            node.parent = None
-        if not node.ancestor and not node.selected and not node.descendant:
-            # cut inactive nodes to extra_inactive, but not of descendants of 
-            # the selected node
-            cut_after(node, extra_inactive, removed)
-        if node.level > to_level and node.parent:
-            # remove nodes that are too deep, but not nodes that are on 
-            # from_level (local root nodes)
-            remove(node, removed)
-        if node.selected:
-            selected = node
-        if not node.visible:
-            remove(node, removed)
-    if selected:
-        cut_after(selected, extra_active, removed)
-    if removed:
-        for node in removed:
-            if node in final:
-                final.remove(node)
-    return final
-
 class PrevNext( InclusionTag ):
     name = 'prev_next_links'
     template = 'menu/prev_next_links.html'
@@ -78,42 +25,38 @@ class PrevNext( InclusionTag ):
             return { 'template': 'menu/empty.html' }
         
         nodes = menu_pool.get_nodes( request, namespace, root_id )
-        
         current_index = None
         
+        root_nodes = []
         for node in nodes:
-            if node.level != 0: # We're only interested in root-level nodes
-                nodes.remove(node)
-            
-        for node in nodes:
-            if node.selected or node.ancestor: # If we're at root, this is okay
-                current_index = nodes.index(node)
+            if node.level == 0:
+                root_nodes.append(node)
+        for node in root_nodes:
+            assert node.level == 0 # There should be only root level nodes
+            if node.selected or node.ancestor: 
+                current_index = root_nodes.index(node)
+                assert current_index != None
                 break
-        
-        for n in nodes:
+
+        # This is done after selection, as the selected node can be invisible
+        for n in root_nodes:
+            # Cut out any invisible nodes (this could have weird behavior)
             if not n.visible:
-                nodes.remove(n)
+                root_nodes.remove(n)
         
-        try:
-            next_link = nodes[current_index + 1]
-            i = current_index + 2
-            while next_link.level != node.level: # We're not at the top level
-                next_link = nodes[i]
-                i = i + 1
+        try: # Next Link
+            next_link = root_nodes[current_index + 1]
         except IndexError:
             next_link = None
-        try:
-            prev_link = nodes[current_index - 1]
-            if prev_link.level != 0:
-                prev_link = None
+        try: # Previous Link
+            prev_link = root_nodes[current_index - 1]
+            if current_index == 0:
+                raise IndexError
         except IndexError:
             prev_link = None
-        
-        if current_index == 0:
-            prev_link = None 
 
         try:
-            context = {  'index': current_index, 'selected': node,'next': next_link, 'prev': prev_link }
+            context = {'next': next_link, 'prev': prev_link}
 
         except:
             context = { 'template': template}
@@ -121,8 +64,72 @@ class PrevNext( InclusionTag ):
         return context
 register.tag( PrevNext )
 
+def get_next_sibling(node, nodes):
+    """Fetch the nearest sibling of node, or return nothing."""
+    try:
+        if node.parent:
+            next = node.parent.children[node.parent.children.index(node) + 1]
+            return next
+        else:
+            i = nodes.index(node) + 1
+            next = nodes[i]
+            while next.level != 0:
+                i = i + 1
+                next = nodes[i]
+
+            if next.level == 0:
+                return next 
+        
+        return None
+    except IndexError:
+        return None
+
+def get_prev_sibling(node, nodes):
+    """Return the most recent previous sibling of a given node, or nothing."""
+    try:
+        # If there's a parent, grab the sibling from the tree
+        if node.parent:
+            index = node.parent.children.index(node) - 1
+            prev = node.parent.children[index]
+            if index < 0:
+                # This is the first child, so return parent
+                return node.parent
+            else:
+                return prev
+        else:
+            # We're at the top-level, so grab the previous sibling by level
+            i = nodes.index(node)                   
+            for prev in reversed(nodes[:i]):
+                if prev.level == 0:
+                    return prev 
+        return None
+    except IndexError:
+        return None
+
+def get_last_child(node):
+    """Fetch the last child of a node (with children)."""
+    try:
+        if node.children:
+            return node.children[-1]
+        return None
+    except IndexError:
+        return None
+
+def get_next_parent(node, nodes):
+    """Fetch a node's parent's next sibling"""
+    node = node.parent
+    next = None 
+    while not next:
+        next = get_next_sibling(node, nodes)
+        if not next:
+            next = get_next_parent(node, nodes)
+    
+    return next
 
 class PrevNextInternal( InclusionTag ):
+
+    """Fetch the next & previous page on the site, according to some rules."""
+
     name = 'prev_next_links_internal'
     template = 'menu/prev_next_links_internal.html'
 
@@ -145,81 +152,51 @@ class PrevNextInternal( InclusionTag ):
         current_index = None
 
         for node in nodes:
-            if node.selected:# or node.ancestor:
+            if node.selected: # There should always be a selected node
                 current_index = nodes.index(node)
                 break
-
-        assert current_index != None
 
         for n in nodes:
             if not n.visible:
                 nodes.remove(n)
-        
+
+        if hasattr(node, 'next') and hasattr(node, 'prev'):
+            context = { 'index':current_index, 'level':node.next, 'sub_next': node.next, 'sub_prev': node.prev }
+            return context                      
         # Handle index pages and intermediary pages with children
         if node.children: 
-            try:
+            try: # Next Link
                 next_link = node.children[0] # The next one is the first
-                assert next_link.level != node.level
-                if next_link.level > node.level and next_link.level >= 2:
-                    while next_link.children:
-                        next_link = next_link.children[0]
-                #V
-                #   next_link = nodes[current_index + 1] # Next root level item
-                #   if next_link.level != node.level: # Non-sequential indices
-                ##      next_link = None
-                #    assert next_link.level == 0 or next_link == None
             except IndexError:
                 next_link = None
-            try:
-                prev_link = nodes[current_index - 1]
-                while prev_link.children:
-                    prev_link = prev_link.children[-1]
+            try: # Previous Link
+                prev_link = get_prev_sibling(node, nodes)
+                if prev_link != None and prev_link.level == node.level:
+                    prev_link_child = get_last_child(prev_link)
+                    if prev_link_child:
+                        prev_link = prev_link_child
             except IndexError:
                 prev_link = None
         # We're at a childrenless page, an index or a leaf
         else: 
-            try:
-                next_link = nodes[current_index + 1]
-                if next_link.level != node.level or next_link.parent_namespace != node.parent_namespace:
-                    if not node.parent:
-                        next_link = None
-                    else:
-                        next_link =  nodes[nodes.index(node.parent) + 1]
+            try: # Next Link
+                next_link = get_next_sibling(node, nodes)
+                if not next_link and node.parent:
+                    next_link = get_next_parent(node, nodes)
             except IndexError:
-                # No next page. Check for parents or end-of-tree.
-                if node.parent:
-                    next_link = node.parent
-                    while next_link.parent:
-                        next_link = next_link.parent
-                else:
-                    next_link = None
-            try:
-                prev_link = nodes[current_index - 1]
-                if prev_link.level != node.level:
-                    if node.parent:
-                        prev_link = node.parent
-                        while prev_link.parent:
-                            prev_link = prev_link.parent
-                    else:
-                        prev_link = None
-                else:
-                    while prev_link.children:
-                        prev_link = prev_link.children[-1]
-           #    if prev_link.level != node.level or prev_link.parent_namespace != node.parent_namespace:
-           #        if node.parent:
-           #            prev_link = node.parent
-           #            while prev_link.parent:
-           #                prev_link = prev_link.parent
-           #        else:
-           #            prev_link = node
-           #    else:
-           #       while prev_link.children:
-           #           prev_link = prev_link.children[-1]
+                next_link = None
+            try: # Prev Link                                    
+                prev_link = get_prev_sibling(node, nodes) 
+                if prev_link != None and prev_link.level == node.level:
+                    prev_link_child = get_last_child(prev_link)
+                    if prev_link_child:
+                        prev_link = prev_link_child
             except IndexError:
                 prev_link = None
         
         try:
-            context = { 'index':current_index, 'level':node.parent_namespace, 'sub_next': next_link, 'sub_prev': prev_link }
+            context = { 'index':current_index, 'level':node.children, 'sub_next': next_link, 'sub_prev': prev_link }
+
         except:
             context = { 'template': template}
             

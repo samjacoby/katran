@@ -74,7 +74,8 @@ class Stamp(models.Model):
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
     value = models.CharField(max_length=30, blank=True)
-    picture = PlaceholderField('Stamp Image', related_name='stamp_picture', help_text="This container holds the stamp picture (and anything else in the same place)")
+    #picture = PlaceholderField('Stamp Image', related_name='stamp_picture', help_text="This container holds the stamp picture (and anything else in the same place)")
+    picture = models.ImageField(upload_to='stamps', blank=True, null=True)
     info = PlaceholderField('Stamp Info', related_name='stamp_info', help_text="Anything that should display immediately below the values of the stamps should go here.")
     footer = PlaceholderField('Stamp Footer', related_name='stamp_footer')
     # Order with which stamp appears in family

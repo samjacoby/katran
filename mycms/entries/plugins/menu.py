@@ -22,8 +22,14 @@ class BookMenu(CMSAttachMenu):
                                     urlconf='entries.urls.books', 
                                     args=[book.order])),
                 book.order,
-                parent_namespace=namespace
+                parent_namespace=namespace,
+                attr={'type':'book'}
             )
+            try:
+                node.prev = nodes[-1]
+                nodes[-1].next = node
+            except IndexError:
+                pass
             nodes.append(node)
         return nodes
 menu_pool.register_menu(BookMenu) # register the menu.
@@ -38,16 +44,22 @@ class TypographyMenu(CMSAttachMenu):
         """
         nodes = []
         namespace = 'typography'
-        for book in Typography.manager.get_all_typography():
+        for typography in Typography.manager.get_all_typography():
             node = NavigationNode(
-                book.order,                                          
+                typography.order,                                          
                 '/%s%s' % ( 'typography', 
-                            reverse('book_detail', 
-                                    urlconf='entries.urls.books', 
-                                            args=[ book.order])),
-                book.order,
-                parent_namespace=namespace
+                            reverse('typography_detail', 
+                                    urlconf='entries.urls.typography', 
+                                            args=[ typography.order])),
+                typography.order,
+                parent_namespace=namespace,
+                attr={'type':'typography'}
             )
+            try:
+                node.prev = nodes[-1]
+                nodes[-1].next = node
+            except IndexError:
+                pass
             nodes.append(node)
         return nodes
 menu_pool.register_menu(TypographyMenu) # register the menu.
