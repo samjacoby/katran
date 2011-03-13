@@ -160,9 +160,10 @@ class PrevNextInternal( InclusionTag ):
             if not n.visible:
                 nodes.remove(n)
 
-        if hasattr(node, 'next') and hasattr(node, 'prev'):
-            context = { 'index':current_index, 'level':node.next, 'sub_next': node.next, 'sub_prev': node.prev }
-            return context                      
+#        if hasattr(node, 'next') and hasattr(node, 'prev'):
+#            context = { 'index':current_index, 'level':node.next, 'sub_next': node.next, 'sub_prev': node.prev }
+#            return context                      
+            
         # Handle index pages and intermediary pages with children
         if node.children: 
             try: # Next Link

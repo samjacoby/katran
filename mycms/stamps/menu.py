@@ -35,21 +35,32 @@ class StampMenu(CMSAttachMenu):
                                              designer_key, 
                                              parent_namespace=namespace,
                                              attr={'type':'family'})
+                try:
+                    family_node.next = None
+                    family_node.prev = families[-1]
+                    families[-1].next = family_node
+                except IndexError:
+                    family_node.prev = None
                 families.append(family_node)
         
                 for s in Stamp.objects.filter(is_published=True, 
                                               in_navigation=True, 
                                               family = f):
                     stamp_key = '%s-%s' % (family_key, s.order)
-                    stamps.append(
-                        NavigationNode(
+                    stamp_node = NavigationNode(
                             s.order, 
                             s.get_absolute_url(), 
                             stamp_key, 
                             family_key, 
                             parent_namespace=namespace,
                             attr={'type':'stamp'})
-                        )
+                    try:
+                        stamp_node.next = None
+                        stamp_node.prev = stamps[-1]
+                        families[-1].next = stamp_node
+                    except IndexError:
+                        stamp_node.prev = None
+                    stamps.append(stamp_node)
         
         nodes.extend(families)
         nodes.extend(stamps)

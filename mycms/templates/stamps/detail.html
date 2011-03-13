@@ -1,11 +1,18 @@
 {% extends 'stamps/base.html' %}
 {% load menu_tags %}
 {% load extra_tags %}
-{% load stamp_tags %}
+{% load stamps_tags %}
 {% load placeholder_tags %}
 
 {% block main %}
 This is stamps/detail.html
+family links
+{% stamp_family_links %}
+selected: <li>{{ misc }}</li>
+stamp links
+<ul>
+{% stamp_links %}
+</ul>
 <ul>
 {% stamp_menu 'designer' %}
 </ul>
