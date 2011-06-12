@@ -144,3 +144,65 @@ class ShowAttrMenu( InclusionTag ):
             
         return context
 register.tag( ShowAttrMenu )
+
+class StampFamilies( InclusionTag ):
+    name = 'stamp_families'
+    template = 'menu/stamp_links.html'
+
+    options = Options(
+        Argument('name', default=None, required=False),
+        Argument('template', default='menu/test.html', required=False),
+    )                                          
+
+    def get_context(self, context, template, name ):
+        try:
+            request = context['request']
+        except KeyError:
+            return { 'template': 'menu/empty.html' }
+        
+        all_nodes = menu_pool.get_nodes(request)
+        nodes = menu_pool.get_nodes_by_attribute( all_nodes, 'type', 'designer' )
+        
+        for node in nodes:
+            if (node.ancestor or node.selected) and node.attr['type'] == 'designer':
+                break
+
+        try:
+            context = { 'children': node.children }
+
+        except:
+            context = { 'template': template}
+            
+        return context
+register.tag( StampFamilies )
+
+class StampValues( InclusionTag ):
+    name = 'stamp_values'
+    template = 'menu/stamp_links.html'
+
+    options = Options(
+        Argument('name', default=None, required=False),
+        Argument('template', default='menu/stamp_links.html', required=False),
+    )                                          
+
+    def get_context(self, context, template, name ):
+        try:
+            request = context['request']
+        except KeyError:
+            return { 'template': 'menu/empty.html' }
+        
+        all_nodes = menu_pool.get_nodes(request)
+        nodes = menu_pool.get_nodes_by_attribute( all_nodes, 'type', 'family' )
+        
+        for node in nodes:
+            if (node.ancestor or node.selected) and node.attr['type'] == 'family':
+                break
+
+        try:
+            context = { 'children': node.children }
+
+        except:
+            context = { 'template': template}
+            
+        return context
+register.tag( StampValues )

@@ -9,7 +9,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+     ('Sam Jacoby', 'sam@shackmanpress.com'),
 )
 
 MANAGERS = ADMINS
@@ -136,4 +136,5 @@ INSTALLED_APPS = (
     'stamps',
     'entries.plugins',
     'sorl.thumbnail',
+    'dashboard'
 )
