@@ -4,6 +4,8 @@
 <!doctype html>
 <head>
   <title>{{ request.current_page.get_menu_title|capfirst }}</title>
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css"/>
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css"/>
   {% plugins_media %}
   {% block head %}{% endblock %}
 </head>
@@ -11,13 +13,15 @@
 <body>
     <nav class='menu' id='top-menu'>
     <ul>
-    {% show_menu 0 5 100 100 %}
+    {% show_menu 0 0 0 1 %}
     {% prev_next_links %}
     </ul>
     </nav>
     {% block sub-menu %}{% endblock %}
     {% show_placeholder "master-header" "header_footer" %}
-    {% block main %}{% endblock %}
+    <div class="main-content">
+      {% block main %}{% endblock %}
+    </div>
     <nav class='menu' id='foot-menu'>
     </nav>                            
     {% show_placeholder "master-footer" "header_footer"  %}

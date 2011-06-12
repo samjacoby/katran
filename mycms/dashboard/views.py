@@ -6,12 +6,16 @@ from django.http import HttpResponse
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+
 
 
 from mycms.stamps import models
 
 log = logging.getLogger(__name__)
 
+@login_required
 def index(request):
 
     context = {}
@@ -22,6 +26,7 @@ def index(request):
 
     return direct_to_template(request, 'stamps/list.html', context)
 
+@login_required
 def action(request):
     if not request.POST:
         log.error("Did not receive POST with this request; redirect")

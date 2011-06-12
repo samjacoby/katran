@@ -4,13 +4,22 @@
 {% load stamps_tags %}
 {% load placeholder_tags %}
 
+{% block sub-menu %}
+<nav class="menu" id="sub-menu">
+  <ul>
+    <li id="page-title" >{{ request.current_page.get_title }}</li>
+  {% stamp_family_links %}
+  </ul>
+  <ul>
+    {% stamp_links %}
+  </ul>
+</nav>
+{% endblock %}
+
 {% block main %}
 This is stamps/detail.html
 family links
-{% stamp_family_links %}
-<ul>
-    {% stamp_links %}
-</ul>
+
 families
 <ul>
 {% stamp_families %}
