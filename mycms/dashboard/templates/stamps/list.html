@@ -1,3 +1,35 @@
+{% extends "base.html" %}  
+{% block head %}
+  <script type="text/javascript" src="/static/js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery-ui-1.8.9.custom.min.js"></script>
+  <script>
+    $(function($) {
+      $(".family" ).sortable({
+        item: 'li',
+        opacity: 0.6,
+        axis: "y",
+        cursor: "move",
+        update: function(e, ui) {
+ //               alert($(this).sortable('serialize'))
+                  alert($(ui.item).prevAll().length)
+                  $.ajax({
+                    url: "/dashboard/action/",
+                    type: "POST",
+                    data: ({ 
+                      id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
+                      order: $(ui.item).prevAll().length,
+                      csrfmiddlewaretoken: '{{ csrf_token }}'}),
+                    success: function(msg) { 
+                      alert(msg)}
+                    })            
+                  }
+      });
+      $(".family" ).disableSelection();
+    })(jQuery);
+  </script>
+
+{% endblock %}
+
 {% block main %}
 <div id="item_list">
   <ul>
@@ -5,10 +37,10 @@
     <li>
       <h3>{{ d.display_name }}</h3>
     {% for f in d.families.all %}
-      <h4>{{ f.name }}</h2>
-      <ul>
+      <h4>Family: {{ f.name }}</h2>
+      <ul class="family">
       {% for s in f.stamps.all %}
-        <li>{{ s.name }}</li>
+        <li id="set_{{ s.id }}" class="stamp">{{ s.name }}</li>
       {% endfor %}
     </ul>
     {% endfor %}
