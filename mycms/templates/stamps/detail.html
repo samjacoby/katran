@@ -8,28 +8,24 @@
 This is stamps/detail.html
 family links
 {% stamp_family_links %}
-selected: <li>{{ misc }}</li>
-stamp links
 <ul>
-{% stamp_links %}
+    {% stamp_links %}
 </ul>
+families
 <ul>
-{% stamp_menu 'designer' %}
+{% stamp_families %}
 </ul>
-<ul>
-{% stamp_menu 'family' %}
-</ul>
-<ul>
-{% stamp_menu 'stamp' %}
-</ul>
-
 <div class="detail-content">         
     {% with "384" as width %}
-    {% render_placeholder e.content width %}
+    {% render_placeholder stamp.content width %}
     {% endwith %}
 </div>
+values
+<ul>
+{% stamp_values %}
+</ul>
 <div class="sidebar-content">
-    {% render_placeholder e.sidebar %}
+    {% render_placeholder stamp.sidebar %}
 </div>
 {% endblock %}
 
