@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
+import logging
+import logging.handlers
 
 gettext = lambda s: s
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+# Set up logging
+LOG_DIR = '%s/log/' % PROJECT_DIR
+LOG_NAME = 'katran.log'
+# Access time, filename/function#line-number message
+log_formatter = logging.Formatter("[%(asctime)s %(filename)s/%(funcName)s#%(lineno)d] %(message)s")
 
 ADMINS = (
      ('Sam Jacoby', 'sam@shackmanpress.com'),
@@ -49,8 +58,8 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static')
+MEDIA_URL = '/static/'
 
 #STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 #STATIC_URL = '/static/'
@@ -139,3 +148,25 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'dashboard'
 )
+
+# Add log setup after local imports
+LOG_FILE = os.path.join(LOG_DIR, LOG_NAME)
+try:
+    if not os.path.exists(os.path.dirname(LOG_FILE)):
+        os.mkdir(os.path.dirname(LOG_FILE))
+    try:
+        handler = logging.handlers.TimedRotatingFileHandler(filename=LOG_FILE, when='midnight')
+    except IOError:
+        import sys
+        handler = logging.StreamHandler(sys.stderr)
+    handler.setFormatter(log_formatter)
+    log = logging.getLogger('')
+    if DEBUG:
+        log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.WARN)
+    log.addHandler(handler)
+except OSError:
+    # Will occur during fab
+    pass
+

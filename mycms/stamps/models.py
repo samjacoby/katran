@@ -50,6 +50,7 @@ class Designer(models.Model):
 
     sponsor = generic.GenericRelation(Sponsor)
 
+    objects = models.Manager()
     # Custom Manager
     cobjects = DesignerManager()
     
@@ -80,7 +81,7 @@ class Family(models.Model):
                         kwargs = {'designer': self.designer.normalized_name, 
                                   'family': self.order})
     class Meta:
-        ordering = ['-order']
+        ordering = ['order']
         verbose_name_plural = 'Families'
 
 class Stamp(models.Model):
@@ -107,4 +108,4 @@ class Stamp(models.Model):
                                   'family': self.family.order,
                                   'stamp': self.order })
     class Meta:
-        ordering = ['-order'] 
+        ordering = ['order'] 

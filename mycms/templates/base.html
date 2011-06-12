@@ -5,6 +5,7 @@
 <head>
   <title>{{ request.current_page.get_menu_title|capfirst }}</title>
   {% plugins_media %}
+  {% block head %}{% endblock %}
 </head>
 
 <body>
