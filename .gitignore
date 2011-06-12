@@ -4,4 +4,6 @@ lib/*
 src/*
 include/*
 build/*
-.Python/*
+.Python
+mycms.db
+log
