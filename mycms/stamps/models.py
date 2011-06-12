@@ -4,6 +4,13 @@ from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 from cms.models.fields import PlaceholderField
 
+
+class ItemManager(models.Manager):
+    
+    def all_items(self):
+        return self.objects.all()
+
+
 class Sponsor(models.Model):
     '''
     This is a sponsor. Not much to see. Can be associated with anything.
@@ -17,16 +24,24 @@ class Sponsor(models.Model):
     def __unicode__(self):                    
         return self.name
 
+
+class DesignerManager(models.Manager):
+
+    def list(self):
+        '''Return correctly ordered list of designers'''
+        list = self.filter(is_published=True).filter(in_navigation=True).order_by('normalized_name').order_by('stamp_type')
+        return list
+
 class Designer(models.Model):
     
-    
     display_name = models.CharField( max_length=60, blank=True, help_text='Designer name displayed in menus and elswhere.')
-    normalized_name = models.CharField( max_length=60, help_text='Name for designer URL as well as alphabeticized listing.')
+    normalized_name = models.CharField( max_length=60, help_text='Normalized name for sorting, e.g. Zapf, Hermann.')
     DESIGNER_TYPE = (
             (0, 'Stamps'),
             (1, 'Other'),
             )
     
+    # This should be done with tags
     stamp_type = models.IntegerField( 'Designer Menu Type', choices=DESIGNER_TYPE, default=0, help_text="Determines in which portion of the menu a designer is displayed.")
 
     is_published = models.BooleanField(help_text='Controls whether or not designer in published to site.')
@@ -34,13 +49,16 @@ class Designer(models.Model):
     info = PlaceholderField('designer_info')
 
     sponsor = generic.GenericRelation(Sponsor)
+
+    # Custom Manager
+    cobjects = DesignerManager()
     
     def __unicode__(self):
         return self.display_name
+
     def get_absolute_url(self):
         return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.normalized_name})
-
 
     class Meta:
         ordering = ['normalized_name']
