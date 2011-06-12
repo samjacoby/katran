@@ -1,0 +1,22 @@
+{% block main %}
+<div id="item_list">
+  <ul>
+  {% for d in items.all %}
+    <li>
+      <h3>{{ d.display_name }}</h3>
+    {% for f in d.families.all %}
+      <h4>{{ f.name }}</h2>
+      <ul>
+      {% for s in f.stamps.all %}
+        <li>{{ s.name }}</li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+
