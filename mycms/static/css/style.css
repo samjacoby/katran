@@ -1,0 +1,160 @@
+body {
+  width: 90%;
+  margin: 3em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .8125em;
+  /* 13 */
+  line-height: 1.125em;
+  /* 18 */ }
+
+/*
+ *
+ * Layout Configuration 
+ *
+ */
+.main-content {
+  float: left;
+  max-width: 18em;
+  /* 288px */
+  min-width: 90%; }
+
+/* If something has content on the side, it goes here */
+#content-sidebar {
+  float: left;
+  width: 239px;
+  margin-left: 50px; }
+
+/* These are the master links at the top */
+nav#top-menu ul {
+  float: left; }
+
+nav#top-menu ul li.selected a {
+  color: #870000; }
+nav#top-menu ul li.ancestor a {
+  color: #870000; }
+
+nav#top-menu ul li {
+  display: inline;
+  font-size: 13px; }
+
+nav#sub-menu {
+  float: left;
+  width: 100%; }
+
+/* Main content container */
+#content {
+  float: left; }
+
+/* Images should be on their own line (always) */
+img {
+  display: block; }
+
+/* Specific Entries */
+.entry {
+  width: 385px; }
+
+/* Menus specific to the Stamps Page */
+nav#designer-nav {
+  float: left;
+  padding-right: 45px; }
+
+nav#sponsor-nav {
+  float: left; }
+
+nav#designer-nav .separator {
+  margin-top: 11px; }
+
+/* This displays just below stamps */
+footer {
+  clear: left;
+  float: left;
+  padding-top: 40px; }
+
+#body-footer-nav {
+  clear: left;
+  float: left; }
+
+/* Secondary Navigation Menu Layout */
+nav#sub-menu {
+  padding: 35px 0 35px 0; }
+
+nav#sub-menu ul li {
+  display: inline; }
+
+/* Bottom Menu Layout */
+nav#body-footer-nav ul li {
+  display: inline; }
+
+/*
+ *
+ * Michael's Fancy-Pants URL coloring scheme 
+ *
+ * */
+/* Regular Links */
+a {
+  text-decoration: none; }
+
+a:visited {
+  color: #808385; }
+
+.text a:visited {
+  color: #808385; }
+
+/* Menu links */
+nav a:visited {
+  text-decoration: none;
+  color: black; }
+
+/* Text Links */
+.text a {
+  color: #C06D6D; }
+
+/* Various Stamp Link Contortions */
+nav#sub-menu a.stamp-family-number {
+  color: #C06D6D; }
+
+nav#sub-menu a.stamp-family-number:visited {
+  color: #808385; }
+
+nav#sub-menu a.selected {
+  color: #870000 !important;
+  font-weight: bold; }
+
+nav#body-footer-nav a.stamp-value {
+  color: #C06D6D; }
+
+nav#body-footer-nav a.stamp-value:visited {
+  color: #808385; }
+
+nav#body-footer-nav a.selected {
+  color: #870000 !important;
+  font-weight: bold; }
+
+#header-title {
+  font-weight: bold;
+  color: #323133; }
+
+/* General Character Styles */
+.highlight-color {
+  color: #870000; }
+
+.highlight-bold {
+  font-weight: bold; }
+
+strong {
+  font-weight: bold; }
+
+em {
+  font-style: italic; }
+
+/* General Layout Styles */
+#content p {
+  margin-bottom: 22px; }
+
+table p {
+  margin-top: 11px;
+  margin-bottom: 11px; }
+
+/* No Display */
+.invisible {
+  visibility: hidden; }
