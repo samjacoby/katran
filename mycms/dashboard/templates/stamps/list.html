@@ -16,6 +16,7 @@
                     type: "POST",
                     data: ({ 
                       id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
+                      action: 'family',
                       order: $(ui.item).prevAll().length,
                       csrfmiddlewaretoken: '{{ csrf_token }}'}),
                     success: function(msg) { 
@@ -25,17 +26,17 @@
                   })            
                 }
       });
-    //})(jQuery);
       $("ul.family" ).sortable({
         item: 'li',
         opacity: 0.6,
-        axis: "y",
+        axis: 'y',
         cursor: "move",
         update: function(e, ui) {
                   $.ajax({
                     url: "/dashboard/action/",
                     type: "POST",
                     data: ({ 
+                      action: 'stamp',
                       id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
                       order: $(ui.item).prevAll().length,
                       csrfmiddlewaretoken: '{{ csrf_token }}'}),

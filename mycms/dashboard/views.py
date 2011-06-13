@@ -1,7 +1,7 @@
 # Create your views here.
 import logging
 
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import HttpResponse
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect, get_object_or_404
@@ -32,29 +32,38 @@ def action(request):
         log.error("Did not receive POST with this request; redirect")
         return redirect(reverse('dashboard_index')) 
     
+    action = request.POST['action']
     item_id = request.POST['id']
     order = int(request.POST['order']) + 1 # We use 1-indexing
 
-    stamp = get_object_or_404(models.Stamp, pk=item_id)
-    original_order = stamp.order
+    if action == 'family':
+        model = models.Family
+        obj = get_object_or_404(model, pk=item_id)
+        Query = Q(designer=obj.designer) 
+    elif action == 'stamp':
+        model = models.Stamp
+        obj = get_object_or_404(model, pk=item_id)
+        Query = Q(family=obj.family) 
+    else:
+        log.error("Did not receive appropriate ACTION with this request; redirect")
+        return redirect(reverse('dashboard_index'))
 
-    
+    original_order = obj.order
+
     if order < original_order:
-        middle = models.Stamp.objects.filter(family=stamp.family, order__gte=order, order__lt=original_order)
+        middle = model.objects.filter(Query & Q(order__gte=order, order__lt=original_order))
         if middle is not None:
             middle.update(order=F('order') + 1)
         msg = "Updated ordering"
     elif order > original_order:
-        middle = models.Stamp.objects.filter(family=stamp.family, order__gt=original_order, order__lte=order)
+        middle = model.objects.filter(Query & Q(order__gt=original_order, order__lte=order))
         if middle is not None:
             middle.update(order=F('order') - 1)
         msg = "Updated ordering"
     else:
-        log.info("Order remains unchanged; redirect")
-        msg = "Updated. Order unchanged"
+        log.info("Order remains unchanged")
          
-    stamp.order = order
-    stamp.save()
+    obj.order = order
+    obj.save()
 
     return HttpResponse(msg)
-
