@@ -1,3 +1,4 @@
+/* GLOBAL SETTINGS */
 body {
   max-width: 90%;
   margin: 3em;
@@ -7,11 +8,7 @@ body {
   line-height: 1.125em;
   /* 18 */ }
 
-/*
- *
- * Layout Configuration 
- *
- */
+/* LAYOUT */
 .main-content {
   float: left;
   max-width: 18em;
@@ -33,7 +30,7 @@ nav#top-menu ul li.selected a {
 nav#top-menu ul li.ancestor a {
   color: #870000; }
 
-nav#top-menu ul li {
+nav.menu ul li {
   display: inline;
   font-size: 13px; }
 
@@ -100,10 +97,24 @@ a:visited {
 .text a:visited {
   color: #808385; }
 
-/* Menu links */
-nav a:visited {
+/* MENUS */
+/* Top menus */
+nav#top-menu ul li {
+  padding-left: .6em;
+  padding-right: .6em; }
+nav#top-menu ul li.first {
+  padding-left: 0; }
+  nav#top-menu ul li.first a {
+    font-weight: 600; }
+
+nav#sub-menu ul li.first a {
+  color: #870000; }
+
+nav#top-menu a, nav#sub-menu a {
   text-decoration: none;
   color: black; }
+  nav#top-menu a :visited, nav#sub-menu a :visited {
+    color: inherit; }
 
 /* Text Links */
 .text a {

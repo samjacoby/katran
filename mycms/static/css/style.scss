@@ -1,3 +1,7 @@
+/* GLOBAL SETTINGS */
+
+$highlight-color: #870000;
+
 body {
   max-width: 90%;
   margin: 3em;
@@ -6,17 +10,12 @@ body {
   line-height: 1.125em; /* 18 */
 }
 
-/*
- *
- * Layout Configuration 
- *
- */
+/* LAYOUT */
 
 .main-content {
   float: left;
   max-width: 18em; /* 288px */
   min-width: 90%;
-  
 }
 
 /* If something has content on the side, it goes here */
@@ -35,17 +34,18 @@ nav#top-menu ul {
 
 nav#top-menu ul {
   li.selected a {
-    color: #870000;
+    color: $highlight-color;
   }
   li.ancestor a {
-    color: #870000;
+    color: $highlight-color;
   }
 }
 
-nav#top-menu ul li {
+nav.menu ul li {
   display: inline;
   font-size: 13px;
 }
+
 nav#sub-menu {
   float: left;
   width: 100%;
@@ -130,10 +130,33 @@ a:visited {
   color: #808385;
 }
 
-/* Menu links */
-nav a:visited {
+/* MENUS */
+
+/* Top menus */
+nav#top-menu {
+  ul li {
+    padding-left: .6em;
+    padding-right: .6em;
+  }
+  
+  ul li.first { 
+    padding-left: 0;
+    a { font-weight: 600; }
+  }
+}
+
+nav#sub-menu {
+  ul li.first a {
+    color: $highlight-color;
+  }
+}
+
+nav#top-menu a, nav#sub-menu a {
   text-decoration: none;
   color: black;
+  :visited {
+    color: inherit;
+  }
 }
 
 /* Text Links */
@@ -151,7 +174,7 @@ nav#sub-menu a.stamp-family-number:visited {
 }
 
 nav#sub-menu a.selected {
-  color: #870000 !important;
+  color: $highlight-color !important;
   font-weight: bold
 }
 
@@ -164,7 +187,7 @@ nav#body-footer-nav a.stamp-value:visited {
 }
 
 nav#body-footer-nav a.selected {
-  color: #870000 !important;
+  color: $highlight-color !important;
   font-weight: bold
 }
 
@@ -175,7 +198,7 @@ nav#body-footer-nav a.selected {
 
 /* General Character Styles */
 .highlight-color {
-  color: #870000;
+  color: $highlight-color;
 }
 
 .highlight-bold {
@@ -191,6 +214,7 @@ em {
 }
 
 /* General Layout Styles */
+
 #content p {
   margin-bottom:22px;
 }
