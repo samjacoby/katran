@@ -102,6 +102,8 @@ CMS_TEMPLATES = (
     ('header_footer_base.html', 'Header Footer Template'),
     ('entries/index.html', 'Base Entries Template'),
     ('detail.html', 'Base Book Template'),
+    ('pages/links.html', 'Link Page Template'),
+
 )
 
 CMS_MENU_TITLE_OVERWRITE = True

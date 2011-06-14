@@ -68,9 +68,9 @@ class Entry( models.Model ):
 
     def get_absolute_url(self):
         if self.entry_type == 0:
-            root = 'typography'
+            return reverse('entries.views.typography_detail' , kwargs = { 'order': self.order })
         elif self.entry_type == 1:
-            root = 'books'
+            return reverse('entries.views.book_detail' , kwargs = { 'order': self.order })
         elif self.entry_type == 2:
             root = 'news'
         

@@ -9,17 +9,17 @@ body {
   /* 18 */ }
 
 /* LAYOUT */
-.main-content {
+.all-content {
   float: left;
-  max-width: 18em;
-  /* 288px */
   min-width: 90%; }
 
-/* If something has content on the side, it goes here */
-#content-sidebar {
+.main-content {
+  float: left; }
+
+.side-content {
   float: left;
-  width: 239px;
-  margin-left: 50px; }
+  padding-left: 2em;
+  width: 15em; }
 
 /* These are the master links at the top */
 nav#top-menu ul {
@@ -34,7 +34,7 @@ nav.menu ul li {
   display: inline;
   font-size: 13px; }
 
-nav#sub-menu {
+nav.sub-menu {
   float: left;
   width: 100%; }
 
@@ -72,7 +72,7 @@ footer {
   float: left; }
 
 /* Secondary Navigation Menu Layout */
-nav#sub-menu {
+nav.sub-menu {
   padding: 35px 0 35px 0; }
 
 nav#sub-menu ul li {

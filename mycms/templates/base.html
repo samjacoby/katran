@@ -1,29 +1,40 @@
 {% load cms_tags %}
 {% load cache menu_tags %}
 {% load extra_tags %}
+{% load placeholder_tags %}
 <!doctype html>
-<head>
-  <title>{{ request.current_page.get_menu_title|capfirst }}</title>
-  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css"/>
-  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css"/>
-  {% plugins_media %}
-  {% block head %}{% endblock %}
-</head>
+  <head>
+    <title>{{ request.current_page.get_menu_title|capfirst }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css"/>
+    {% plugins_media %}
+    {% block head %}{% endblock %}
+  </head>
 
-<body>
+  <body>
     <nav class='menu' id='top-menu'>
-    <ul>
-    {% show_menu 0 0 0 1 %}
-    {% prev_next_links %}
-    </ul>
+      <ul>
+      {% show_menu 0 0 0 1 %}
+      {% prev_next_links %}
+      </ul>
     </nav>
     {% block sub-menu %}{% endblock %}
     {% show_placeholder "master-header" "header_footer" %}
-    <div class="main-content">
-      {% block main %}{% endblock %}
+    <div class="all-content">
+      <div class="main-content">
+        {% with "384" as width %}
+          {% placeholder "content-a" %}
+          {% block main %}{% endblock %}
+          {% placeholder "content-b" %}
+        {% endwith %}
+      </div>
+      {% block side-content %}{% endblock %}
     </div>
-    <nav class='menu' id='foot-menu'>
-    </nav>                            
     {% show_placeholder "master-footer" "header_footer"  %}
-</body>
+    <nav class='menu sub-menu'>
+      <ul>
+      {% prev_next_links_internal %}
+      </ul>
+    </nav>
+  </body>
 </html>             
