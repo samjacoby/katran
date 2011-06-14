@@ -81,7 +81,8 @@ register.tag( PrevNextFamily )
 
 class PrevNextStamp( InclusionTag ):
     name = 'stamp_links'
-    template = 'menu/prev_next_links.html'
+    #template = 'menu/prev_next_links.html'
+    template = 'menu/stamp_next.html'
 
     options = Options(
         Argument('namespace', default=None, required=False),
@@ -197,10 +198,8 @@ class StampValues( InclusionTag ):
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'family':
                 break
-
         try:
             context = { 'children': node.children }
-
         except:
             context = { 'template': template}
             

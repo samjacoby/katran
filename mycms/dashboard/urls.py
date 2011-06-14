@@ -6,4 +6,3 @@ urlpatterns = patterns('dashboard.views',
     url(r'^$', 'index', name="dashboard_index"),
     url(r'^action/$', 'action')
 )
-
