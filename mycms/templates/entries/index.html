@@ -1,16 +1,16 @@
 {% extends 'entries/base.html' %}
 {% load cms_tags %}
-{% load cache menu_tags %}
 {% load extra_tags %}
 {% load placeholder_tags %}
 
 {% block side-content %}
 <div class="side-content">
   {% placeholder "sidebar" %}
-</div>
+</div><! -- /end .side-content -->
 {% endblock %}
 
 {% block main %}
+<div class="column-content">
   {% for e in list %}
   <div class="entry">
       {% with "384" as width %}
@@ -19,4 +19,5 @@
       <p><strong>{{ e.title }}.</strong> {{ e.subtitle }}</p>
   </div>
   {% endfor %}
+</div>
 {% endblock %}

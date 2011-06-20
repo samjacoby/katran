@@ -98,23 +98,31 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 CMS_TEMPLATES = (
-    ('standard_root.html', 'Base Root Template'),
-    ('header_footer_base.html', 'Header Footer Template'),
-    ('entries/index.html', 'Base Entries Template'),
-    ('detail.html', 'Base Book Template'),
-    ('pages/links.html', 'Link Page Template'),
+    ('index.html', 'Base Index Template'),
+#    ('entries/index.html', 'Entries Index Template'),
+#    ('entries/book_detail.html', 'Book Detail Template'),
+#    ('entries/typography_detail.html', 'Typography Detail Template'),
 
 )
 
 CMS_MENU_TITLE_OVERWRITE = True
+
 CMS_PLACEHOLDER_CONF = {
         'list_display_content': {
             'plugins': ('TextPlugin', 'PicturePlugin'),
             'name': gettext('Index Display Entry')
             },
-        'detail_content': {
+        'main_content': {
             'plugins': ('TextPlugin', 'PicturePlugin'),
             'name': gettext('Main Entry Content')
+            },
+        'sidebar_content': {
+            'plugins': ('TextPlugin', 'PicturePlugin'),
+            'name': gettext('Sidebar Content')
+            },
+        'secondary_content': {
+            'plugins': ('TextPlugin', 'PicturePlugin'),
+            'name': gettext('Secondary Entry Content')
             },
         }
 

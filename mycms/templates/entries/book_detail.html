@@ -3,6 +3,7 @@
 {% load placeholder_tags %}
 
 {% block main %}
+{% comment %}
 <div class="detail-content">         
     {% with "384" as width %}
     {% render_placeholder e.content width %}
@@ -11,4 +12,5 @@
 <div class="sidebar-content">
     {% render_placeholder e.sidebar %}
 </div>
+{% endcomment %}
 {% endblock %}

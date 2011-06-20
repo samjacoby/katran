@@ -1,27 +1,43 @@
 /* GLOBAL SETTINGS */
 body {
-  max-width: 90%;
+  font: normal 100% Arial, Hevetica, sans-serif; }
+
+#page {
+  width: 90%;
   margin: 3em;
-  font-family: Arial, Helvetica, sans-serif;
+  float: left;
   font-size: .8125em;
-  /* 13 */
+  /* 13/16 */
   line-height: 1.125em;
-  /* 18 */ }
+  /* 18/16 */ }
 
 /* LAYOUT */
 .all-content {
-  float: left;
-  min-width: 90%; }
+  width: 100%;
+  float: left; }
 
 .main-content {
   float: left; }
 
+.column-content {
+  float: left; }
+
 .side-content {
   float: left;
-  padding-left: 2em;
-  width: 15em; }
+  width: 20%;
+  padding-left: 2em; }
+  .side-content p {
+    font-size: 0.846153846em;
+    /* 11/13px */
+    line-height: 1.38461538;
+    /* 18/13px */ }
 
-/* These are the master links at the top */
+/* MENUS */
+nav.menu {
+  clear: both;
+  float: left;
+  padding: 1em 0 1em 0; }
+
 nav#top-menu ul {
   float: left; }
 
@@ -42,13 +58,39 @@ nav.sub-menu {
 #content {
   float: left; }
 
-/* Images should be on their own line (always) */
 img {
   max-width: 100%; }
 
-/* Specific Entries */
+/* ENTRIES INDEX: Book & Typography */
 .entry {
-  width: 385px; }
+  padding: 1em 0 1em 0;
+  margin: 0 0 .5em 0; }
+  .entry p {
+    font-size: 0.846153846em;
+    /* 11/13px */
+    margin: 1em 0 1em 0; }
+
+/* TYPOGRAPHY */
+#main-content {
+  float: left; }
+
+#secondary-content {
+  float: left; }
+
+/* DASHBOARD */
+#dashboard .designer {
+  margin: 1em; }
+  #dashboard .designer h3 {
+    font-weight: 700;
+    font-size: 1.5em;
+    /* 24/16 */
+    display: inline; }
+  #dashboard .designer h4 {
+    font-weight: 700;
+    font-size: 1.1em;
+    display: inline; }
+  #dashboard .designer .family {
+    padding: 1em; }
 
 /* Menus specific to the Stamps Page */
 nav#designer-nav {
@@ -72,10 +114,7 @@ footer {
   float: left; }
 
 /* Secondary Navigation Menu Layout */
-nav.sub-menu {
-  padding: 35px 0 35px 0; }
-
-nav#sub-menu ul li {
+nav.sub-menu ul li {
   display: inline; }
 
 /* Bottom Menu Layout */
@@ -102,6 +141,11 @@ a:visited {
 nav#top-menu ul li {
   padding-left: .6em;
   padding-right: .6em; }
+  nav#top-menu ul li.prev {
+    padding-right: 0; }
+  nav#top-menu ul li.next {
+    padding-left: 0;
+    padding-right: 0; }
 nav#top-menu ul li.first {
   padding-left: 0; }
   nav#top-menu ul li.first a {

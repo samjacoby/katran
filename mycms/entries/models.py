@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from django.core.urlresolvers import reverse
 from cms.models.fields import PlaceholderField
@@ -35,7 +34,8 @@ class Entry( models.Model ):
     entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
 
     cover = PlaceholderField('list_display_content', related_name='list_display' )
-    content = PlaceholderField('detail_content', related_name='detail')
+    content = PlaceholderField('main_content', related_name='main_content')
+    secondary_content = PlaceholderField('secondary_content', related_name='secondary_content')
     sidebar = PlaceholderField('sidebar_content', related_name='sidebar')
 
     order = models.PositiveIntegerField( 'Order',  default=1 )
@@ -112,7 +112,7 @@ class Book ( Entry ):
         proxy = True
 
 class Typography ( Entry ):
-    
+
     def get_absolute_url(self):
         return reverse('entries.views.typography_detail'
                 , kwargs = { 'order': self.order }

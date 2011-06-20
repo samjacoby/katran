@@ -8,14 +8,8 @@ def fetch_object( entry_type, order ):
 
 def book_detail( request, entry_type, order ):
     e = fetch_object( entry_type, order)
-    
-    return render_to_response('entries/detail.html', {
-        'e': e, }
-        , context_instance=RequestContext(request))
+    return render_to_response('entries/book_detail.html', {'e': e, }, context_instance=RequestContext(request))
 
 def typography_detail(request, entry_type, order ):
     e = fetch_object( entry_type, order)
-    
-    return render_to_response('entries/detail.html', {
-        'e': e, }
-        , context_instance=RequestContext(request))
+    return render_to_response('entries/typography_detail.html', {'e': e, }, context_instance=RequestContext(request))

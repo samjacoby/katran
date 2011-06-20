@@ -3,32 +3,49 @@
 $highlight-color: #870000;
 
 body {
-  max-width: 90%;
+  font: normal 100% Arial, Hevetica, sans-serif;
+}
+
+#page {
+  width: 90%;
   margin: 3em;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .8125em; /* 13 */
-  line-height: 1.125em; /* 18 */
+  float: left;
+  font-size: .8125em; /* 13/16 */
+  line-height: 1.125em; /* 18/16 */
 }
 
 /* LAYOUT */
 
 .all-content {
+  width: 100%;
   float: left;
-  min-width: 90%;
 }
 
 .main-content {
   float: left;
-//  max-width: 18em; /* 288px */
+}
+
+.column-content {
+  float: left;
 }
 
 .side-content {
   float: left;
+  width: 20%;
   padding-left: 2em;
-  width: 15em;
+  p {
+    font-size: 0.846153846em; /* 11/13px */
+    line-height: 1.38461538; /* 18/13px */
+  }
 }
 
-/* These are the master links at the top */
+/* MENUS */
+
+nav.menu {
+  clear: both;
+  float: left;
+  padding: 1em 0 1em 0;
+}
 
 nav#top-menu ul {
   float: left;
@@ -59,14 +76,47 @@ nav.sub-menu {
   float: left;
 }
 
-/* Images should be on their own line (always) */
 img {
   max-width: 100%;
 }
 
-/* Specific Entries */
+/* ENTRIES INDEX: Book & Typography */
 .entry {
-  width: 385px;
+  padding: 1em 0 1em 0;
+  margin: 0 0 .5em 0;
+  p {
+    font-size: 0.846153846em; /* 11/13px */
+    margin: 1em 0 1em 0;
+  }
+}
+
+/* TYPOGRAPHY */
+#main-content {
+  float: left;
+}
+
+#secondary-content {
+  float: left;
+}
+/* DASHBOARD */
+#dashboard {
+  .designer {
+    margin: 1em;
+    h3 {
+      font-weight: 700;
+      font-size: 1.5em; /* 24/16 */
+      display: inline;
+    }
+    h4 {
+      font-weight: 700;
+      font-size: 1.1em;
+      display: inline;
+   }
+  .family {
+    padding: 1em;
+  }
+
+  } 
 }
 
 /* Menus specific to the Stamps Page */
@@ -100,10 +150,10 @@ footer {
 /* Secondary Navigation Menu Layout */
 
 nav.sub-menu {
-  padding: 35px 0 35px 0;
+//  padding: 35px 0 35px 0;
 }
 
-nav#sub-menu ul li {
+nav.sub-menu ul li {
   display: inline;
 }
 
@@ -139,6 +189,13 @@ nav#top-menu {
   ul li {
     padding-left: .6em;
     padding-right: .6em;
+    &.prev {
+      padding-right: 0;
+    }
+    &.next {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   
   ul li.first { 
@@ -230,3 +287,4 @@ table p {
 .invisible {
   visibility: hidden;
 }
+

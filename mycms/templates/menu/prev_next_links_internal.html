@@ -1,3 +1,2 @@
-{{ index }} level: {{ level }}
 {% if sub_prev %}<li class="prev"><a href="{% firstof sub_prev.get_absolute_url prev.get_absolute_url %}">&laquo;</a></li>{% endif %}
 {% if sub_next %}<li class="next"><a href="{% firstof sub_next.get_absolute_url next.get_absolute_url %}">&raquo;</a></li>{% endif %}

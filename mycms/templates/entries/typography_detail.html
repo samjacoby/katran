@@ -1,14 +1,29 @@
 {% extends 'entries/base.html' %}
 {% load extra_tags %}
 {% load placeholder_tags %}
+{% load cms_tags %}
 
 {% block main %}
-<div class="detail-content">         
+<div id="main-content">         
+
     {% with "384" as width %}
-    {% render_placeholder e.content width %}
+      {% render_placeholder e.content width %}
     {% endwith %}
 </div>
-<div class="sidebar-content">
+
+<nav class='menu sub-menu'>
+  <ul>
+  {% prev_next_links_internal %}
+  </ul>
+</nav>
+<div id="secondary-content">
+    {% render_placeholder e.secondary_content %}
+</div>
+
+{% endblock %}
+
+{% block side-content %}
+<div class="side-content">
     {% render_placeholder e.sidebar %}
 </div>
 {% endblock %}

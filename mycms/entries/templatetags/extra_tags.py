@@ -19,49 +19,52 @@ class PrevNext( InclusionTag ):
     )
 
     def get_context(self, context, template, from_level, to_level,  root_id, namespace ):
-        try:
-            request = context['request']
-        except KeyError:
-            return { 'template': 'menu/empty.html' }
-        
-        nodes = menu_pool.get_nodes( request, namespace, root_id )
-        current_index = None
-        
-        root_nodes = []
-        for node in nodes:
-            if node.level == 0:
-                root_nodes.append(node)
-        for node in root_nodes:
-            assert node.level == 0 # There should be only root level nodes
-            if node.selected or node.ancestor: 
-                current_index = root_nodes.index(node)
-                assert current_index != None
-                break
-
-        # This is done after selection, as the selected node can be invisible
-        for n in root_nodes:
-            # Cut out any invisible nodes (this could have weird behavior)
-            if not n.visible:
-                root_nodes.remove(n)
-        
-        try: # Next Link
-            next_link = root_nodes[current_index + 1]
-        except IndexError:
-            next_link = None
-        try: # Previous Link
-            prev_link = root_nodes[current_index - 1]
-            if current_index == 0:
-                raise IndexError
-        except IndexError:
-            prev_link = None
-
-        try:
-            context = {'next': next_link, 'prev': prev_link}
-
-        except:
-            context = { 'template': template}
+        try: 
+            try:
+                request = context['request']
+            except KeyError:
+                return { 'template': 'menu/empty.html' }
             
-        return context
+            nodes = menu_pool.get_nodes( request, namespace, root_id )
+            current_index = None
+            
+            root_nodes = []
+            for node in nodes:
+                if node.level == 0:
+                    root_nodes.append(node)
+            for node in root_nodes:
+                assert node.level == 0 # There should be only root level nodes
+                if node.selected or node.ancestor: 
+                    current_index = root_nodes.index(node)
+                    assert current_index != None
+                    break
+
+            # This is done after selection, as the selected node can be invisible
+            for n in root_nodes:
+                # Cut out any invisible nodes (this could have weird behavior)
+                if not n.visible:
+                    root_nodes.remove(n)
+            
+            try: # Next Link
+                next_link = root_nodes[current_index + 1]
+            except IndexError:
+                next_link = None
+            try: # Previous Link
+                prev_link = root_nodes[current_index - 1]
+                if current_index == 0:
+                    raise IndexError
+            except IndexError:
+                prev_link = None
+
+            try:
+                context = {'next': next_link, 'prev': prev_link}
+
+            except:
+                context = { 'template': template}
+                
+            return context
+        except Exception, e:
+            pass
 register.tag( PrevNext )
 
 def get_next_sibling(node, nodes):
@@ -81,7 +84,7 @@ def get_next_sibling(node, nodes):
                 return next 
         
         return None
-    except IndexError:
+    except IndexError, AttributeError:
         return None
 
 def get_prev_sibling(node, nodes):
@@ -184,7 +187,7 @@ class PrevNextInternal( InclusionTag ):
                 next_link = get_next_sibling(node, nodes)
                 if not next_link and node.parent:
                     next_link = get_next_parent(node, nodes)
-            except IndexError:
+            except:
                 next_link = None
             try: # Prev Link                                    
                 prev_link = get_prev_sibling(node, nodes) 

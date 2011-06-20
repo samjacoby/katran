@@ -12,29 +12,34 @@
   </head>
 
   <body>
-    <nav class='menu' id='top-menu'>
-      <ul>
-      {% show_menu 0 0 0 1 %}
-      {% prev_next_links %}
-      </ul>
-    </nav>
-    {% block sub-menu %}{% endblock %}
-    {% show_placeholder "master-header" "header_footer" %}
-    <div class="all-content">
-      <div class="main-content">
-        {% with "384" as width %}
-          {% placeholder "content-a" %}
-          {% block main %}{% endblock %}
-          {% placeholder "content-b" %}
-        {% endwith %}
-      </div>
-      {% block side-content %}{% endblock %}
+    <div id="page">
+      <!-- Top-level Navigation Menu --> 
+      <nav class='menu' id='top-menu'>
+        <ul>
+        {% show_menu 0 0 0 1 %}
+        {% prev_next_links %}
+        </ul>
+      </nav>
+      <!-- Second-level Navigation Menu --> 
+      {% block sub-menu %}{% endblock %}
+
+      <div class="all-content">
+
+        <div class="main-content">
+
+            {% block main %}{% endblock %}
+
+        </div><!-- /end .main-content -->
+
+        <!-- Sidebar Content -->
+        {% block side-content %}{% endblock %}
+
+      </div><!-- /end .all-content --> 
+      <nav class='menu sub-menu'>
+        <ul>
+        {% prev_next_links_internal %}
+        </ul>
+      </nav>
     </div>
-    {% show_placeholder "master-footer" "header_footer"  %}
-    <nav class='menu sub-menu'>
-      <ul>
-      {% prev_next_links_internal %}
-      </ul>
-    </nav>
   </body>
 </html>             
