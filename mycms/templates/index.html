@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load extra_tags %}    
+{% load cms_tags %}
+{% block sub-menu %}
+<nav class='menu' id='sub-menu'>
+  <ul>
+  <li id="page-title" >{{ request.current_page.get_title }}</li> {% prev_next_links_internal %}
+  </ul>
+</nav>
+{% endblock %}
+
+{% block main %}
+  {% with "384" as width %}
+    {% placeholder "main-content" %}
+  {% endwith %}
+{% endblock %}
