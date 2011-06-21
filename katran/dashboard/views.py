@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-from mycms.stamps import models
+from stamps import models
 
 log = logging.getLogger(__name__)
 
