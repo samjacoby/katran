@@ -88,7 +88,7 @@ class Stamp(models.Model):
     family = models.ForeignKey(Family, related_name='stamps')
     is_published = models.BooleanField(help_text='Controls whether or not stamp is published to site.')
     in_navigation = models.BooleanField(help_text='Whether or not stamp appears in menus.')
-    url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible <em>only</em> through this url. In this case, order will be ignored. The url cannot be a number but can be nested.")
+    url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible through this url.")
     name = models.CharField(max_length=100, blank=True, help_text="If entered, will override stamp family name.")
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
@@ -103,6 +103,13 @@ class Stamp(models.Model):
     sponsor = generic.GenericRelation(Sponsor)
 
     def get_absolute_url(self):
+        if self.url_override:
+            return reverse('stamp-detail-url',
+                kwargs = {'designer': self.family.designer.normalized_name, 
+                          'family': self.family.order,
+                          'stamp': self.order, 
+                          'url_override':self.url_override})
+            
         return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.family.designer.normalized_name, 
                                   'family': self.family.order,
