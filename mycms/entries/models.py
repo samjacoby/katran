@@ -3,21 +3,21 @@ from django.core.urlresolvers import reverse
 from cms.models.fields import PlaceholderField
 
 
-class EntryManager( models.Manager ):
+class EntryManager(models.Manager):
 
     def get_all_of_type(self, entry_type):
         return self.filter( entry_type=entry_type )
 
     def get_all_typography(self):
-        return self.filter( entry_type=0 )
+        return self.filter(entry_type=0)
 
     def get_all_books(self):
-        return self.filter( entry_type=1 )
+        return self.filter(entry_type=1)
 
     def get_all_news(self):
-        return self.filter( entry_type=2 )
+        return self.filter(entry_type=2)
 
-class Entry( models.Model ):
+class Entry(models.Model):
 
     objects = models.Manager()
     manager = EntryManager()
@@ -25,16 +25,16 @@ class Entry( models.Model ):
     title = models.CharField( max_length=100 , blank=True )
     subtitle = models.CharField( max_length=100, blank=True ) 
 
-    ENTRY_TYPE = (
-            (0, 'Typography'),
-            (1, 'Book'),
-            (2, 'News'),
+    ENTRY_TYPE =(
+           (0, 'Typography'),
+           (1, 'Book'),
+           (2, 'News'),
             )
 
     entry_type = models.IntegerField( 'Entry Type', choices=ENTRY_TYPE, default=1 )
 
     cover = PlaceholderField('list_display_content', related_name='list_display' )
-    content = PlaceholderField('main_content', related_name='main_content')
+    content = PlaceholderField('main_content')
     secondary_content = PlaceholderField('secondary_content', related_name='secondary_content')
     sidebar = PlaceholderField('sidebar_content', related_name='sidebar')
 
@@ -100,7 +100,7 @@ class Entry( models.Model ):
         verbose_name_plural = 'Entries'
 
 
-class Book ( Entry ):
+class Book(Entry):
     
     def get_absolute_url(self):
         return reverse('entries.views.book_detail'
@@ -111,7 +111,7 @@ class Book ( Entry ):
         verbose_name_plural = 'Books'
         proxy = True
 
-class Typography ( Entry ):
+class Typography(Entry):
 
     def get_absolute_url(self):
         return reverse('entries.views.typography_detail'
@@ -123,7 +123,7 @@ class Typography ( Entry ):
         proxy = True
 
 
-class News ( Entry ):
+class News(Entry):
     
     class Meta:
         verbose_name_plural = 'News'
