@@ -99,10 +99,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 CMS_TEMPLATES = (
     ('index.html', 'Base Index Template'),
-#    ('entries/index.html', 'Entries Index Template'),
-#    ('entries/book_detail.html', 'Book Detail Template'),
-#    ('entries/typography_detail.html', 'Typography Detail Template'),
-
 )
 
 CMS_MENU_TITLE_OVERWRITE = True

@@ -4,10 +4,10 @@
 {% ifequal placeholder 'list_display_content' %}
 <a href="{{ e.get_absolute_url }}">
 {% endifequal %}
-{% thumbnail picture.image width as im %}
+{% thumbnail picture.image "384" as im %}
   <img src="{{ im.url }}" {% if picture.alt %}alt="{{ picture.alt }}" {% endif %}/>
-  {% endthumbnail %}
-  {% ifequal placeholder 'list_display_content' %}
+{% endthumbnail %}
+{% ifequal placeholder 'list_display_content' %}
 </a>
 {% endifequal %}
 {% if picture.url %}</a>{% endif %}

@@ -1,11 +1,10 @@
 {% extends 'entries/base.html' %}
+{% load cms_tags %}
 {% load extra_tags %}
 {% load placeholder_tags %}
-{% load cms_tags %}
 
 {% block main %}
 <div id="main-content">         
-
     {% with "384" as width %}
       {% render_placeholder e.content width %}
     {% endwith %}
@@ -17,13 +16,17 @@
   </ul>
 </nav>
 <div id="secondary-content">
+  {% with "384" as width %}
     {% render_placeholder e.secondary_content %}
+  {% endwith %}
 </div>
 
 {% endblock %}
 
 {% block side-content %}
 <div class="side-content">
+  {% with "384" as width %}
     {% render_placeholder e.sidebar %}
+  {% endwith %}
 </div>
 {% endblock %}

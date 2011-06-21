@@ -58,7 +58,7 @@ class Designer(models.Model):
         return self.display_name
 
     def get_absolute_url(self):
-        return reverse('stamps.views.detail', 
+        return reverse('designer', 
                         kwargs = {'designer': self.normalized_name})
 
     class Meta:

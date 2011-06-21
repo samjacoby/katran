@@ -59,11 +59,12 @@ nav.sub-menu {
   float: left; }
 
 img {
-  max-width: 100%; }
+  max-width: 100%;
+  display: block; }
 
 /* ENTRIES INDEX: Book & Typography */
 .entry {
-  padding: 1em 0 1em 0;
+  padding: 0 0 1em 0;
   margin: 0 0 .5em 0; }
   .entry p {
     font-size: 0.846153846em;
