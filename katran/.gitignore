@@ -1,2 +1,4 @@
 media/images/
+static/cache
 mycms.db
+static/cms_*
