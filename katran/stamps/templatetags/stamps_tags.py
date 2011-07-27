@@ -139,7 +139,6 @@ class ShowAttrMenu( InclusionTag ):
 
         try:
             context = { 'children': nodes }
-
         except:
             context = { 'template': template}
             
@@ -147,6 +146,7 @@ class ShowAttrMenu( InclusionTag ):
 register.tag( ShowAttrMenu )
 
 class StampFamilies( InclusionTag ):
+    '''Generate a list of links to stamp families'''
     name = 'stamp_families'
     template = 'menu/stamp_links.html'
 
@@ -178,6 +178,7 @@ class StampFamilies( InclusionTag ):
 register.tag( StampFamilies )
 
 class StampValues( InclusionTag ):
+    '''Generate a linked list of stamp values'''
     name = 'stamp_values'
     template = 'menu/stamp_links.html'
 
@@ -198,6 +199,8 @@ class StampValues( InclusionTag ):
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'family':
                 break
+        for c in node.children:
+            print dir(c)
         try:
             context = { 'children': node.children }
         except:

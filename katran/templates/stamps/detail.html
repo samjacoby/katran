@@ -23,7 +23,10 @@
     {% render_placeholder stamp.content width %}
     {% endwith %}
 </div>
-values
+<ul>
+<li>{% firstof stamp.name stamp.family.name %}</li>
+<li>{% firstof stamp.country stamp.family.country %}</li>
+<li>{% firstof stamp.year stamp.family.year %}</li>
 <ul>
 {% stamp_values %}
 </ul>

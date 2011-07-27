@@ -35,7 +35,7 @@ class DesignerManager(models.Manager):
 class Designer(models.Model):
     
     display_name = models.CharField( max_length=60, blank=True, help_text='Designer name displayed in menus and elswhere.')
-    normalized_name = models.CharField( max_length=60, help_text='Normalized name for sorting, e.g. Zapf, Hermann.')
+    normalized_name = models.CharField( max_length=60, help_text='Normalized name for URL, e.g. Hermann Zapf becomes zapf.')
     DESIGNER_TYPE = (
             (0, 'Stamps'),
             (1, 'Other'),
@@ -75,7 +75,7 @@ class Family(models.Model):
     sponsor = generic.GenericRelation(Sponsor)
     
     def __unicode__( self ):
-        return self.name
+        return "%s - %s" % (self.designer.display_name, self.name)
     def get_absolute_url(self):
         return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.designer.normalized_name, 
@@ -92,7 +92,7 @@ class Stamp(models.Model):
     name = models.CharField(max_length=100, blank=True, help_text="If entered, will override stamp family name.")
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
-    value = models.CharField(max_length=30, blank=True)
+    value = models.CharField(max_length=50, blank=True)
     #picture = PlaceholderField('Stamp Image', related_name='stamp_picture', help_text="This container holds the stamp picture (and anything else in the same place)")
     picture = models.ImageField(upload_to='stamps', blank=True, null=True)
     info = PlaceholderField('Stamp Info', related_name='stamp_info', help_text="Anything that should display immediately below the values of the stamps should go here.")
