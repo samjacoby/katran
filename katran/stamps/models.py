@@ -63,7 +63,7 @@ class Designer(KModel):
     cobjects = DesignerManager()
     
     def __unicode__(self):
-        return self.display_name
+        return self.name
 
     def get_absolute_url(self):
         return reverse('designer', 
@@ -81,7 +81,7 @@ class Family(KModel):
     sponsor = generic.GenericRelation(Sponsor)
     
     def __unicode__( self ):
-        return "%s - %s" % (self.designer.display_name, self.name)
+        return "%s - %s" % (self.designer.name, self.name)
 
     def get_absolute_url(self):
         return reverse('stamps.views.detail', 
