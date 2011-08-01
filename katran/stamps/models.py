@@ -68,6 +68,7 @@ class Family(models.Model):
     designer  = models.ForeignKey(Designer, related_name='families')
     is_published = models.BooleanField(help_text='Controls whether or not family is published to site.')
     in_navigation = models.BooleanField(help_text='Whether or not family appears in menus.')
+
     name = models.CharField(max_length=100, help_text="Cannot be blank, but can be overriden by stamp name.")
     country = models.CharField(max_length=60, blank=True, help_text="If left blank, stamp's country will be used.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="If left blank, stamp's year will be used.")
@@ -82,21 +83,24 @@ class Family(models.Model):
                                   'family': self.order})
     class Meta:
         ordering = ['order']
+        unique_together = ('designer', 'order')
         verbose_name_plural = 'Families'
 
 class Stamp(models.Model):
     family = models.ForeignKey(Family, related_name='stamps')
     is_published = models.BooleanField(help_text='Controls whether or not stamp is published to site.')
     in_navigation = models.BooleanField(help_text='Whether or not stamp appears in menus.')
+
     url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible through this url.")
+
     name = models.CharField(max_length=100, blank=True, help_text="If entered, will override stamp family name.")
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
     value = models.CharField(max_length=50, blank=True)
-    #picture = PlaceholderField('Stamp Image', related_name='stamp_picture', help_text="This container holds the stamp picture (and anything else in the same place)")
     picture = models.ImageField(upload_to='stamps', blank=True, null=True)
     info = PlaceholderField('Stamp Info', related_name='stamp_info', help_text="Anything that should display immediately below the values of the stamps should go here.")
     footer = PlaceholderField('Stamp Footer', related_name='stamp_footer')
+
     # Order with which stamp appears in family
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
     
@@ -116,3 +120,4 @@ class Stamp(models.Model):
                                   'stamp': self.order })
     class Meta:
         ordering = ['order'] 
+        unique_together = ('family', 'order')
