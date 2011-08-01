@@ -26,13 +26,14 @@ class Sponsor(models.Model):
 
 
 class DesignerManager(models.Manager):
-def list(self): '''Return correctly ordered list of designers'''
+
+    def list(self): 
         list = self.filter(is_published=True).filter(in_navigation=True).order_by('normalized_name').order_by('stamp_type')
         return list
 
 class KModel(models.Model):
 
-    is_published = models.BooleanField(default=True help_text='Published to live site?')
+    is_published = models.BooleanField(default=True, help_text='Published to live site?')
     in_navigation = models.BooleanField(default=True, help_text='Accessible through link in menu?')
 
     name = models.CharField(max_length=100, help_text='Displayed through-out the site')
