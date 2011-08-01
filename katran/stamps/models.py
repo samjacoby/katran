@@ -26,15 +26,24 @@ class Sponsor(models.Model):
 
 
 class DesignerManager(models.Manager):
-
-    def list(self):
-        '''Return correctly ordered list of designers'''
+def list(self): '''Return correctly ordered list of designers'''
         list = self.filter(is_published=True).filter(in_navigation=True).order_by('normalized_name').order_by('stamp_type')
         return list
 
-class Designer(models.Model):
+class KModel(models.Model):
+
+    is_published = models.BooleanField(default=True help_text='Published to live site?')
+    in_navigation = models.BooleanField(default=True, help_text='Accessible through link in menu?')
+
+    name = models.CharField(max_length=100, help_text='Displayed through-out the site')
+
+    class Meta:
+        abstract = True
+
     
-    display_name = models.CharField( max_length=60, blank=True, help_text='Designer name displayed in menus and elswhere.')
+
+class Designer(KModel):
+    
     normalized_name = models.CharField( max_length=60, help_text='Normalized name for URL, e.g. Hermann Zapf becomes zapf.')
     DESIGNER_TYPE = (
             (0, 'Stamps'),
@@ -44,8 +53,6 @@ class Designer(models.Model):
     # This should be done with tags
     stamp_type = models.IntegerField( 'Designer Menu Type', choices=DESIGNER_TYPE, default=0, help_text="Determines in which portion of the menu a designer is displayed.")
 
-    is_published = models.BooleanField(help_text='Controls whether or not designer in published to site.')
-    in_navigation = models.BooleanField(help_text='Whether or not designer appears in menus.')
     info = PlaceholderField('designer_info')
 
     sponsor = generic.GenericRelation(Sponsor)
@@ -64,12 +71,9 @@ class Designer(models.Model):
     class Meta:
         ordering = ['normalized_name']
 
-class Family(models.Model):
+class Family(KModel):
     designer  = models.ForeignKey(Designer, related_name='families')
-    is_published = models.BooleanField(help_text='Controls whether or not family is published to site.')
-    in_navigation = models.BooleanField(help_text='Whether or not family appears in menus.')
 
-    name = models.CharField(max_length=100, help_text="Cannot be blank, but can be overriden by stamp name.")
     country = models.CharField(max_length=60, blank=True, help_text="If left blank, stamp's country will be used.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="If left blank, stamp's year will be used.")
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
@@ -77,6 +81,7 @@ class Family(models.Model):
     
     def __unicode__( self ):
         return "%s - %s" % (self.designer.display_name, self.name)
+
     def get_absolute_url(self):
         return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.designer.normalized_name, 
@@ -86,14 +91,10 @@ class Family(models.Model):
         unique_together = ('designer', 'order')
         verbose_name_plural = 'Families'
 
-class Stamp(models.Model):
+class Stamp(KModel):
     family = models.ForeignKey(Family, related_name='stamps')
-    is_published = models.BooleanField(help_text='Controls whether or not stamp is published to site.')
-    in_navigation = models.BooleanField(help_text='Whether or not stamp appears in menus.')
-
     url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible through this url.")
 
-    name = models.CharField(max_length=100, blank=True, help_text="If entered, will override stamp family name.")
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="Will override stamp family year.")
     value = models.CharField(max_length=50, blank=True)

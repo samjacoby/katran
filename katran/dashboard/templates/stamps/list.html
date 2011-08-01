@@ -58,7 +58,7 @@
   <ul>
   {% for d in items.all %}
     <li class="designer">
-      <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.display_name }}</a>
+      <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.name }}</a>
         <a href="/admin/stamps/family/add/">[+]</a>
       </h3>
       <ul class="families">

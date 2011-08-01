@@ -18,7 +18,7 @@ class StampMenu(CMSAttachMenu):
                                                  is_published=True, 
                                                  in_navigation=True):
             designer_key = '%s' % d.normalized_name
-            designer_node = NavigationNode(d.display_name, 
+            designer_node = NavigationNode(d.name, 
                                            d.get_absolute_url(), 
                                            designer_key,
                                            parent_namespace=namespace,

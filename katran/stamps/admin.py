@@ -17,7 +17,7 @@ class StampInline(admin.StackedInline):
     extra = 0
 
 class DesignerAdmin(PlaceholderAdmin):
-   list_display = ('display_name',)
+   list_display = ('name',)
    inlines = [FamilyInline]
    class Media:
         js = ('js/stamp-utils.js',)
