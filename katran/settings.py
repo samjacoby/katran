@@ -152,7 +152,7 @@ INSTALLED_APPS = (
     'stamps',
     'entries.plugins',
     'sorl.thumbnail',
-    'dashboard'
+    'katran.dashboard'
 )
 
 # Add log setup after local imports

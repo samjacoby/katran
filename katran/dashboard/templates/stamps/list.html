@@ -58,14 +58,18 @@
   <ul>
   {% for d in items.all %}
     <li class="designer">
-      <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.display_name }}</a></h3>
+      <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.display_name }}</a>
+        <a href="/admin/stamps/family/add/">[+]</a>
+      </h3>
       <ul class="families">
       {% for f in d.families.all %}
         <li id="set_{{ f.id }}" class="family">
-          <h4>Family:<a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a></h4>
+          <h4>Family:<a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a>
+          <a href="/admin/stamps/stamp/add/">[+]</a>
+          </h4>
           <ul class="family">
           {% for s in f.stamps.all %}
-            <li id="set_{{ s.id }}" class="stamp">{{ s.name }} 
+            <li id="set_{{ s.id }}" class="stamp">{% firstof s.name f.name %} 
               <a href="{% url admin:stamps_stamp_change s.id %}">(edit)</a>
             </li>
           {% endfor %}
