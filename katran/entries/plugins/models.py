@@ -1,9 +1,9 @@
 from django.db import models
-from entries.models import Typography, Book, News                 
+from entries.models import Typography, Book
 from django.utils.translation import ugettext_lazy as _
 from cms.models import CMSPlugin
 
-class IndexPicture( CMSPlugin ):
+class IndexPicture(CMSPlugin):
     """
     A custom picture which allows for index display (or not)
     """
@@ -25,7 +25,7 @@ class IndexPicture( CMSPlugin ):
                 pass
         return "<empty>"
 
-class BookPlugin( CMSPlugin ):
+class BookPlugin(CMSPlugin):
     book = models.ForeignKey('entries.Book', related_name='plugins')
 
     def __unicode__(self):

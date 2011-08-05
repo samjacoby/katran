@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.conf import settings
+from menus.menu_pool import menu_pool
 from cms.models.fields import PlaceholderField
 
 
@@ -72,6 +74,9 @@ class Entry(models.Model):
 
     
     def save(self, *args, **kwargs):
+
+        # Invalidate the menu cache on creating/modifying objects
+        menu_pool.clear(settings.SITE_ID, settings.LANGUAGE_CODE)
         
         if not self.pk:
             c = type(self).__name__

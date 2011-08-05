@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db import models
 from django.forms import ModelForm
 from cms.admin.placeholderadmin import PlaceholderAdmin
-from entries.models import Book, Typography, News
+from entries.models import Book, Typography
 
 class BaseClass( PlaceholderAdmin ):
     
@@ -26,11 +26,6 @@ class BookAdmin( BaseClass ):
 
     entry_type = 1 # Book
 
-class NewsAdmin( BaseClass ):
-
-    entry_type = 2 # News
-    
 
 admin.site.register( Book, BookAdmin ) 
 admin.site.register( Typography, TypographyAdmin )
-admin.site.register( News, NewsAdmin )

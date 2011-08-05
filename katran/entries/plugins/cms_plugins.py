@@ -26,13 +26,6 @@ class BookList( EntryList ):
     name = 'Book Index'
     render_template = 'entries/plugins/book_list.html'
 
-class NewsList( EntryList ):
-
-    type = 2 # News
-    name = 'News Index'
-    render_template = 'entries/plugins/book_list.html'
-
-
 class BookPlugin( CMSPluginBase ):
     model = BookPluginModel
     name = 'Book Plugin'                            
@@ -65,6 +58,5 @@ class IndexPicturePlugin( CMSPluginBase ):
 plugin_pool.register_plugin( BookPlugin )
 plugin_pool.register_plugin( TypographyList )
 plugin_pool.register_plugin( BookList )
-plugin_pool.register_plugin( NewsList )
 plugin_pool.register_plugin( IndexPicturePlugin )
 

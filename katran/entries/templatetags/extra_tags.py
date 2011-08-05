@@ -129,7 +129,7 @@ def get_next_parent(node, nodes):
     
     return next
 
-class PrevNextInternal( InclusionTag ):
+class PrevNextInternal(InclusionTag):
 
     """Fetch the next & previous page on the site, according to some rules."""
 
@@ -168,6 +168,9 @@ class PrevNextInternal( InclusionTag ):
 #            return context                      
             
         # Handle index pages and intermediary pages with children
+        print node.title
+        print node.children
+        
         if node.children: 
             try: # Next Link
                 next_link = node.children[0] # The next one is the first

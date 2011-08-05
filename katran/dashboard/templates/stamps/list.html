@@ -1,87 +1,50 @@
 {% extends "base.html" %}  
+{% load extra_tags %}
+{% load stamps_tags %}
+{% load placeholder_tags %}
+
 {% block head %}
-  <script type="text/javascript" src="/static/js/jquery-1.4.4.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery-ui-1.8.9.custom.min.js"></script>
-  <script>
-    $(function($) {
-      $("ul.families" ).sortable({
-        item: 'div',
-        opacity: 0.6,
-        handle: "h4",
-        axis: "y",
-        cursor: "move",
-        update: function(e, ui) {
-                  $.ajax({
-                    url: "/dashboard/action/",
-                    type: "POST",
-                    data: ({ 
-                      id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
-                      action: 'family',
-                      order: $(ui.item).prevAll().length,
-                      csrfmiddlewaretoken: '{{ csrf_token }}'}),
-                    success: function(msg) { 
-                      var no = 'op'
-                      alert(msg)
-                    }
-                  })            
-                }
-      });
-      $("ul.family" ).sortable({
-        item: 'li',
-        opacity: 0.6,
-        axis: 'y',
-        cursor: "move",
-        update: function(e, ui) {
-                  $.ajax({
-                    url: "/dashboard/action/",
-                    type: "POST",
-                    data: ({ 
-                      action: 'stamp',
-                      id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
-                      order: $(ui.item).prevAll().length,
-                      csrfmiddlewaretoken: '{{ csrf_token }}'}),
-                    success: function(msg) { 
-                      var no = 'op'
-                      alert(msg)
-                    }
-                  })            
-                }
-      });
-    })(jQuery)
-
-  </script>
-
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.9.custom.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.js"></script>
 {% endblock %}
 
 {% block main %}
 <div id="dashboard">
   <ul>
+  {# DESIGNERS #}
   {% for d in items.all %}
     <li class="designer">
       <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.name }}</a>
         <a href="/admin/stamps/family/add/">[+]</a>
       </h3>
       <ul class="families">
+
+      {# FAMILIES #}
       {% for f in d.families.all %}
         <li id="set_{{ f.id }}" class="family">
           <h4>Family:<a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a>
-          <a href="/admin/stamps/stamp/add/">[+]</a>
+            <a href="/admin/stamps/stamp/add/">[+]</a>
           </h4>
           <ul class="family">
+
+          {# STAMPS #}
           {% for s in f.stamps.all %}
             <li id="set_{{ s.id }}" class="stamp">{% firstof s.name f.name %} 
               <a href="{% url admin:stamps_stamp_change s.id %}">(edit)</a>
             </li>
+            <img src="{{ MEDIA_URL }}/{{ s.picture }}"/>
           {% endfor %}
+
+          {# ENDSTAMPS #}
           </ul>
         </li>
+
+      {# ENDFAMILIES #}
       {% endfor %}
       </ul>
   </li>
+  {# ENDDESIGNERS #}
   {% endfor %}
 </ul>
 {% endblock %}
-
-
-
-

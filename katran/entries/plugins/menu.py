@@ -15,12 +15,10 @@ class BookMenu(CMSAttachMenu):
         nodes = []
         namespace = 'book'
         for book in Book.manager.get_all_books():
-            node = NavigationNode(
-                book.order,                                          
-                '/%s%s' % ('books', 
-                            reverse('book_detail', 
-                                    urlconf='entries.urls.books', 
-                                    args=[book.order])),
+            node = NavigationNode(book.order, '/%s%s' % 
+                            ('books', reverse('book_detail', 
+                                      urlconf='entries.urls.books', 
+                                      args=[book.order])),
                 book.order,
                 parent_namespace=namespace,
                 attr={'type':'book'}

@@ -81,7 +81,6 @@ register.tag( PrevNextFamily )
 
 class PrevNextStamp( InclusionTag ):
     name = 'stamp_links'
-    #template = 'menu/prev_next_links.html'
     template = 'menu/stamp_next.html'
 
     options = Options(
