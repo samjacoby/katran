@@ -11,11 +11,6 @@ class TypographyHook( CMSApp ):
     urls = ['entries.urls.typography']
 #    menu = [TypographyMenu]
 
-class NewsHook( CMSApp ):
-    name = 'News Application'
-    urls = ['entries.urls.news']
-
 
 apphook_pool.register( BookHook )
 apphook_pool.register( TypographyHook )
-apphook_pool.register( NewsHook )
