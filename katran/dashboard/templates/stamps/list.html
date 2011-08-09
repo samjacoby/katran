@@ -6,7 +6,9 @@
 {% block head %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.9.custom.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/utils.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.js"></script>
+
 {% endblock %}
 
 {% block main %}
@@ -32,8 +34,8 @@
           {% for s in f.stamps.all %}
             <li id="set_{{ s.id }}" class="stamp">{% firstof s.name f.name %} 
               <a href="{% url admin:stamps_stamp_change s.id %}">(edit)</a>
+              <img width='100px' src="{{ MEDIA_URL }}/{{ s.picture }}"/>
             </li>
-            <img src="{{ MEDIA_URL }}/{{ s.picture }}"/>
           {% endfor %}
 
           {# ENDSTAMPS #}

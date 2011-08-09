@@ -22,7 +22,6 @@ def index(request):
 
     items  = models.Designer.cobjects.list().select_related()
     context['items'] = items
-    print items
 
     return direct_to_template(request, 'stamps/list.html', context)
 
@@ -51,6 +50,7 @@ def action(request):
     original_order = obj.order
 
     if order < original_order:
+        # Mass update ordering of other items
         middle = model.objects.filter(Query & Q(order__gte=order, order__lt=original_order))
         if middle is not None:
             middle.update(order=F('order') + 1)

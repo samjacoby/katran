@@ -89,7 +89,6 @@ class Family(KModel):
                                   'family': self.order})
     class Meta:
         ordering = ['order']
-        unique_together = ('designer', 'order')
         verbose_name_plural = 'Families'
 
 class Stamp(KModel):
@@ -122,4 +121,3 @@ class Stamp(KModel):
                                   'stamp': self.order })
     class Meta:
         ordering = ['order'] 
-        unique_together = ('family', 'order')
