@@ -1,13 +1,20 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load extra_tags %}
 {% load placeholder_tags %}
 
 {% block sub-menu %}
-<nav class='menu sub-menu'>
-<ul>
-  spine
-  <li id="page-title" >{{ request.current_page.get_title }}</li>
+<nav class="menu" id="sub-menu">
+  <ul>
+    <li id="page-title" >{{ request.current_page.get_title }}</li>
+    {% prev_next_links_internal %}
+    </ul>
+</nav>
+{% endblock %}
+
+{% block footer-menu %}
+<nav class="menu" id="footer-menu">
+  <ul>
   {% prev_next_links_internal %}
-</ul>
+  </ul>
 </nav>
 {% endblock %}

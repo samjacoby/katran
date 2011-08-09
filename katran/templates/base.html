@@ -14,19 +14,14 @@
   <body>
     <div id="page">
       <!-- Top-level Navigation Menu --> 
-      <nav class='menu' id='top-menu'>
+      <nav class="menu" id="top-menu">
         <ul>
         {% show_menu 0 0 0 1 %}
         {% prev_next_links %}
         </ul>
       </nav>
       <!-- Second-level Navigation Menu --> 
-      <nav class='menu' id='sub-menu'>
-        <ul>
-          <li id="page-title" >{{ request.current_page.get_title }}</li>
-          {% prev_next_links_internal %}
-          </ul>
-      </nav>
+      {% block sub-menu %}{% endblock %}
 
       <div class="all-content">
 
@@ -40,11 +35,7 @@
         {% block side-content %}{% endblock %}
 
       </div><!-- /end .all-content --> 
-      <nav class='menu sub-menu'>
-        <ul>
-        {% prev_next_links_internal %}
-        </ul>
-      </nav>
+      {% block footer-menu %}{% endblock %}
     </div>
   </body>
 </html>             

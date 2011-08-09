@@ -33,6 +33,18 @@ DATABASES = {
     }
 }
 
+SDATABASES = { 
+    'default': { 
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'. 
+        'NAME': 'shackman_katran',                      # Or path to database file if using sqlite3. 
+        'USER': 'shackman_webuser',                      # Not used with sqlite3. 
+        'PASSWORD': 'O)3kmkRVSCUX',                  # Not used with sqlite3. 
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3. 
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3. 
+    } 
+} 
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -122,11 +134,12 @@ CMS_PLACEHOLDER_CONF = {
             },
         }
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'katran.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(PROJECT_DIR, 'dashboard', 'templates'),
+    os.path.join(PROJECT_DIR, 'stamps', 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -148,11 +161,11 @@ INSTALLED_APPS = (
     'cms.plugins.file',
     'cms.plugins.snippet',
     'cms.plugins.googlemap',
-    'entries',
-    'stamps',
-    'entries.plugins',
     'sorl.thumbnail',
-    'katran.dashboard'
+    'katran',
+    'katran.stamps',
+    'katran.dashboard',
+    'katran.entries',
 )
 
 # Add log setup after local imports
