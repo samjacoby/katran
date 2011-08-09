@@ -29,6 +29,7 @@ def get_prev_sibling(node, nodes):
         return None
 
 class PrevNextFamily( InclusionTag ):
+    '''Previous and next links that iterate over stamp families'''
     name = 'stamp_family_links'
     template = 'menu/prev_next_links.html'
 
@@ -52,7 +53,12 @@ class PrevNextFamily( InclusionTag ):
             assert node.attr['type'] == 'family'
 
         for node in nodes:
-            if node.selected or node.descendant or node.ancestor: # Short-circuits at first descendant
+            if node.descendant:
+                # We're at the root index, so just return with first family and arbitrary previoous
+                context['next'] = nodes[0]
+                context['prev'] = node.parent.parent.parent # This happens to be /resources/
+                return context
+            if node.selected or node.ancestor:
                 current_index = nodes.index(node)
                 break
 
@@ -72,7 +78,7 @@ class PrevNextFamily( InclusionTag ):
         if current_index == 0:
             prev_link = (node.parent).parent
 
-        context['misc'] = current_index
+
         context['next'] = next_link
         context['prev'] = prev_link
 
@@ -80,6 +86,7 @@ class PrevNextFamily( InclusionTag ):
 register.tag( PrevNextFamily )
 
 class PrevNextStamp( InclusionTag ):
+    '''Generate a link for the next viewable stamp'''
     name = 'stamp_links'
     template = 'menu/stamp_next.html'
 
@@ -162,6 +169,12 @@ class StampFamilies( InclusionTag ):
         
         all_nodes = menu_pool.get_nodes(request)
         nodes = menu_pool.get_nodes_by_attribute( all_nodes, 'type', 'designer' )
+
+        for node in all_nodes:
+            # If we're at the root level, don't bother getting children
+            if node.selected and node.level < 2:
+                context = { 'template': template}
+                return context
         
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'designer':
