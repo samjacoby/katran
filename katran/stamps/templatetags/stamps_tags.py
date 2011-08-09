@@ -52,7 +52,7 @@ class PrevNextFamily( InclusionTag ):
             assert node.attr['type'] == 'family'
 
         for node in nodes:
-            if node.selected or node.descendant or node.ancestor: # Breaks at first descendant
+            if node.selected or node.descendant or node.ancestor: # Short-circuits at first descendant
                 current_index = nodes.index(node)
                 break
 
