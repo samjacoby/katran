@@ -70,15 +70,15 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static')
-MEDIA_URL = '/static/'
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static/katran/')
+MEDIA_URL = '/static/katran/'
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/katran/')
+STATIC_URL = '/static/katran/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/admin/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '0r6%7gip5tmez*vygfv+u14h@4lbt^8e2^26o#5_f_#b7%cm)u'
@@ -134,7 +134,7 @@ CMS_PLACEHOLDER_CONF = {
             },
         }
 
-ROOT_URLCONF = 'katran.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
@@ -162,10 +162,10 @@ INSTALLED_APPS = (
     'cms.plugins.snippet',
     'cms.plugins.googlemap',
     'sorl.thumbnail',
-    'katran',
-    'katran.stamps',
-    'katran.dashboard',
-    'katran.entries',
+    'stamps',
+    'dashboard',
+    'entries',
+    'entries.plugins',
 )
 
 # Add log setup after local imports

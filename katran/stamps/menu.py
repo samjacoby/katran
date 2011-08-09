@@ -66,5 +66,5 @@ class StampMenu(CMSAttachMenu):
         nodes.extend(stamps)
         return nodes
                     
-#menu_pool.register_menu(StampMenu)
+menu_pool.register_menu(StampMenu)
     
