@@ -12,7 +12,6 @@ urlpatterns = patterns('',
             queryset=Book.manager.get_all_books(),
             context_object_name = 'list',
             template_name = 'entries/index.html')),
-    url(r'^books/(?P<order>\d+)/$', 'entries.views.book_detail', { 'entry_type': '1' }, name='book_detail'),
+    url(r'^(?P<order>\d+)/$', 'entries.views.book_detail', { 'entry_type': '1' }, name='book_detail'),
 
 )
-

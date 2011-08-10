@@ -15,10 +15,7 @@ class BookMenu(CMSAttachMenu):
         nodes = []
         namespace = 'book'
         for book in Book.manager.get_all_books():
-            node = NavigationNode(book.order, '/%s%s' % 
-                            ('books', reverse('book_detail', 
-                                      urlconf='entries.urls.books', 
-                                      args=[book.order])),
+            node = NavigationNode(book.order, '%s' % book.get_absolute_url(),
                 book.order,
                 parent_namespace=namespace,
                 attr={'type':'book'}
@@ -43,12 +40,7 @@ class TypographyMenu(CMSAttachMenu):
         nodes = []
         namespace = 'typography'
         for typography in Typography.manager.get_all_typography():
-            node = NavigationNode(
-                typography.order,                                          
-                '/%s%s' % ( 'typography', 
-                            reverse('typography_detail', 
-                                    urlconf='entries.urls.typography', 
-                                            args=[ typography.order])),
+            node = NavigationNode(typography.order, '%s' % typography.get_absolute_url(), 
                 typography.order,
                 parent_namespace=namespace,
                 attr={'type':'typography'}
