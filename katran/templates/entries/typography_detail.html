@@ -4,29 +4,27 @@
 {% load placeholder_tags %}
 
 {% block main %}
-<div id="main-content">         
+<div id="typography">
     {% with "384" as width %}
       {% render_placeholder e.content width %}
     {% endwith %}
-</div>
 
-<nav class="menu" id="sub-menu">
-  <ul>
-  {% prev_next_links_internal %}
-  </ul>
-</nav>
-<div id="secondary-content">
-  {% with "384" as width %}
-    {% render_placeholder e.secondary_content %}
-  {% endwith %}
-</div>
+  <nav class="menu">
+    <ul>
+    {% prev_next_links_internal %}
+    </ul>
+  </nav>
 
+    {% with "384" as width %}
+      {% render_placeholder e.secondary_content %}
+    {% endwith %}
+</div>
 {% endblock %}
 
 {% block side-content %}
-<div class="side-content">
-  {% with "384" as width %}
-    {% render_placeholder e.sidebar %}
-  {% endwith %}
-</div>
+  <div id="side-content">
+    {% with "384" as width %}
+      {% render_placeholder e.sidebar %}
+    {% endwith %}
+  </div>
 {% endblock %}

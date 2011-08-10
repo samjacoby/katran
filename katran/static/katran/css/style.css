@@ -29,17 +29,13 @@ body {
 .column-content {
   float: left; }
 
-.side-content {
+#side-content {
   float: left;
   width: 20%;
   padding-left: 2em; }
-  .side-content p {
+  #side-content p {
     line-height: 1.38461538;
     /* 18/13px */ }
-
-/* Main content container */
-#content {
-  float: left; }
 
 img {
   max-width: 100%;
@@ -53,9 +49,9 @@ img {
     margin: 1em 0 1em 0; }
 
 /* TYPOGRAPHY */
-#secondary-content {
-  clear: both;
-  float: left; }
+#typography nav.menu {
+  float: none;
+  width: 100%; }
 
 /* Menus specific to the Stamps Page */
 nav#designer-nav {
@@ -117,6 +113,10 @@ nav.menu {
     nav.menu ul li {
       display: inline;
       margin-right: 1em; }
+      nav.menu ul li.prev a, nav.menu ul li.next a {
+        color: black; }
+        nav.menu ul li.prev a:visited, nav.menu ul li.next a:visited {
+          color: black; }
 
 /* Top menus */
 nav#top-menu ul li {
@@ -130,7 +130,9 @@ nav#top-menu ul li {
     margin-left: 0;
     margin-right: 0; }
     nav#top-menu ul li.first a {
-      color: black !important; }
+      color: black; }
+      nav#top-menu ul li.first a:visited {
+        color: black; }
     nav#top-menu ul li.first a {
       font-weight: 600; }
   nav#top-menu ul li.next {
@@ -153,12 +155,14 @@ nav#top-menu a, nav#sub-menu a {
 ul#stamp-meta {
   clear: both; }
 
-nav.menu ul#stamp-values li.prev a:visited, nav.menu ul#stamp-values li.next a:visited, nav.menu ul#stamp-families li.prev a:visited, nav.menu ul#stamp-families li.next a:visited {
-  color: black; }
-nav.menu ul#stamp-values li a, nav.menu ul#stamp-families li a {
+nav.menu ul#stamp-values a, nav.menu ul#stamp-families a {
   color: #C06D6D; }
-  nav.menu ul#stamp-values li a:visited, nav.menu ul#stamp-families li a:visited {
+  nav.menu ul#stamp-values a:visited, nav.menu ul#stamp-families a:visited {
     color: #808385; }
+nav.menu ul#stamp-values li.prev a, nav.menu ul#stamp-values li.next a, nav.menu ul#stamp-families li.prev a, nav.menu ul#stamp-families li.next a {
+  color: black; }
+  nav.menu ul#stamp-values li.prev a:visited, nav.menu ul#stamp-values li.next a:visited, nav.menu ul#stamp-families li.prev a:visited, nav.menu ul#stamp-families li.next a:visited {
+    color: black; }
 nav.menu ul#stamp-values li.selected a, nav.menu ul#stamp-families li.selected a {
   color: #870000 !important;
   font-weight: bold; }
