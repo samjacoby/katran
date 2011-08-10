@@ -7,3 +7,5 @@ build/*
 .Python
 mycms.db
 log
+cache
+cms_page_media
