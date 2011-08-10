@@ -70,10 +70,10 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static/katran/')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static', 'katran/')
 MEDIA_URL = '/static/katran/'
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/katran/')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static', 'katran/')
 STATIC_URL = '/static/katran/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.

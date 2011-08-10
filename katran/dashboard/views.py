@@ -9,8 +9,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required
 
-
-
 from stamps import models
 
 log = logging.getLogger(__name__)
@@ -23,7 +21,7 @@ def index(request):
     items  = models.Designer.cobjects.list().select_related()
     context['items'] = items
 
-    return direct_to_template(request, 'stamps/list.html', context)
+    return direct_to_template(request, 'dashboard/list.html', context)
 
 @login_required
 def action(request):

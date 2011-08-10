@@ -10,8 +10,8 @@ body {
   width: 90%;
   margin: 3em;
   float: left;
-  font-size: .8125em; /* 13/16 */
-  line-height: 1.125em; /* 18/16 */
+  font-size: .7857em;
+  line-height: 1.5em; /* 18/12 */
 }
 
 /* LAYOUT */
@@ -19,6 +19,7 @@ body {
 .all-content {
   width: 100%;
   float: left;
+  font-size: .9em;
 }
 
 .main-content {
@@ -34,40 +35,8 @@ body {
   width: 20%;
   padding-left: 2em;
   p {
-    font-size: 0.846153846em; /* 11/13px */
     line-height: 1.38461538; /* 18/13px */
   }
-}
-
-/* MENUS */
-
-nav.menu {
-  clear: both;
-  float: left;
-  padding: 1em 0 1em 0;
-}
-
-nav#top-menu ul {
-  float: left;
-}
-
-nav#top-menu ul {
-  li.selected a {
-    color: $highlight-color;
-  }
-  li.ancestor a {
-    color: $highlight-color;
-  }
-}
-
-nav.menu ul li {
-  display: inline;
-  font-size: 13px;
-}
-
-nav.sub-menu {
-  float: left;
-  width: 100%;
 }
 
 /* Main content container */
@@ -86,40 +55,20 @@ img {
   padding: 0 0 1em 0;
   margin: 0 0 .5em 0;
   p {
-    font-size: 0.846153846em; /* 11/13px */
     margin: 1em 0 1em 0;
   }
 }
 
 /* TYPOGRAPHY */
 #main-content {
+  clear: both;
   float: left;
 }
 
 #secondary-content {
+  clear: both;
   float: left;
 }
-/* DASHBOARD */
-#dashboard {
-  .designer {
-    margin: 1em;
-    h3 {
-      font-weight: 700;
-      font-size: 1.5em; /* 24/16 */
-      display: inline;
-    }
-    h4 {
-      font-weight: 700;
-      font-size: 1.1em;
-      display: inline;
-   }
-  .family {
-    padding: 1em;
-  }
-
-  } 
-}
-
 /* Menus specific to the Stamps Page */
 
 nav#designer-nav {
@@ -150,58 +99,80 @@ footer {
 
 /* Secondary Navigation Menu Layout */
 
-nav.sub-menu {
-//  padding: 35px 0 35px 0;
+nav {
+  &#sub-menu {
+    font-size: .9em;
+    ul li {
+      margin-right: 1em;
+      display: inline;
+    }
+  }
+  /* Bottom Menu Layout */
+  &#footer-menu {
+    font-size: .9em;
+    ul li {
+      margin-left: .5em;
+      margin-right: 1em;
+      display: inline;
+      &.prev, &.next {
+        margin-left: 0;
+      }
+      a { 
+        color: black;
+        &:visited { color: black; }
+      }
+    }
+  }
 }
-
-nav.sub-menu ul li {
-  display: inline;
-}
-
-/* Bottom Menu Layout */
-
-nav#body-footer-nav ul li {
-  display: inline;
-}
-
-/*
- *
- * Michael's Fancy-Pants URL coloring scheme 
- *
- * */
 
 /* Regular Links */
 a {
   text-decoration: none;
-}
-
-a:visited {
-  color: #808385;
-}
-
-.text a:visited {
-  color: #808385;
+  &:visited {
+    color: #808385;
+  }
 }
 
 /* MENUS */
 
+// Common to all menus
+nav.menu {
+  clear: both;
+  float: left;
+  display: block;
+  padding: 1em 0 1em 0;
+  ul { 
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline;
+      margin-right: 1em;
+    }
+  }
+}
+
 /* Top menus */
 nav#top-menu {
   ul li {
-    padding-left: .6em;
-    padding-right: .6em;
-    &.prev {
-      padding-right: 0;
+    margin-left: 1em;
+    margin-right: 1em;
+    &.selected a {
+      color: $highlight-color;
+    }
+    &.ancestor a {
+      color: $highlight-color;
+    }
+    &.first { 
+      a {
+        color: black !important;
+      }
+      margin-left: 0;
+      margin-right: 0;
+      a { font-weight: 600; }
     }
     &.next {
-      padding-left: 0;
-      padding-right: 0;
+      margin-left: 0;
     }
-  }
-  
-  ul li.first { 
-    padding-left: 0;
-    a { font-weight: 600; }
   }
 }
 
@@ -215,7 +186,7 @@ nav#top-menu a, nav#sub-menu a {
   text-decoration: none;
   color: black;
   :visited {
-    color: inherit;
+    color: black;
   }
 }
 
@@ -224,31 +195,25 @@ nav#top-menu a, nav#sub-menu a {
   color: #C06D6D;
 }
 
-/* Various Stamp Link Contortions */
-nav#sub-menu a.stamp-family-number {
-  color: #C06D6D;
-}
+/* STAMPS */
 
-nav#sub-menu a.stamp-family-number:visited {
-  color: #808385;
-}
-
-nav#sub-menu a.selected {
-  color: $highlight-color !important;
-  font-weight: bold
-}
-
-nav#body-footer-nav a.stamp-value {
-  color: #C06D6D;
-}
-
-nav#body-footer-nav a.stamp-value:visited {
-  color: #808385;
-}
-
-nav#body-footer-nav a.selected {
-  color: $highlight-color !important;
-  font-weight: bold
+nav.menu {
+  ul#stamp-values,ul#stamp-families {
+    li {
+      a { 
+        color: #C06D6D;
+        &:visited {
+          color: #808385;
+        }
+      }
+      &.selected {
+        a {
+        color: $highlight-color !important;
+        font-weight: bold
+        }
+      }
+    }
+  }
 }
 
 #header-title {
@@ -287,5 +252,43 @@ table p {
 /* No Display */
 .invisible {
   visibility: hidden;
+}
+
+/* DASHBOARD */
+
+#dashboard {
+  li {
+    padding: 1em;
+    margin: 1em;
+  }
+  li.designer {
+    float: left;
+    border: thin solid black;
+    h3 {
+      font-weight: 700;
+      font-size: 1.5em; /* 24/16 */
+      display: inline;
+    }
+    h4 {
+      font-weight: 700;
+      font-size: 1.1em;
+      display: inline;
+   }
+    li.family {
+      float: left;
+      background: #CFCFCF;
+      li.stamp {
+        float: left;
+        border: thin dashed #DEDEDE;
+        background: white;
+        #stamp-meta {
+          li {
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+    }
+  } 
 }
 

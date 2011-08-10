@@ -1,4 +1,4 @@
-{% extends 'entries/base.html' %}
+{% extends "entries/base.html" %}
 {% load cms_tags %}
 {% load extra_tags %}
 {% load placeholder_tags %}
@@ -10,7 +10,7 @@
     {% endwith %}
 </div>
 
-<nav class='menu sub-menu'>
+<nav class="menu" id="sub-menu">
   <ul>
   {% prev_next_links_internal %}
   </ul>

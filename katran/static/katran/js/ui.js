@@ -2,8 +2,6 @@ $(function($) {
   $("ul.families" ).sortable({
     item: 'div',
     opacity: 0.6,
-    handle: "h4",
-    axis: "y",
     cursor: "move",
     update: function(e, ui) {
               $.ajax({
@@ -24,7 +22,6 @@ $(function($) {
   $("ul.family" ).sortable({
     item: 'li',
     opacity: 0.6,
-    axis: 'y',
     cursor: "move",
     update: function(e, ui) {
               $.ajax({
@@ -41,5 +38,5 @@ $(function($) {
               })            
             }
   });
-})(jQuery)
+})
 

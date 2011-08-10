@@ -6,15 +6,15 @@ body {
   width: 90%;
   margin: 3em;
   float: left;
-  font-size: .8125em;
-  /* 13/16 */
-  line-height: 1.125em;
-  /* 18/16 */ }
+  font-size: .7857em;
+  line-height: 1.5em;
+  /* 18/12 */ }
 
 /* LAYOUT */
 .all-content {
   width: 100%;
-  float: left; }
+  float: left;
+  font-size: .9em; }
 
 .main-content {
   float: left; }
@@ -27,32 +27,8 @@ body {
   width: 20%;
   padding-left: 2em; }
   .side-content p {
-    font-size: 0.846153846em;
-    /* 11/13px */
     line-height: 1.38461538;
     /* 18/13px */ }
-
-/* MENUS */
-nav.menu {
-  clear: both;
-  float: left;
-  padding: 1em 0 1em 0; }
-
-nav#top-menu ul {
-  float: left; }
-
-nav#top-menu ul li.selected a {
-  color: #870000; }
-nav#top-menu ul li.ancestor a {
-  color: #870000; }
-
-nav.menu ul li {
-  display: inline;
-  font-size: 13px; }
-
-nav.sub-menu {
-  float: left;
-  width: 100%; }
 
 /* Main content container */
 #content {
@@ -67,31 +43,16 @@ img {
   padding: 0 0 1em 0;
   margin: 0 0 .5em 0; }
   .entry p {
-    font-size: 0.846153846em;
-    /* 11/13px */
     margin: 1em 0 1em 0; }
 
 /* TYPOGRAPHY */
 #main-content {
+  clear: both;
   float: left; }
 
 #secondary-content {
+  clear: both;
   float: left; }
-
-/* DASHBOARD */
-#dashboard .designer {
-  margin: 1em; }
-  #dashboard .designer h3 {
-    font-weight: 700;
-    font-size: 1.5em;
-    /* 24/16 */
-    display: inline; }
-  #dashboard .designer h4 {
-    font-weight: 700;
-    font-size: 1.1em;
-    display: inline; }
-  #dashboard .designer .family {
-    padding: 1em; }
 
 /* Menus specific to the Stamps Page */
 nav#designer-nav {
@@ -115,42 +76,62 @@ footer {
   float: left; }
 
 /* Secondary Navigation Menu Layout */
-nav.sub-menu ul li {
-  display: inline; }
+nav {
+  /* Bottom Menu Layout */ }
+  nav#sub-menu {
+    font-size: .9em; }
+    nav#sub-menu ul li {
+      margin-right: 1em;
+      display: inline; }
+  nav#footer-menu {
+    font-size: .9em; }
+    nav#footer-menu ul li {
+      margin-left: .5em;
+      margin-right: 1em;
+      display: inline; }
+      nav#footer-menu ul li.prev, nav#footer-menu ul li.next {
+        margin-left: 0; }
+      nav#footer-menu ul li a {
+        color: black; }
+        nav#footer-menu ul li a:visited {
+          color: black; }
 
-/* Bottom Menu Layout */
-nav#body-footer-nav ul li {
-  display: inline; }
-
-/*
- *
- * Michael's Fancy-Pants URL coloring scheme 
- *
- * */
 /* Regular Links */
 a {
   text-decoration: none; }
-
-a:visited {
-  color: #808385; }
-
-.text a:visited {
-  color: #808385; }
+  a:visited {
+    color: #808385; }
 
 /* MENUS */
+nav.menu {
+  clear: both;
+  float: left;
+  display: block;
+  padding: 1em 0 1em 0; }
+  nav.menu ul {
+    margin: 0;
+    padding: 0; }
+    nav.menu ul li {
+      display: inline;
+      margin-right: 1em; }
+
 /* Top menus */
 nav#top-menu ul li {
-  padding-left: .6em;
-  padding-right: .6em; }
-  nav#top-menu ul li.prev {
-    padding-right: 0; }
+  margin-left: 1em;
+  margin-right: 1em; }
+  nav#top-menu ul li.selected a {
+    color: #870000; }
+  nav#top-menu ul li.ancestor a {
+    color: #870000; }
+  nav#top-menu ul li.first {
+    margin-left: 0;
+    margin-right: 0; }
+    nav#top-menu ul li.first a {
+      color: black !important; }
+    nav#top-menu ul li.first a {
+      font-weight: 600; }
   nav#top-menu ul li.next {
-    padding-left: 0;
-    padding-right: 0; }
-nav#top-menu ul li.first {
-  padding-left: 0; }
-  nav#top-menu ul li.first a {
-    font-weight: 600; }
+    margin-left: 0; }
 
 nav#sub-menu ul li.first a {
   color: #870000; }
@@ -159,30 +140,18 @@ nav#top-menu a, nav#sub-menu a {
   text-decoration: none;
   color: black; }
   nav#top-menu a :visited, nav#sub-menu a :visited {
-    color: inherit; }
+    color: black; }
 
 /* Text Links */
 .text a {
   color: #C06D6D; }
 
-/* Various Stamp Link Contortions */
-nav#sub-menu a.stamp-family-number {
+/* STAMPS */
+nav.menu ul#stamp-values li a, nav.menu ul#stamp-families li a {
   color: #C06D6D; }
-
-nav#sub-menu a.stamp-family-number:visited {
-  color: #808385; }
-
-nav#sub-menu a.selected {
-  color: #870000 !important;
-  font-weight: bold; }
-
-nav#body-footer-nav a.stamp-value {
-  color: #C06D6D; }
-
-nav#body-footer-nav a.stamp-value:visited {
-  color: #808385; }
-
-nav#body-footer-nav a.selected {
+  nav.menu ul#stamp-values li a:visited, nav.menu ul#stamp-families li a:visited {
+    color: #808385; }
+nav.menu ul#stamp-values li.selected a, nav.menu ul#stamp-families li.selected a {
   color: #870000 !important;
   font-weight: bold; }
 
@@ -214,3 +183,30 @@ table p {
 /* No Display */
 .invisible {
   visibility: hidden; }
+
+/* DASHBOARD */
+#dashboard li {
+  padding: 1em;
+  margin: 1em; }
+#dashboard li.designer {
+  float: left;
+  border: thin solid black; }
+  #dashboard li.designer h3 {
+    font-weight: 700;
+    font-size: 1.5em;
+    /* 24/16 */
+    display: inline; }
+  #dashboard li.designer h4 {
+    font-weight: 700;
+    font-size: 1.1em;
+    display: inline; }
+  #dashboard li.designer li.family {
+    float: left;
+    background: #CFCFCF; }
+    #dashboard li.designer li.family li.stamp {
+      float: left;
+      border: thin dashed #DEDEDE;
+      background: white; }
+      #dashboard li.designer li.family li.stamp #stamp-meta li {
+        padding: 0;
+        margin: 0; }
