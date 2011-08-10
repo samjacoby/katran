@@ -155,9 +155,9 @@ nav#top-menu a, nav#sub-menu a {
 ul#stamp-meta {
   clear: both; }
 
-nav.menu ul#stamp-values a, nav.menu ul#stamp-families a {
+nav.menu ul#stamp-values li a, nav.menu ul#stamp-families li a {
   color: #C06D6D; }
-  nav.menu ul#stamp-values a:visited, nav.menu ul#stamp-families a:visited {
+  nav.menu ul#stamp-values li a:visited, nav.menu ul#stamp-families li a:visited {
     color: #808385; }
 nav.menu ul#stamp-values li.prev a, nav.menu ul#stamp-values li.next a, nav.menu ul#stamp-families li.prev a, nav.menu ul#stamp-families li.next a {
   color: black; }

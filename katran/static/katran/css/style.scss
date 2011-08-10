@@ -214,10 +214,12 @@ ul#stamp-meta {
 
 nav.menu {
   ul#stamp-values, ul#stamp-families {
-    a { 
-      color: #C06D6D;
-      &:visited {
-        color: #808385;
+    li {
+      a { 
+        color: #C06D6D;
+        &:visited {
+          color: #808385;
+        }
       }
     }
     li.prev a, li.next a {

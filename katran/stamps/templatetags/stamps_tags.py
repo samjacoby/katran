@@ -211,6 +211,11 @@ class StampValues( InclusionTag ):
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'family':
                 break
+        print '%s - %s' % (node, node.selected)
+
+        if node.selected: # We're at a family, so automatically select the first stamp
+          node.children[0].selected = True
+
         for c in node.children:
             print dir(c)
         try:
