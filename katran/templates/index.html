@@ -15,3 +15,11 @@
     {% placeholder "main-content" %}
   {% endwith %}
 {% endblock %}
+
+{% block footer-menu %}
+<nav class='menu' id='footer-menu'>
+  <ul>
+  {% prev_next_links_internal %}
+  </ul>
+</nav>
+{% endblock %}

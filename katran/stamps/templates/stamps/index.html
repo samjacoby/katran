@@ -4,6 +4,17 @@
 {% load extra_tags %}
 {% load stamps_tags %}
 
+{% block sub-menu %}
+<nav class="menu" id="sub-menu">
+  <ul id="stamp-families">
+    <li id="page-title" >{{ request.current_page.get_title }}</li>
+    <li><strong>About the collection</strong></li>
+    {% stamp_families %}
+    {% stamp_family_links %}
+  </ul>
+</nav>
+{% endblock %}
+
 {% block main %}
     {% placeholder "main-content" %}
     This is stamp index.

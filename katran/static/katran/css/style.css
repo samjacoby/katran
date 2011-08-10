@@ -19,7 +19,7 @@ body {
 .side-menu {
   float: left;
   padding-right: 2em;
-  width: 20%; }
+  width: 15%; }
 
 #main-content {
   width: 40%;
@@ -153,6 +153,8 @@ nav#top-menu a, nav#sub-menu a {
 ul#stamp-meta {
   clear: both; }
 
+nav.menu ul#stamp-values li.prev a:visited, nav.menu ul#stamp-values li.next a:visited, nav.menu ul#stamp-families li.prev a:visited, nav.menu ul#stamp-families li.next a:visited {
+  color: black; }
 nav.menu ul#stamp-values li a, nav.menu ul#stamp-families li a {
   color: #C06D6D; }
   nav.menu ul#stamp-values li a:visited, nav.menu ul#stamp-families li a:visited {

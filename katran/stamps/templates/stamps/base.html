@@ -4,25 +4,18 @@
 {% load extra_tags %}
 {% load stamps_tags %}
 
-{% block sub-menu %}
-<nav class="menu" id="sub-menu">
-  <ul id="stamp-families">
-    <li id="page-title" >{{ request.current_page.get_title }}</li>
-    {% stamp_families %}
-    {% stamp_family_links %}
-  </ul>
-</nav>
-{% endblock %}
 
 {% block side-menu %}
 <div class="side-menu">
   {% placeholder "sidebar" %}
+  This is the menu.
 </div>
 {% endblock %}
 
 {% block side-content %}
 <div class="side-content">
   {% placeholder "sidebar" %}
+  This is a sidebar.
 </div>
 {% endblock %}
 
