@@ -11,12 +11,19 @@ body {
   /* 18/12 */ }
 
 /* LAYOUT */
-.all-content {
+#all-content {
   width: 100%;
   float: left;
   font-size: .9em; }
 
-.main-content {
+.side-menu {
+  float: left;
+  padding-right: 2em;
+  width: 20%; }
+
+#main-content {
+  width: 40%;
+  /* 384/960 */
   float: left; }
 
 .column-content {
@@ -46,10 +53,6 @@ img {
     margin: 1em 0 1em 0; }
 
 /* TYPOGRAPHY */
-#main-content {
-  clear: both;
-  float: left; }
-
 #secondary-content {
   clear: both;
   float: left; }
@@ -147,6 +150,9 @@ nav#top-menu a, nav#sub-menu a {
   color: #C06D6D; }
 
 /* STAMPS */
+ul#stamp-meta {
+  clear: both; }
+
 nav.menu ul#stamp-values li a, nav.menu ul#stamp-families li a {
   color: #C06D6D; }
   nav.menu ul#stamp-values li a:visited, nav.menu ul#stamp-families li a:visited {
@@ -185,9 +191,12 @@ table p {
   visibility: hidden; }
 
 /* DASHBOARD */
+#dashboard #stamp-meta li {
+  padding: 0;
+  margin: 0; }
 #dashboard li {
   padding: 1em;
-  margin: 1em; }
+  margin: 1em 1em 1em 0; }
 #dashboard li.designer {
   float: left;
   border: thin solid black; }
@@ -207,6 +216,3 @@ table p {
       float: left;
       border: thin dashed #DEDEDE;
       background: white; }
-      #dashboard li.designer li.family li.stamp #stamp-meta li {
-        padding: 0;
-        margin: 0; }

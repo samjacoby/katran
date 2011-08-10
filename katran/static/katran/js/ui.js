@@ -19,7 +19,7 @@ $(function($) {
             }
   });
 
-  $("ul.family" ).sortable({
+  $("ul.stamps" ).sortable({
     item: 'li',
     opacity: 0.6,
     cursor: "move",

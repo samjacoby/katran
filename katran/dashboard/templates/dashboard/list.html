@@ -17,9 +17,13 @@
       {# FAMILIES #}
       {% for f in d.families.all %}
         <li id="set_{{ f.id }}" class="family">
-          <h4>Family:<a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a>
+          <h4><a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a>
             <a href="/admin/stamps/stamp/add/">[+]</a>
           </h4>
+          <ul id="stamp-meta"> 
+            <li>{% firstof f.country %}</li>
+            <li>{% firstof f.year %}</li>
+          </ul>
           <ul class="stamps">
           {# STAMPS #}
           {% for s in f.stamps.all %}

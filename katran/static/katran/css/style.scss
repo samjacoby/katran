@@ -16,13 +16,20 @@ body {
 
 /* LAYOUT */
 
-.all-content {
+#all-content {
   width: 100%;
   float: left;
   font-size: .9em;
 }
 
-.main-content {
+.side-menu {
+  float: left;
+  padding-right: 2em;
+  width: 20%;
+}
+
+#main-content {
+  width: 40%; /* 384/960 */
   float: left;
 }
 
@@ -60,15 +67,11 @@ img {
 }
 
 /* TYPOGRAPHY */
-#main-content {
-  clear: both;
-  float: left;
-}
-
 #secondary-content {
   clear: both;
   float: left;
 }
+
 /* Menus specific to the Stamps Page */
 
 nav#designer-nav {
@@ -197,6 +200,10 @@ nav#top-menu a, nav#sub-menu a {
 
 /* STAMPS */
 
+ul#stamp-meta {
+  clear: both;
+}
+
 nav.menu {
   ul#stamp-values,ul#stamp-families {
     li {
@@ -257,9 +264,15 @@ table p {
 /* DASHBOARD */
 
 #dashboard {
+  #stamp-meta {
+    li {
+      padding: 0;
+      margin: 0;
+    }
+  }
   li {
     padding: 1em;
-    margin: 1em;
+    margin: 1em 1em 1em 0;
   }
   li.designer {
     float: left;
@@ -281,12 +294,6 @@ table p {
         float: left;
         border: thin dashed #DEDEDE;
         background: white;
-        #stamp-meta {
-          li {
-            padding: 0;
-            margin: 0;
-          }
-        }
       }
     }
   } 

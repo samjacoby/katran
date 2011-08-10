@@ -1,8 +1,10 @@
 {% extends 'stamps/base.html' %}
+{% load cms_tags %}
+{% load placeholder_tags %}
 {% load extra_tags %}
 {% load stamps_tags %}
-{% load placeholder_tags %}
 
 {% block main %}
-This is the stamp index.
+    {% placeholder "main-content" %}
+    This is stamp index.
 {% endblock %}

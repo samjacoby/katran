@@ -53,7 +53,7 @@ class StampMenu(CMSAttachMenu):
                             stamp_key, 
                             family_key, 
                             parent_namespace=namespace,
-                            attr={'type':'stamp'})
+                            attr={'type':'stamp', 'value':s.value})
                     try:
                         stamp_node.next = None
                         stamp_node.prev = stamps[-1]

@@ -192,7 +192,7 @@ register.tag( StampFamilies )
 class StampValues( InclusionTag ):
     '''Generate a linked list of stamp values'''
     name = 'stamp_values'
-    template = 'menu/stamp_links.html'
+    template = 'menu/stamp_links_values.html'
 
     options = Options(
         Argument('name', default=None, required=False),

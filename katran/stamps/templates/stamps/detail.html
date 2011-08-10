@@ -13,16 +13,15 @@
     {% render_placeholder stamp.content width %}
     {% endwith %}
 </div>
-<ul id="stamp-meta"> 
-  <li>{% firstof stamp.name stamp.family.name %}</li>
-  <li>{% firstof stamp.country stamp.family.country %}</li>
-  <li>{% firstof stamp.year stamp.family.year %}</li>
-</ul>
 <nav class="menu">
   <ul id="stamp-values">
     {% stamp_values %}
   </ul>
 </nav>
+<ul id="stamp-meta"> 
+  <li><span id="place">{% firstof stamp.country stamp.family.country %}</span>.<span class="year">{% firstof stamp.year stamp.family.year %}</span></li>
+  <li><span class="name">{% firstof stamp.name stamp.family.name %}</span></li>
+</ul>
 <div class="sidebar-content">
     {% render_placeholder stamp.sidebar %}
 </div>
