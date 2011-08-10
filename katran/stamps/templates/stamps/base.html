@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load extra_tags %}
+{% load stamps_tags %}
+{% load placeholder_tags %}
+
+{% block sub-menu %}
+<nav class="menu" id="sub-menu">
+  <ul id="stamp-families">
+    <li id="page-title" >{{ request.current_page.get_title }}</li>
+    {% stamp_families %}
+    {% stamp_family_links %}
+  </ul>
+</nav>
+{% endblock %}
+
+
+{% block footer-menu %}
+<nav class="menu" id="footer-menu">
+  <ul>
+    {% stamp_family_links %}
+  </ul>
+</nav>
+{% endblock %}
