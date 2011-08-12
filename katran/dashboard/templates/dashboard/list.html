@@ -5,6 +5,11 @@
 
 {% block main %}
 <div id="dashboard">
+    <table>
+        {% for form in formset %}
+        {{ form }}
+        {% endfor %}
+    </table>
   <ul>
   {# DESIGNERS #}
   {% for d in items.all %}

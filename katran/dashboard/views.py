@@ -7,9 +7,10 @@ from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import login_required
+from django.forms import ModelForm
+from django.forms.models import modelformset_factory
 
-from stamps import models
+import stamps.models
 
 log = logging.getLogger(__name__)
 
@@ -18,8 +19,14 @@ def index(request):
 
     context = {}
 
-    items  = models.Designer.cobjects.list().select_related()
+    items  = stamps.models.Designer.cobjects.list().select_related()
+
+    DesignerFormset = modelformset_factory(stamps.models.Stamp,form=stamps.models.StampForm)
+    designer_fs = DesignerFormset()
+        
+        
     context['items'] = items
+    context['formset'] = designer_fs
 
     return direct_to_template(request, 'dashboard/list.html', context)
 
@@ -34,11 +41,11 @@ def action(request):
     order = int(request.POST['order']) + 1 # We use 1-indexing
 
     if action == 'family':
-        model = models.Family
+        model = stamps.models.Family
         obj = get_object_or_404(model, pk=item_id)
         Query = Q(designer=obj.designer) 
     elif action == 'stamp':
-        model = models.Stamp
+        model = stamps.models.Stamp
         obj = get_object_or_404(model, pk=item_id)
         Query = Q(family=obj.family) 
     else:

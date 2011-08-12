@@ -22,11 +22,13 @@ body {
   width: 15%; }
 
 #main-content {
-  width: 40%;
-  /* 384/960 */
   float: left; }
 
-.column-content {
+#content {
+  width: 80%;
+  float: left; }
+
+#column-content {
   float: left; }
 
 #side-content {

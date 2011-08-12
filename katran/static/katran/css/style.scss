@@ -29,11 +29,16 @@ body {
 }
 
 #main-content {
-  width: 40%; /* 384/960 */
   float: left;
 }
 
-.column-content {
+#content {
+  width: 80%;
+  float: left;
+}
+
+#column-content {
+  //width: 40%; /* 384/960 */
   float: left;
 }
 

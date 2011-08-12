@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
+from django.forms import ModelForm
+
 from cms.models.fields import PlaceholderField
 
 
@@ -121,3 +123,20 @@ class Stamp(KModel):
                                   'stamp': self.order })
     class Meta:
         ordering = ['order'] 
+
+class DesignerForm(ModelForm):
+
+    class Meta:
+        model = Designer
+
+class FamilyForm(ModelForm):
+
+    class Meta:
+        model = Family
+
+class StampForm(ModelForm):
+
+    class Meta:
+        model = Stamp
+        exclude = ('footer','info')
+
