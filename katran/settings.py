@@ -60,6 +60,9 @@ LANGUAGE_CODE = 'en'
 
 SITE_ID = 1
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -167,6 +170,12 @@ INSTALLED_APPS = (
     'entries',
     'entries.plugins',
 )
+
+# Import settings from local.py
+try:
+    from local import *
+except ImportError, e:
+    pass
 
 # Add log setup after local imports
 LOG_FILE = os.path.join(LOG_DIR, LOG_NAME)
