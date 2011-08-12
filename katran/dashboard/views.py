@@ -8,7 +8,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
-from django.forms.models import modelformset_factory
+from django.forms.models import inlineformset_factory, modelformset_factory
 
 import stamps.models
 
@@ -19,11 +19,11 @@ def index(request):
 
     context = {}
 
-    items  = stamps.models.Designer.cobjects.list().select_related()
+    items  = stamps.models.Stamp.objects.all().select_related()
 
-    DesignerFormset = modelformset_factory(stamps.models.Stamp,form=stamps.models.StampForm)
+    fields = ('name', 'country', 'year')
+    DesignerFormset = modelformset_factory(stamps.models.Stamp,form=stamps.models.StampForm, can_delete=True)
     designer_fs = DesignerFormset()
-        
         
     context['items'] = items
     context['formset'] = designer_fs

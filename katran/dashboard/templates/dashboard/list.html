@@ -5,11 +5,13 @@
 
 {% block main %}
 <div id="dashboard">
-    <table>
-        {% for form in formset %}
-        {{ form }}
-        {% endfor %}
-    </table>
+<form method="post" action="">
+  <table>
+  {% csrf_token %}
+  {{ formset.as_table }}
+  </table>
+  <input type="submit" value="Save" / >
+</form>
   <ul>
   {# DESIGNERS #}
   {% for d in items.all %}
