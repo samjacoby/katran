@@ -19,18 +19,24 @@ log = logging.getLogger(__name__)
 def index(request):
 
     context = {}
+    formsets = []
+
+    designers = stamps.models.Designer.objects.all()
 
     if request.method == 'POST':
-        formset = dashboard.forms.DesignerFormset(request.POST, request.FILES, queryset=stamps.models.Designer.cobjects.ordered_list()[0:1])
+        #formset = dashboard.forms.FamilyFormset(request.POST, request.FILES, queryset=stamps.models.Stamp.objects.ordered_list())
+        formset = dashboard.forms.FamilyFormset(request.POST, request.FILES, queryset=stamps.models.Stamp.objects.ordered_list())
         if formset.is_valid():
             # do something with the formset.cleaned_data
             formset.save_all()
         else:
             print formset.errors
     else:
-        formset = dashboard.forms.DesignerFormset(queryset=stamps.models.Designer.cobjects.ordered_list()[0:1])
+        #formset = dashboard.forms.FamilyFormset(queryset=stamps.models.Stamp.objects.ordered_list())
+        for d in designers:
+            formsets.append(dashboard.forms.FamilyFormset(instance=d, prefix='DESIGNER_%s' % d.pk))
 
-    context['designers'] = formset
+    context['designers'] = formsets
     return direct_to_template(request, 'dashboard/list.html', context)
 
 @login_required

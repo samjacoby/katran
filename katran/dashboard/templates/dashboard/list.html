@@ -6,32 +6,20 @@
 
 {% block main %}
 <div id="dashboard">
-
 <form action="." method="POST">
   {% csrf_token %}
   {{ designers.management_form }}
-  {% for designer in designers %}
+  {% for families in designers %}
   <div class="formgroup">
     <hr>    
     <h2>DESIGNER</h2>
     <hr>
-    {{ designer }}
-    <hr>
-    {% if designer.nested %}
-    <div class="formgroup">
-    {% for families in designer.nested %}
-    {{ families.management_form }}
-      {% for family in families %}
-        <h3>FAMILY</h3>
-        {{ family }}
-        <hr>
-        <div class="formgroup">
-        {% render_stamps forloop.counter0 %}
-        </div>
-      {% endfor %}
+    ping
+    {% for family in families %}
+      {{ family }}
+      {% render_stamps forloop.counter0 %}
     {% endfor %}
-    </div>
-    {% endif %}
+    <hr>
   </div>
   {% endfor %}
   <input type="submit" value="Save" />
