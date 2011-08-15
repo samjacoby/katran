@@ -11,6 +11,7 @@ from django.forms import ModelForm
 from django.forms.models import inlineformset_factory, modelformset_factory
 
 import stamps.models
+import dashboard.forms
 
 log = logging.getLogger(__name__)
 
@@ -19,34 +20,27 @@ def index(request):
 
     context = {}
 
-    DesignerFormset = modelformset_factory(stamps.models.Designer, form=stamps.models.DesignerForm, can_delete=True, max_num=0)
-    FamilyFormset = modelformset_factory(stamps.models.Family, form=stamps.models.FamilyForm, can_delete=True, max_num=0)
-    StampFormset = modelformset_factory(stamps.models.Stamp, form=stamps.models.StampForm, can_delete=True, max_num=0)
-        
     if request.method == 'POST':
-        bound_designer_formset = DesignerFormset(request.POST, request.FILES, prefix='designer')
-        bound_family_formset = FamilyFormset(request.POST, request.FILES, prefix='family')
-        bound_stamp_formset = StampFormset(request.POST, request.FILES, prefix='stamp') 
-        if bound_designer_formset.is_valid() and bound_family_formset.is_valid() and bound_stamp_formset.is_valid(): 
+   #     formset = dashboard.forms.DesignerFormset(request.POST, request.FILES)
+#        family_formset = FamilyFormset(queryset=stamps.models.Family.objects.ordered_list().select_related(), prefix='family')
+#        stamp_formset = StampFormset(queryset=stamps.models.Stamp.objects.ordered_list().select_related(), prefix='stamp')
+        if formset.is_valid():
+            pass
             # do something with the formset.cleaned_data
-            bound_designer_formset.save()
-            bound_family_formset.save()
-            bound_stamp_formset.save()
+#            formset.save_all()
         else:
             print formset.errors
     else:
-        designer_formset = DesignerFormset(queryset=stamps.models.Designer.cobjects.ordered_list().select_related(), prefix='designer')
-        family_formset = FamilyFormset(queryset=stamps.models.Family.objects.ordered_list().select_related(), prefix='family')
-        stamp_formset = StampFormset(queryset=stamps.models.Stamp.objects.ordered_list().select_related(), prefix='stamp')
+        #formset = dashboard.forms.DesignerFormset(queryset=stamps.models.Designer.cobjects.ordered_list())
+        designers = stamps.models.Designer.objects.all()
+        #formset = dashboard.forms.FamilyFormset(instance=designers[0])
+        formset = dashboard.forms.DesignerFormset(queryset=designers)
+#        formset = dashboard.forms.DesignerFormset()
 
     # Queryset is the list of objects, formset.forms, the corresponding forms
     # Zip together to allow iteration in one go in template
-    stamp_formset.zipped = zip(stamp_formset.queryset, stamp_formset.forms)
-
-    context['designer_formset'] = designer_formset
-    context['family_formset'] = family_formset
-    context['stamp_formset'] = stamp_formset
-
+#    stamp_formset.zipped = zip(stamp_formset.queryset, stamp_formset.forms)
+    context['designers'] = formset
     return direct_to_template(request, 'dashboard/list.html', context)
 
 @login_required

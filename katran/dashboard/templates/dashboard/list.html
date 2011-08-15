@@ -6,74 +6,40 @@
 {% block main %}
 <div id="dashboard">
 
-<form method="post" action="">
+<form action="." method="POST">
   {% csrf_token %}
-  {{ designer_formset.management_form }}
-  {{ designer_formset }}
-  <input type="submit" value="Save" / >
-</form>
-
-<form method="post" action="">
-  {% csrf_token %}
-  {{ family_formset.management_form }}
-  {{ family_formset }}
-  <input type="submit" value="Save" / >
-</form>
-
-<form method="post" action="">
-  {% csrf_token %}
-  {{ stamp_formset.management_form }}
-  {% regroup stamp_formset.zipped by 0.family.designer.id as stamps %}
-  {% for designer in stamps %}
-  <ul class="designer">          
-    {% regroup designer.list by 0.family.id as families %}
-    <h3><a href="{% url admin:stamps_designer_change families.0.list.0.0.family.designer.id %}">{{ families.0.list.0.0.family.designer.name }}</a></h3>
+  {{ designers.management_form }}
+  {% for designer in designers %}
+  <div class="formgroup">
+    <hr>    
+    <h2>DESIGNER</h2>
+    <hr>
+    {{ designer }}
+    <hr>
+    {% if designer.nested %}
+    <div class="formgroup">
+    {% for families in designer.nested %}
       {% for family in families %}
-        {% with family.list.0.0.family as f %}
-          {% include 'dashboard/includes/family.html' %}
-        {% endwith %}
+        <h3>FAMILY</h3>
+        <hr>
+        {{ family.management_form }}
+        {{ family }}
+        {% if families.nested %}
+        {% for stamp in families.nested %}
+          <hr>
+          <div class="formgroup">
+          <h4>STAMP</h4>
+          {{ stamp.management_form }}
+          {{ stamp }}
+          </div>
+        {% endfor %}
+        {% endif %}
       {% endfor %}
-  </ul>
+    {% endfor %}
+    </div>
+    {% endif %}
+  </div>
   {% endfor %}
-
-  <input type="submit" value="Save" / >
+  <input type="submit" value="Save" />
 </form>
-  <ul>
-  {% for s in items %}
-    {% include 'dashboard/includes/stamp.html' %}
-  {% endfor %} 
-  {# DESIGNERS #}
-  {% for d in items.all %}
-    <li class="designer">
-      <h3><a href="{% url admin:stamps_designer_change d.id %}">{{ d.name }}</a>
-        <a href="/admin/stamps/family/add/">[+]</a>
-      </h3>
-      <ul class="families">
-
-      {# FAMILIES #}
-      {% for f in d.families.all %}
-        <li id="set_{{ f.id }}" class="family">
-          <h4><a href="{% url admin:stamps_family_change f.id %}">{{ f.name }}</a>
-            <a href="/admin/stamps/stamp/add/">[+]</a>
-          </h4>
-          <ul id="stamp-meta"> 
-            <li>{% firstof f.country %}</li>
-            <li>{% firstof f.year %}</li>
-          </ul>
-          <ul class="stamps">
-          {# STAMPS #}
-          {% for s in f.stamps.all %}
-            {% include 'dashboard/includes/stamp.html' %}
-          {% endfor %}
-          {# ENDSTAMPS #}
-          </ul>
-        </li>
-
-      {# ENDFAMILIES #}
-      {% endfor %}
-      </ul>
-  </li>
-  {# ENDDESIGNERS #}
-  {% endfor %}
-</ul>
 {% endblock %}

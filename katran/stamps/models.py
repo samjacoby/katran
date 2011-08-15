@@ -117,9 +117,7 @@ class Family(KModel):
 class StampManager(models.Manager):
 
     def ordered_list(self): 
-        list = self.order_by('family__designer__normalized_name','family__order','order')
-        return list
-
+        return self.order_by('family__designer__normalized_name','family__order','order')
 
 class Stamp(KModel):
     family = models.ForeignKey(Family, related_name='stamps')
@@ -153,22 +151,3 @@ class Stamp(KModel):
                                   'stamp': self.order })
     class Meta:
         ordering = ['order'] 
-
-class DesignerForm(ModelForm):
-
-    class Meta:
-        model = Designer
-        exclude = ('order','info')
-
-class FamilyForm(ModelForm):
-
-    class Meta:
-        model = Family
-        exclude = ('order',)
-
-class StampForm(ModelForm):
-
-    class Meta:
-        model = Stamp
-        exclude = ('order','footer','info')
-
