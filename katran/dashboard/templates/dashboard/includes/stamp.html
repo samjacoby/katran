@@ -1,11 +1,2 @@
-<li id="set_{{ s.id }}" class="stamp">
-  <img width='100px' src="{{ MEDIA_URL }}/{{ s.picture }}"/>
-  <ul id="stamp-meta"> 
-    <li>{% firstof s.name s.family.name %}</li>
-    <li>{% firstof s.country s.family.country %}</li>
-    <li>{% firstof s.year s.family.year %}</li>
-    <li>{% firstof s.value 'n/a' %}</li>
-  </ul>
-  <a href="{% url admin:stamps_stamp_change s.id %}">(edit)</a>
-</li>
+<ul>{{ form.as_ul }}</ul>
 

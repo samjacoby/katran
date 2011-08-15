@@ -200,27 +200,28 @@ table p {
 
 /* DASHBOARD */
 #dashboard #stamp-meta li {
-  padding: 0;
-  margin: 0; }
-#dashboard li {
   padding: 1em;
-  margin: 1em 1em 1em 0; }
-#dashboard li.designer {
-  float: left;
+  margin: 1em; }
+#dashboard .designer {
+  padding: 1em;
+  margin: 1em;
   border: thin solid black; }
-  #dashboard li.designer h3 {
+  #dashboard .designer h3 {
     font-weight: 700;
     font-size: 1.5em;
     /* 24/16 */
     display: inline; }
-  #dashboard li.designer h4 {
+  #dashboard .designer h4 {
     font-weight: 700;
     font-size: 1.1em;
     display: inline; }
-  #dashboard li.designer li.family {
-    float: left;
-    background: #CFCFCF; }
-    #dashboard li.designer li.family li.stamp {
-      float: left;
+  #dashboard .designer .family {
+    padding: 1em;
+    margin: 1em 0 1em 0;
+    background: #CFCFCF;
+    border: thin solid black; }
+    #dashboard .designer .family .stamp {
+      padding: 1em;
+      margin: 1em;
       border: thin dashed #DEDEDE;
       background: white; }

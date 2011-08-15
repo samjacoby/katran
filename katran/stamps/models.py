@@ -1,10 +1,12 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
 
 from cms.models.fields import PlaceholderField
+from menus.menu_pool import menu_pool
 
 
 class ItemManager(models.Manager):
@@ -42,6 +44,14 @@ class KModel(models.Model):
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+
+        # Invalidate the menu cache on creating/modifying objects
+        menu_pool.clear(settings.SITE_ID, settings.LANGUAGE_CODE)
+        
+        super(KModel, self).save(*args, **kwargs)
+
 
     
 
@@ -93,6 +103,14 @@ class Family(KModel):
         ordering = ['order']
         verbose_name_plural = 'Families'
 
+class StampManager(models.Manager):
+
+    def ordered_list(self): 
+        list = self.order_by('family__designer__normalized_name').order_by('family__order').order_by('order')
+        list = self.order_by('family__designer__normalized_name','family__order','order')
+        return list
+
+
 class Stamp(KModel):
     family = models.ForeignKey(Family, related_name='stamps')
     url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible through this url.")
@@ -104,9 +122,11 @@ class Stamp(KModel):
     info = PlaceholderField('Stamp Info', related_name='stamp_info', help_text="Anything that should display immediately below the values of the stamps should go here.")
     footer = PlaceholderField('Stamp Footer', related_name='stamp_footer')
 
+    # Custom Manager
+    objects = StampManager()
+
     # Order with which stamp appears in family
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
-    
     sponsor = generic.GenericRelation(Sponsor)
 
     def get_absolute_url(self):

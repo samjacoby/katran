@@ -19,19 +19,34 @@ def index(request):
 
     context = {}
 
-    items  = stamps.models.Stamp.objects.all().select_related()
+#    items  = stamps.models.Stamp.objects.ordered_list().select_related()
+    #items  = stamps.models.Designer.cobjects.list().select_related()
 
-    fields = ('name', 'country', 'year')
-    DesignerFormset = modelformset_factory(stamps.models.Stamp,form=stamps.models.StampForm, can_delete=True)
-    designer_fs = DesignerFormset()
+    StampFormset = modelformset_factory(stamps.models.Stamp,form=stamps.models.StampForm, can_delete=True, max_num=0)
         
-    context['items'] = items
-    context['formset'] = designer_fs
+    if request.method == 'POST':
+        formset = StampFormset(request.POST, request.FILES, queryset=stamps.models.Stamp.objects.ordered_list().select_related())
+        if formset.is_valid():
+            # do something with the formset.cleaned_data
+            formset.save()
+        else:
+            print formset.errors
+    else:
+        formset = StampFormset(queryset=stamps.models.Stamp.objects.ordered_list().select_related())
+
+    # Queryset is the list of objects, formset.forms, the corresponding forms
+    # Zip together to allow iteration in one go in template
+    formset.zipped = zip(formset.queryset, formset.forms)
+
+    print formset.forms
+
+    context['formset'] = formset
 
     return direct_to_template(request, 'dashboard/list.html', context)
 
 @login_required
 def action(request):
+
     if not request.POST:
         log.error("Did not receive POST with this request; redirect")
         return redirect(reverse('dashboard_index')) 
@@ -58,7 +73,7 @@ def action(request):
         # Mass update ordering of other items
         middle = model.objects.filter(Query & Q(order__gte=order, order__lt=original_order))
         if middle is not None:
-            middle.update(order=F('order') + 1)
+                middle.update(order=F('order') + 1)
         msg = "Updated ordering"
     elif order > original_order:
         middle = model.objects.filter(Query & Q(order__gt=original_order, order__lte=order))

@@ -1,8 +1,10 @@
 $(function($) {
-  $("ul.families" ).sortable({
-    item: 'div',
+  $(".designer" ).sortable({
+    item: 'ul',
     opacity: 0.6,
     cursor: "move",
+    containment: 'parent',
+    axis: 'y',
     update: function(e, ui) {
               $.ajax({
                 url: "/dashboard/action/",
@@ -19,10 +21,12 @@ $(function($) {
             }
   });
 
-  $("ul.stamps" ).sortable({
+  $(".family" ).sortable({
     item: 'li',
     opacity: 0.6,
     cursor: "move",
+    axis: 'y',
+    containment: 'parent',
     update: function(e, ui) {
               $.ajax({
                 url: "/dashboard/action/",

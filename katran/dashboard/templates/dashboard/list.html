@@ -6,13 +6,27 @@
 {% block main %}
 <div id="dashboard">
 <form method="post" action="">
-  <table>
   {% csrf_token %}
-  {{ formset.as_table }}
-  </table>
+  {{ formset.management_form }}
+  {% regroup formset.zipped by 0.family.designer.id as stamps %}
+  {% for designer in stamps %}
+  <ul class="designer">          
+    {% regroup designer.list by 0.family.id as families %}
+    <h3><a href="{% url admin:stamps_designer_change families.0.list.0.0.family.designer.id %}">{{ families.0.list.0.0.family.designer.name }}</a></h3>
+      {% for family in families %}
+        {% with family.list.0.0.family as f %}
+          {% include 'dashboard/includes/family.html' %}
+        {% endwith %}
+      {% endfor %}
+  </ul>
+  {% endfor %}
+
   <input type="submit" value="Save" / >
 </form>
   <ul>
+  {% for s in items %}
+    {% include 'dashboard/includes/stamp.html' %}
+  {% endfor %} 
   {# DESIGNERS #}
   {% for d in items.all %}
     <li class="designer">
