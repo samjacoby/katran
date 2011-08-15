@@ -5,10 +5,25 @@
 
 {% block main %}
 <div id="dashboard">
+
 <form method="post" action="">
   {% csrf_token %}
-  {{ formset.management_form }}
-  {% regroup formset.zipped by 0.family.designer.id as stamps %}
+  {{ designer_formset.management_form }}
+  {{ designer_formset }}
+  <input type="submit" value="Save" / >
+</form>
+
+<form method="post" action="">
+  {% csrf_token %}
+  {{ family_formset.management_form }}
+  {{ family_formset }}
+  <input type="submit" value="Save" / >
+</form>
+
+<form method="post" action="">
+  {% csrf_token %}
+  {{ stamp_formset.management_form }}
+  {% regroup stamp_formset.zipped by 0.family.designer.id as stamps %}
   {% for designer in stamps %}
   <ul class="designer">          
     {% regroup designer.list by 0.family.id as families %}

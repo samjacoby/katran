@@ -29,11 +29,6 @@ class Sponsor(models.Model):
         return self.name
 
 
-class DesignerManager(models.Manager):
-
-    def list(self): 
-        list = self.filter(is_published=True).filter(in_navigation=True).order_by('normalized_name').order_by('stamp_type')
-        return list
 
 class KModel(models.Model):
 
@@ -53,7 +48,14 @@ class KModel(models.Model):
         super(KModel, self).save(*args, **kwargs)
 
 
-    
+class DesignerManager(models.Manager):
+
+    def list(self): 
+        list = self.filter(is_published=True).filter(in_navigation=True).order_by('normalized_name', 'stamp_type')
+        return list
+
+    def ordered_list(self):
+        return self.order_by('normalized_name')
 
 class Designer(KModel):
     
@@ -84,6 +86,12 @@ class Designer(KModel):
     class Meta:
         ordering = ['normalized_name']
 
+class FamilyManager(models.Manager):
+
+    def ordered_list(self): 
+        return self.order_by('designer__normalized_name','order')
+
+
 class Family(KModel):
     designer  = models.ForeignKey(Designer, related_name='families')
 
@@ -91,6 +99,9 @@ class Family(KModel):
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="If left blank, stamp's year will be used.")
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
     sponsor = generic.GenericRelation(Sponsor)
+
+    # Custom Manager
+    objects = FamilyManager()
     
     def __unicode__( self ):
         return "%s - %s" % (self.designer.name, self.name)
@@ -106,7 +117,6 @@ class Family(KModel):
 class StampManager(models.Manager):
 
     def ordered_list(self): 
-        list = self.order_by('family__designer__normalized_name').order_by('family__order').order_by('order')
         list = self.order_by('family__designer__normalized_name','family__order','order')
         return list
 
@@ -148,15 +158,17 @@ class DesignerForm(ModelForm):
 
     class Meta:
         model = Designer
+        exclude = ('order','info')
 
 class FamilyForm(ModelForm):
 
     class Meta:
         model = Family
+        exclude = ('order',)
 
 class StampForm(ModelForm):
 
     class Meta:
         model = Stamp
-        exclude = ('footer','info')
+        exclude = ('order','footer','info')
 
