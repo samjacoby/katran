@@ -21,25 +21,15 @@ def index(request):
     context = {}
 
     if request.method == 'POST':
-   #     formset = dashboard.forms.DesignerFormset(request.POST, request.FILES)
-#        family_formset = FamilyFormset(queryset=stamps.models.Family.objects.ordered_list().select_related(), prefix='family')
-#        stamp_formset = StampFormset(queryset=stamps.models.Stamp.objects.ordered_list().select_related(), prefix='stamp')
+        formset = dashboard.forms.DesignerFormset(request.POST, request.FILES, queryset=stamps.models.Designer.cobjects.ordered_list()[0:1])
         if formset.is_valid():
-            pass
             # do something with the formset.cleaned_data
-#            formset.save_all()
+            formset.save_all()
         else:
             print formset.errors
     else:
-        #formset = dashboard.forms.DesignerFormset(queryset=stamps.models.Designer.cobjects.ordered_list())
-        designers = stamps.models.Designer.objects.all()
-        #formset = dashboard.forms.FamilyFormset(instance=designers[0])
-        formset = dashboard.forms.DesignerFormset(queryset=designers)
-#        formset = dashboard.forms.DesignerFormset()
+        formset = dashboard.forms.DesignerFormset(queryset=stamps.models.Designer.cobjects.ordered_list()[0:1])
 
-    # Queryset is the list of objects, formset.forms, the corresponding forms
-    # Zip together to allow iteration in one go in template
-#    stamp_formset.zipped = zip(stamp_formset.queryset, stamp_formset.forms)
     context['designers'] = formset
     return direct_to_template(request, 'dashboard/list.html', context)
 

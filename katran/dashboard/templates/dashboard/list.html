@@ -2,6 +2,7 @@
 {% load extra_tags %}
 {% load stamps_tags %}
 {% load placeholder_tags %}
+{% load dashboard_tags %}
 
 {% block main %}
 <div id="dashboard">
@@ -19,21 +20,14 @@
     {% if designer.nested %}
     <div class="formgroup">
     {% for families in designer.nested %}
+    {{ families.management_form }}
       {% for family in families %}
         <h3>FAMILY</h3>
-        <hr>
-        {{ family.management_form }}
         {{ family }}
-        {% if families.nested %}
-        {% for stamp in families.nested %}
-          <hr>
-          <div class="formgroup">
-          <h4>STAMP</h4>
-          {{ stamp.management_form }}
-          {{ stamp }}
-          </div>
-        {% endfor %}
-        {% endif %}
+        <hr>
+        <div class="formgroup">
+        {% render_stamps forloop.counter0 %}
+        </div>
       {% endfor %}
     {% endfor %}
     </div>
