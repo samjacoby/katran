@@ -1,0 +1,7 @@
+<ul class="family" id="set_{{ f.id }}">
+  {% for stamp, form in family.list %}
+    <li class="stamp" id="set_{{ stamp.id }}">
+    {% include 'dashboard/includes/stamp.html' %}
+    </li>
+  {% endfor %}
+</ul>
