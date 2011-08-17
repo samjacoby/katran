@@ -55,8 +55,8 @@ class PrevNextFamily( InclusionTag ):
 
         for node in nodes:
             if node.descendant:
-                if node.parent.attr['type'] == 'designer': 
-                    # We're the designer level, so make first descendant
+                if node.parent.attr['type'] == 'designer' and node.parent.selected: 
+                    # We're at the designer level, so make first descendant the selected node
                     current_index = nodes.index(node)
                     break
                 else:
@@ -68,6 +68,7 @@ class PrevNextFamily( InclusionTag ):
                 current_index = nodes.index(node)
                 break
 
+        print current_index
         assert current_index != None
 
         # This is done after selection, as the selected node can be invisible
