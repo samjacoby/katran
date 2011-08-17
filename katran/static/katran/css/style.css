@@ -30,13 +30,20 @@ body {
   /* 384/960 */
   float: left; }
 
+.column-content {
+  width: 40%;
+  /* 384/960 */
+  float: left; }
+
+#stamps.column-content {
+  width: 30%;
+  /* 288/960 */
+  float: left; }
+
 #side-content {
   float: left;
-  width: 20%;
+  width: 22%;
   padding-left: 2em; }
-  #side-content p {
-    line-height: 1.38461538;
-    /* 18/13px */ }
 
 img {
   max-width: 100%;
@@ -80,6 +87,8 @@ nav {
   /* Bottom Menu Layout */ }
   nav#sub-menu {
     font-size: .9em; }
+    nav#sub-menu li#page-title {
+      color: #870000; }
     nav#sub-menu ul li {
       margin-right: 1em;
       display: inline; }
@@ -198,7 +207,10 @@ table p {
 .invisible {
   visibility: hidden; }
 
-/* DASHBOARD */
+/* DASHBOARD AND UI*/
+#stamp-edit-controls {
+  float: left; }
+
 #dashboard #stamp-meta li {
   padding: 1em;
   margin: 1em; }

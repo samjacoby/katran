@@ -15,8 +15,16 @@
 </nav>
 {% endblock %}
 
+{% block side-content %}
+<div id="side-content">
+  {% placeholder "sidebar" %}
+  This is a sidebar.
+</div>
+{% endblock %}
+
+
 {% block main %}
-  <div id="column-content">
+  <div id="stamps" class="column-content">
     {% placeholder "main-content" %}
     This is stamp index.
   </div>

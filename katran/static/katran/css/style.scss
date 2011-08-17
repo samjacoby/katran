@@ -41,13 +41,25 @@ body {
   float: left;
 }
 
+.column-content {
+  width: 40%; /* 384/960 */
+  float: left;
+}
+
+#stamps {
+  &.column-content {
+    width: 30%; /* 288/960 */ 
+    float: left;
+  }
+}
+
 #side-content {
   float: left;
-  width: 20%;
+  width: 22%;
   padding-left: 2em;
-  p {
-    line-height: 1.38461538; /* 18/13px */
-  }
+//  p {
+//    line-height: 1.38461538; /* 18/13px */
+//  }
 }
 
 img {
@@ -106,6 +118,9 @@ footer {
 nav {
   &#sub-menu {
     font-size: .9em;
+    li#page-title {
+      color: $highlight-color;
+    }
     ul li {
       margin-right: 1em;
       display: inline;
@@ -280,7 +295,11 @@ table p {
   visibility: hidden;
 }
 
-/* DASHBOARD */
+/* DASHBOARD AND UI*/
+
+#stamp-edit-controls {
+  float: left;
+}
 
 #dashboard {
   #stamp-meta {
