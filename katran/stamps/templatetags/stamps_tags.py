@@ -30,6 +30,7 @@ def get_prev_sibling(node, nodes):
 
 class PrevNextFamily( InclusionTag ):
     '''Previous and next links that iterate over stamp families'''
+
     name = 'stamp_family_links'
     template = 'menu/prev_next_links.html'
 
@@ -45,19 +46,24 @@ class PrevNextFamily( InclusionTag ):
         except KeyError:
             return { 'template': 'menu/empty.html' }
         
+        # Fetch all nodes of all types
         all_nodes = menu_pool.get_nodes(request, namespace, root_id )
+        # Fetch families
         nodes = menu_pool.get_nodes_by_attribute(all_nodes, 'type', 'family')
+
         current_index = None
 
         for node in nodes:
-            assert node.attr['type'] == 'family'
-
-        for node in nodes:
             if node.descendant:
-                # We're at the root index, so just return with first family and arbitrary previoous
-                context['next'] = nodes[0]
-                context['prev'] = node.parent.parent.parent # This happens to be /resources/
-                return context
+                if node.parent.attr['type'] == 'designer': 
+                    # We're the designer level, so make first descendant
+                    current_index = nodes.index(node)
+                    break
+                else:
+                    # We're at the root index, so just return with first family and arbitrary previoous
+                    context['next'] = nodes[0]
+                    context['prev'] = node.parent.parent.parent # This happens to be /resources/
+                    return context
             if node.selected or node.ancestor:
                 current_index = nodes.index(node)
                 break
@@ -71,10 +77,10 @@ class PrevNextFamily( InclusionTag ):
                 nodes.remove(n)
         
         try:
-            next_link = nodes[ current_index + 1 ]
+            next_link = nodes[current_index + 1]
         except IndexError:
             next_link = (node.parent).parent
-        prev_link = nodes[ current_index - 1]
+        prev_link = nodes[current_index - 1]
         if current_index == 0:
             prev_link = (node.parent).parent
 
@@ -177,7 +183,11 @@ class StampFamilies( InclusionTag ):
                 return context
         
         for node in nodes:
-            if (node.ancestor or node.selected) and node.attr['type'] == 'designer':
+            if node.selected and node.attr['type'] == 'designer':
+                # Set first family to be selected
+                node.children[0].selected = True
+                break
+            if node.ancestor and node.attr['type'] == 'designer':
                 break
 
         try:
@@ -187,7 +197,7 @@ class StampFamilies( InclusionTag ):
             context = { 'template': template}
             
         return context
-register.tag( StampFamilies )
+register.tag(StampFamilies)
 
 class StampValues( InclusionTag ):
     '''Generate a linked list of stamp values'''
@@ -206,13 +216,16 @@ class StampValues( InclusionTag ):
             return { 'template': 'menu/empty.html' }
         
         all_nodes = menu_pool.get_nodes(request)
-        nodes = menu_pool.get_nodes_by_attribute( all_nodes, 'type', 'family' )
-        
+        nodes = menu_pool.get_nodes_by_attribute(all_nodes, 'type', 'family')
+
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'family':
                 break
+            if node.descendant: # We must be at a designer
+                node.selected = True # This must be the first family, so select it
+                break
 
-        if node.selected: # We're at a family, so automatically select the first stamp
+        if node.selected: # We're at a family or designer, so automatically select the first stamp
           node.children[0].selected = True
 
         try:
