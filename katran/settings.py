@@ -114,7 +114,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 CMS_TEMPLATES = (
     ('index.html', 'Base Index Template'),
-    ('page.html', 'Base Page Template'),
+    ('page.html', 'Base Full-width Page Template'),
+    ('page-column.html', 'Base Column-width Page Template'),
 )
 
 CMS_MENU_TITLE_OVERWRITE = True

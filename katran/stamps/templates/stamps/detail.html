@@ -16,23 +16,23 @@
 {% endblock %}
 
 {% block main %}
-<div class="detail-content">         
+<div id="column-content">         
     <a href="{% stamp_links %}">
       <img src="{{ MEDIA_URL }}/{{ stamp.picture }}"/>
     </a>
     {% with "384" as width %}
     {% render_placeholder stamp.content width %}
     {% endwith %}
-</div>
-<nav class="menu">
-  <ul id="stamp-values">
-    {% stamp_values %}
+  <nav class="menu">
+    <ul id="stamp-values">
+      {% stamp_values %}
+    </ul>
+  </nav>
+  <ul id="stamp-meta"> 
+    <li><span id="place">{% firstof stamp.country stamp.family.country %}</span>.<span class="year">{% firstof stamp.year stamp.family.year %}</span></li>
+    <li><span class="name">{% firstof stamp.name stamp.family.name %}</span></li>
   </ul>
-</nav>
-<ul id="stamp-meta"> 
-  <li><span id="place">{% firstof stamp.country stamp.family.country %}</span>.<span class="year">{% firstof stamp.year stamp.family.year %}</span></li>
-  <li><span class="name">{% firstof stamp.name stamp.family.name %}</span></li>
-</ul>
+</div>
 <div class="sidebar-content">
     {% render_placeholder stamp.sidebar %}
 </div>

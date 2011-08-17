@@ -29,7 +29,6 @@ body {
 }
 
 #main-content {
-  float: left;
 }
 
 #content {
@@ -38,7 +37,7 @@ body {
 }
 
 #column-content {
-  //width: 40%; /* 384/960 */
+  width: 40%; /* 384/960 */
   float: left;
 }
 
@@ -133,6 +132,7 @@ nav {
 /* Regular Links */
 a {
   text-decoration: none;
+  color: black;
   &:visited {
     color: #808385;
   }

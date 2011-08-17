@@ -4,9 +4,11 @@
 
 {% regroup children by attr.stamp_type as designer_list %}
 {% for type in designer_list %}                                                                                                            
-  <li>{{ type.grouper }}</li>
+  {% if type.grouper == 1 %}
+  <li>other assorted materials</li>
+  {% endif %}
   {% for item in type.list %}
-  <li {% if child.selected or selected.ancestor %}class="selected"{% endif %}>
+  <li {% if item.selected or selected.ancestor %}class="selected"{% endif %}>
 	<a href="{{ item.attr.redirect_url|default:item.get_absolute_url }}">{{ item.get_menu_title }}</a>
   </li>                
   {% endfor %}

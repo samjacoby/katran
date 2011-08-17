@@ -21,14 +21,13 @@ body {
   padding-right: 2em;
   width: 15%; }
 
-#main-content {
-  float: left; }
-
 #content {
   width: 80%;
   float: left; }
 
 #column-content {
+  width: 40%;
+  /* 384/960 */
   float: left; }
 
 #side-content {
@@ -99,7 +98,8 @@ nav {
 
 /* Regular Links */
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  color: black; }
   a:visited {
     color: #808385; }
 
