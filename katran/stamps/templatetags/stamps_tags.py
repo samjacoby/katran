@@ -211,13 +211,10 @@ class StampValues( InclusionTag ):
         for node in nodes:
             if (node.ancestor or node.selected) and node.attr['type'] == 'family':
                 break
-        print '%s - %s' % (node, node.selected)
 
         if node.selected: # We're at a family, so automatically select the first stamp
           node.children[0].selected = True
 
-        for c in node.children:
-            print dir(c)
         try:
             context = { 'children': node.children }
         except:
@@ -225,3 +222,36 @@ class StampValues( InclusionTag ):
             
         return context
 register.tag( StampValues )
+
+class DesignerMenu( InclusionTag ):
+    '''A list of all available designers'''
+    
+    name = 'designer_menu'
+    template = 'menu/designer_menu.html'
+
+    options = Options(
+        Argument('name', default=None, required=False),
+        Argument('template', default='menu/stamp_links.html', required=False),
+    )                                          
+
+    def get_context(self, context, template, name ):
+        try:
+            request = context['request']
+        except KeyError:
+            return { 'template': 'menu/empty.html' }
+        
+        all_nodes = menu_pool.get_nodes(request)
+        nodes = menu_pool.get_nodes_by_attribute( all_nodes, 'type', 'designer' )
+        
+        for node in nodes:
+            if (node.ancestor or node.selected):
+                node.selected = True # make sure this is true, as we'll use it in the templates
+                break
+
+        try:
+            context = { 'children': nodes }
+        except:
+            context = { 'template': template}
+            
+        return context
+register.tag( DesignerMenu )

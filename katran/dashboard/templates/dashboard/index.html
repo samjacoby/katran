@@ -8,19 +8,12 @@
 <div id="dashboard">
 <form action="." method="POST">
   {% csrf_token %}
-  {{ designers.management_form }}
-  {% for families in designers %}
-  <div class="formgroup">
-    <hr>    
-    <h2>DESIGNER</h2>
-    <hr>
-    ping
-    {% for family in families %}
-      {{ family }}
-      {% render_stamps forloop.counter0 %}
-    {% endfor %}
-    <hr>
-  </div>
+  {{ management_form }}
+  {% for d, form in designers %}
+    <table>
+    <tr><a href="{% url dashboard_detail d.pk %}">{{ d }}</a></tr>
+    {{ form }}
+    </table>
   {% endfor %}
   <input type="submit" value="Save" />
 </form>

@@ -5,7 +5,14 @@ from django.http import HttpResponse
 
 
 def index(request):
+    
+    context = {}
+
+    designers = Designer.cobjects.list()
+    context['designers'] = designers
+
     return render_to_response('stamps/index.html',
+                              context,
                               context_instance=RequestContext(request))
 
 def detail(request, designer, family=1, stamp=1, url_override=''):

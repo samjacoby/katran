@@ -16,28 +16,48 @@ import dashboard.forms
 log = logging.getLogger(__name__)
 
 @login_required
-def index(request):
+def detail(request, designer):
 
     context = {}
-    formsets = []
-
-    designers = stamps.models.Designer.objects.all()
+    
+    designer = get_object_or_404(stamps.models.Designer, pk=designer)
 
     if request.method == 'POST':
-        #formset = dashboard.forms.FamilyFormset(request.POST, request.FILES, queryset=stamps.models.Stamp.objects.ordered_list())
-        formset = dashboard.forms.FamilyFormset(request.POST, request.FILES, queryset=stamps.models.Stamp.objects.ordered_list())
+        formset = dashboard.forms.FamilyFormset(request.POST, request.FILES, instance=designer, prefix='FAMILY_%s' % designer.pk) 
         if formset.is_valid():
             # do something with the formset.cleaned_data
             formset.save_all()
         else:
             print formset.errors
     else:
-        #formset = dashboard.forms.FamilyFormset(queryset=stamps.models.Stamp.objects.ordered_list())
-        for d in designers:
-            formsets.append(dashboard.forms.FamilyFormset(instance=d, prefix='DESIGNER_%s' % d.pk))
+        formset = dashboard.forms.FamilyFormset(instance=designer, prefix='FAMILY_%s' % designer.pk)
 
-    context['designers'] = formsets
-    return direct_to_template(request, 'dashboard/list.html', context)
+    context['families'] = formset
+    return direct_to_template(request, 'dashboard/detail.html', context)
+
+@login_required
+def index(request):
+    '''Fetch and display an editable list of designers'''
+
+    context = {}
+    formsets = []
+
+    # Fetch all designers (regardless of status)
+    qs = stamps.models.Designer.cobjects.ordered_list()
+
+    if request.POST:
+        formset = dashboard.forms.DesignerFormset(request.POST, queryset=qs)
+        if formset.is_valid():
+            formset.save()
+    else:
+        formset = dashboard.forms.DesignerFormset(queryset=qs)
+
+    # Iterate over designers and forms at the same time, so zip together
+    context['designers'] = zip(qs, formset.forms)
+    # Add management form back, now that the basic form is omitted
+    context['management_form'] = formset.management_form
+
+    return direct_to_template(request, 'dashboard/index.html', context)
 
 @login_required
 def action(request):

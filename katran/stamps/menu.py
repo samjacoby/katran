@@ -13,16 +13,13 @@ class StampMenu(CMSAttachMenu):
         families = []
         namespace = 'stamp'
         
-        for d in Designer.objects.select_related('families',
-                                                 'stamps').filter(
-                                                 is_published=True, 
-                                                 in_navigation=True):
+        for d in Designer.cobjects.list():
             designer_key = '%s' % d.normalized_name
             designer_node = NavigationNode(d.name, 
                                            d.get_absolute_url(), 
                                            designer_key,
                                            parent_namespace=namespace,
-                                           attr={'type':'designer'})
+                                           attr={'type':'designer', 'stamp_type': d.stamp_type})
             nodes.append(designer_node)
         
             for f in Family.objects.filter(is_published=True, 

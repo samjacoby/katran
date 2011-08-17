@@ -1,0 +1,29 @@
+{% load menu_tags %}
+{% load extra_tags %}
+{% spaceless %}
+
+{% regroup children by attr.stamp_type as designer_list %}
+{% for type in designer_list %}                                                                                                            
+  <li>{{ type.grouper }}</li>
+  {% for item in type.list %}
+  <li {% if child.selected or selected.ancestor %}class="selected"{% endif %}>
+	<a href="{{ item.attr.redirect_url|default:item.get_absolute_url }}">{{ item.get_menu_title }}</a>
+  </li>                
+  {% endfor %}
+{% endfor %}
+
+{% endspaceless %}
+
+{% regroup people by gender as gender_list %}
+
+<ul>
+{% for gender in gender_list %}
+    <li>{{ gender.grouper }}
+    <ul>
+        {% for item in gender.list %}
+        <li>{{ item.first_name }} {{ item.last_name }}</li>
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
