@@ -39,6 +39,8 @@ body {
   float: left;
   width: 35%;
   padding-left: 2em; }
+  #stamps #side-content #designer-info {
+    width: 70%; }
   #stamps #side-content #sponsor-list {
     margin-top: 1.5em;
     width: 75%; }
