@@ -1,6 +1,10 @@
-/* GLOBAL SETTINGS */
+/* Global Variables */
 
 $highlight-color: #870000;
+$off-color: #C06D6D;
+$visited: #808385;
+
+/* Initialize Page */
 
 body {
   font: normal 100% Arial, Hevetica, sans-serif;
@@ -14,21 +18,12 @@ body {
   line-height: 1.5em; /* 18/12 */
 }
 
-/* LAYOUT */
+/* Basic Layout */
 
-#all-content {
+.all-content {
   width: 100%;
   float: left;
   font-size: .9em;
-}
-
-.side-menu {
-  float: left;
-  padding-right: 2em;
-  width: 15%;
-}
-
-#main-content {
 }
 
 #content {
@@ -37,35 +32,80 @@ body {
 }
 
 #column-content {
-  width: 40%; /* 384/960 */
+  width: 37%; /* 384/960 */
   float: left;
 }
 
 .column-content {
-  width: 40%; /* 384/960 */
+  width: 37%; /* 384/960 */
   float: left;
 }
 
 #stamps {
-  &.column-content {
+  .column-content {
     width: 30%; /* 288/960 */ 
     float: left;
   }
+  #side-content {
+    float: left;
+    width: 35%;
+    padding-left: 2em;
+    #sponsor-list {
+      margin-top: 1.5em;
+      width: 75%;
+    }
+  }
 }
 
-#side-content {
-  float: left;
-  width: 22%;
-  padding-left: 2em;
-//  p {
-//    line-height: 1.38461538; /* 18/13px */
-//  }
+#entries {
+  #side-content {
+    float: left;
+    width: 22%;
+    padding-left: 2em;
+  }
 }
+
+
+.side-menu {
+  float: left;
+  padding-right: 2em;
+  width: 15%;
+}
+
 
 img {
   max-width: 100%;
   display: block;
 }
+
+/* General Character Styles */
+.highlight-color {
+  color: $highlight-color;
+}
+
+.highlight-bold {
+  font-weight: bold;
+}
+
+strong {
+  font-weight:bold;
+}
+
+em {
+  font-style: italic;
+}
+
+/* General Layout Styles */
+
+#content p {
+  margin-bottom:22px;
+}
+
+table p {
+  margin-top:11px;
+  margin-bottom:11px;
+}
+
 
 /* ENTRIES INDEX: Book & Typography */
 .entry {
@@ -84,34 +124,34 @@ img {
   }
 }
 
+/* STAMPS */
 
-/* Menus specific to the Stamps Page */
-
-nav#designer-nav {
-  float: left;
-  padding-right:45px;
+// List of designers
+nav#designer-menu {
+  li.heading {
+    font-weight: bold;
+    margin-top: 1em;
+  }
 }
 
-nav#sponsor-nav {
-  float: left;
+// List of sponsors
+div#sponsor-list {
+  &>p { font-weight: bold; }
+  a { 
+    color: $off-color;
+    &:visited {
+     color: $visited;
+    }
+  }
+  .name {
+    font-weight: bold;
+    color: $highlight-color;
+  }
+  .link {
+    color: $highlight-color;
+  }
 }
 
-nav#designer-nav .separator {
-  margin-top: 11px;
-}
-
-/* This displays just below stamps */
-
-footer {
-  clear: left;
-  float: left;
-  padding-top:40px;
-}
-
-#body-footer-nav {
-  clear: left;
-  float: left;
-}
 
 /* Secondary Navigation Menu Layout */
 
@@ -149,7 +189,7 @@ a {
   text-decoration: none;
   color: black;
   &:visited {
-    color: #808385;
+    color: $visited;
   }
 }
 
@@ -238,7 +278,7 @@ nav.menu {
       a { 
         color: #C06D6D;
         &:visited {
-          color: #808385;
+          color: $visited;
         }
       }
     }
@@ -262,40 +302,7 @@ nav.menu {
   color: #323133;
 }
 
-/* General Character Styles */
-.highlight-color {
-  color: $highlight-color;
-}
-
-.highlight-bold {
-  font-weight: bold;
-}
-
-strong {
-  font-weight:bold;
-}
-
-em {
-  font-style: italic;
-}
-
-/* General Layout Styles */
-
-#content p {
-  margin-bottom:22px;
-}
-
-table p {
-  margin-top:11px;
-  margin-bottom:11px;
-}
-
-/* No Display */
-.invisible {
-  visibility: hidden;
-}
-
-/* DASHBOARD AND UI*/
+/* Administrative Dashboard */
 
 #stamp-edit-controls {
   float: left;
@@ -335,5 +342,10 @@ table p {
       }
     }
   } 
+}
+
+/* No Display */
+.invisible {
+  visibility: hidden;
 }
 

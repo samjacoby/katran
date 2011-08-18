@@ -8,7 +8,6 @@ from django.forms import ModelForm
 from cms.models.fields import PlaceholderField
 from menus.menu_pool import menu_pool
 
-
 class ItemManager(models.Manager):
     
     def all_items(self):
@@ -18,14 +17,17 @@ class Sponsor(models.Model):
     '''
     This is a sponsor. Not much to see. Can be associated with anything.
     '''
-    content_type = models.ForeignKey(ContentType)
-    content_object = generic.GenericForeignKey()
-    object_id = models.PositiveIntegerField()
+
+    active = models.BooleanField(default=True, help_text='Active sponsor?')
     name = models.CharField(max_length=100)
-    link = models.CharField(max_length=100)
+    normalized_name = models.CharField(max_length=100, help_text='The text by which this sponsor is ordered')
+    link = models.CharField(max_length=300)
 
     def __unicode__(self):                    
         return self.name
+
+    class Meta:
+        ordering = ['normalized_name'] 
 
 class KModel(models.Model):
 
@@ -33,6 +35,7 @@ class KModel(models.Model):
     in_navigation = models.BooleanField(default=True, help_text='Accessible through link in menu?')
 
     name = models.CharField(max_length=100, help_text='Displayed through-out the site')
+    sponsor  = models.ManyToManyField(Sponsor, null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -53,11 +56,6 @@ class DesignerManager(models.Manager):
     def ordered_list(self):
         return self.order_by('stamp_type', 'normalized_name')
 
-class DesignerType(models.Model):
-
-    name = models.CharField(max_length=60)
-    order = models.PositiveIntegerField(default=1)                      
-
 class Designer(KModel):
     
     normalized_name = models.CharField( max_length=60, help_text='Normalized name for URL, e.g. Hermann Zapf becomes zapf.')
@@ -70,8 +68,6 @@ class Designer(KModel):
     stamp_type = models.IntegerField( 'Designer Menu Type', choices=DESIGNER_TYPE, default=0, help_text="Determines in which portion of the menu a designer is displayed.")
 
     info = PlaceholderField('designer_info')
-
-    sponsor = generic.GenericRelation(Sponsor)
 
     objects = models.Manager()
     # Custom Manager
@@ -99,7 +95,6 @@ class Family(KModel):
     country = models.CharField(max_length=60, blank=True, help_text="If left blank, stamp's country will be used.")
     year = models.IntegerField(max_length=4, blank=True, null=True, help_text="If left blank, stamp's year will be used.")
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
-    sponsor = generic.GenericRelation(Sponsor)
 
     # Custom Manager
     objects = FamilyManager()
@@ -136,7 +131,6 @@ class Stamp(KModel):
 
     # Order with which stamp appears in family
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
-    sponsor = generic.GenericRelation(Sponsor)
 
     def get_absolute_url(self):
         if self.url_override:

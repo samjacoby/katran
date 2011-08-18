@@ -4,15 +4,16 @@
 {% load extra_tags %}
 {% load stamps_tags %}
 
-
 {% block side-menu %}
 <div class="side-menu">
   {% placeholder "sidebar-menu" %}
-  <ul>
+  <nav id="designer-menu">
   {% designer_menu %}
-  </ul>
+  </nav>
 </div>
 {% endblock %}
+
+{% block page-id %}stamps{% endblock %}
 
 {% block footer-menu %}
 <nav class="menu" id="footer-menu">

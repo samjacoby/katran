@@ -9,6 +9,8 @@ def index(request):
     context = {}
 
     designers = Designer.cobjects.list()
+    sponsors = Sponsor.objects.filter(active=True)
+    context['sponsors'] = sponsors
     context['designers'] = designers
 
     return render_to_response('stamps/index.html',
@@ -21,7 +23,7 @@ def detail(request, designer, family=1, stamp=1, url_override=''):
                                      family__order=family, 
                                      order=stamp,
                                      url_override=url_override)
-    
+    print dir(stamp.sponsor) 
     return render_to_response('stamps/detail.html',
                              {'stamp': stamp },
                               context_instance=RequestContext(request))

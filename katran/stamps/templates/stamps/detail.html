@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block main %}
-<div id="stamps" class="column-content">         
+<div class="column-content">         
   <a href="{% stamp_links %}">
     <img src="{{ MEDIA_URL }}/{{ stamp.picture }}"/>
   </a>
@@ -34,8 +34,20 @@
     <li><span id="place">{% firstof stamp.country stamp.family.country %}</span>.<span class="year">{% firstof stamp.year stamp.family.year %}</span></li>
     <li><span class="name">{% firstof stamp.name stamp.family.name %}</span></li>
   </ul>
+  {% if stamp.sponsor.all %}
+  <hr size="1">
+  <div id="sponsor-list">
+  <em>This page was made possible with help from:</em>
+  <ul>
+  {% for s in stamp.sponsor.all %}
+    <li><span class="name">{{ s.name }}</span> : <a class="link" target="_blank" href="{{s.link}}">{{ s.link }}</a>
+  {% endfor %}
+  </ul>
+  </div>
+  {% endif %}
   {% render_placeholder stamp.info %}
-  {% if request.user.is_authorized %}
+  {% if request.user.is_authenticated %}
+  <hr>
   <ul id="stamp-edit-controls">
     <li><a href="{% url dashboard_index %}">dashboard</a></li>
     <li><a href="{% url admin:stamps_designer_change stamp.family.designer.id %}">designer</a>
@@ -46,7 +58,9 @@
 </div>
 
 <div id="side-content">
+  <div id="designer-info">
     {% render_placeholder stamp.family.designer.info %}
+  </div>
 </div>
 {% endblock %}
 

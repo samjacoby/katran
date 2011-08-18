@@ -23,17 +23,12 @@
       <!-- Second-level Navigation Menu --> 
       {% block sub-menu %}{% endblock %}
 
-      <div id="all-content">
+      <div class="all-content" id="{% block page-id %}{% endblock %}">
         
         {% block side-menu %}{% endblock %}
 
-        <div id="main-content">
+        {% block main %}{% endblock %}
 
-            {% block main %}{% endblock %}
-
-        </div><!-- /end .main-content -->
-
-        <!-- Sidebar Content -->
         {% block side-content %}{% endblock %}
 
       </div><!-- /end .all-content --> 

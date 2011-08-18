@@ -168,8 +168,6 @@ class PrevNextInternal(InclusionTag):
 #            return context                      
             
         # Handle index pages and intermediary pages with children
-        print node.title
-        print node.children
         
         if node.children: 
             try: # Next Link

@@ -1,4 +1,5 @@
-/* GLOBAL SETTINGS */
+/* Global Variables */
+/* Initialize Page */
 body {
   font: normal 100% Arial, Hevetica, sans-serif; }
 
@@ -10,44 +11,72 @@ body {
   line-height: 1.5em;
   /* 18/12 */ }
 
-/* LAYOUT */
-#all-content {
+/* Basic Layout */
+.all-content {
   width: 100%;
   float: left;
   font-size: .9em; }
-
-.side-menu {
-  float: left;
-  padding-right: 2em;
-  width: 15%; }
 
 #content {
   width: 80%;
   float: left; }
 
 #column-content {
-  width: 40%;
+  width: 37%;
   /* 384/960 */
   float: left; }
 
 .column-content {
-  width: 40%;
+  width: 37%;
   /* 384/960 */
   float: left; }
 
-#stamps.column-content {
+#stamps .column-content {
   width: 30%;
   /* 288/960 */
   float: left; }
+#stamps #side-content {
+  float: left;
+  width: 35%;
+  padding-left: 2em; }
+  #stamps #side-content #sponsor-list {
+    margin-top: 1.5em;
+    width: 75%; }
 
-#side-content {
+#entries #side-content {
   float: left;
   width: 22%;
   padding-left: 2em; }
 
+.side-menu {
+  float: left;
+  padding-right: 2em;
+  width: 15%; }
+
 img {
   max-width: 100%;
   display: block; }
+
+/* General Character Styles */
+.highlight-color {
+  color: #870000; }
+
+.highlight-bold {
+  font-weight: bold; }
+
+strong {
+  font-weight: bold; }
+
+em {
+  font-style: italic; }
+
+/* General Layout Styles */
+#content p {
+  margin-bottom: 22px; }
+
+table p {
+  margin-top: 11px;
+  margin-bottom: 11px; }
 
 /* ENTRIES INDEX: Book & Typography */
 .entry {
@@ -61,26 +90,22 @@ img {
   float: none;
   width: 100%; }
 
-/* Menus specific to the Stamps Page */
-nav#designer-nav {
-  float: left;
-  padding-right: 45px; }
+/* STAMPS */
+nav#designer-menu li.heading {
+  font-weight: bold;
+  margin-top: 1em; }
 
-nav#sponsor-nav {
-  float: left; }
-
-nav#designer-nav .separator {
-  margin-top: 11px; }
-
-/* This displays just below stamps */
-footer {
-  clear: left;
-  float: left;
-  padding-top: 40px; }
-
-#body-footer-nav {
-  clear: left;
-  float: left; }
+div#sponsor-list > p {
+  font-weight: bold; }
+div#sponsor-list a {
+  color: #c06d6d; }
+  div#sponsor-list a:visited {
+    color: #808385; }
+div#sponsor-list .name {
+  font-weight: bold;
+  color: #870000; }
+div#sponsor-list .link {
+  color: #870000; }
 
 /* Secondary Navigation Menu Layout */
 nav {
@@ -182,32 +207,7 @@ nav.menu ul#stamp-values li.selected a, nav.menu ul#stamp-families li.selected a
   font-weight: bold;
   color: #323133; }
 
-/* General Character Styles */
-.highlight-color {
-  color: #870000; }
-
-.highlight-bold {
-  font-weight: bold; }
-
-strong {
-  font-weight: bold; }
-
-em {
-  font-style: italic; }
-
-/* General Layout Styles */
-#content p {
-  margin-bottom: 22px; }
-
-table p {
-  margin-top: 11px;
-  margin-bottom: 11px; }
-
-/* No Display */
-.invisible {
-  visibility: hidden; }
-
-/* DASHBOARD AND UI*/
+/* Administrative Dashboard */
 #stamp-edit-controls {
   float: left; }
 
@@ -237,3 +237,7 @@ table p {
       margin: 1em;
       border: thin dashed #DEDEDE;
       background: white; }
+
+/* No Display */
+.invisible {
+  visibility: hidden; }

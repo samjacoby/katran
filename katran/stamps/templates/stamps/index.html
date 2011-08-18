@@ -18,14 +18,21 @@
 {% block side-content %}
 <div id="side-content">
   {% placeholder "sidebar" %}
-  This is a sidebar.
+  {% if sponsors %}
+  <div id="sponsor-list"> 
+    <p>This collection of pages was made possible with generous help from:</p>
+    <ul>
+    {% for s in sponsors %}
+      <li><a target="_blank" href="{{ s.link }}">{{ s.name }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
 
-
 {% block main %}
-  <div id="stamps" class="column-content">
+  <div id="index" class="column-content">
     {% placeholder "main-content" %}
-    This is stamp index.
   </div>
 {% endblock %}
