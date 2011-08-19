@@ -133,7 +133,9 @@ class Stamp(KModel):
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
 
     def get_absolute_url(self):
-        if self.url_override:
+        if self.parent and self.url_override:
+            return '%s/%s' % (self.parent.get_absolute_url(), self.url_override)
+        elif: self.url_override:
             return reverse('stamp-detail-url',
                 kwargs = {'designer': self.family.designer.normalized_name, 
                           'family': self.family.order,
