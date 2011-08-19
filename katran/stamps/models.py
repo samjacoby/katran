@@ -117,6 +117,7 @@ class StampManager(models.Manager):
 
 class Stamp(KModel):
     family = models.ForeignKey(Family, related_name='stamps')
+    parent = models.ForeignKey('self', blank=True, null=True, help_text="Used in conjuction with URL override, to make one stamp accessible through another")
     url_override = models.CharField(max_length=40, blank=True, help_text="When set, this stamp will be accessible through this url.")
 
     country = models.CharField(max_length=60, blank=True, help_text="Will override stamp family country.")
