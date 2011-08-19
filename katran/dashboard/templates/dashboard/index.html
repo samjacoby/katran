@@ -5,15 +5,16 @@
 {% load dashboard_tags %}
 
 {% block main %}
-<div id="dashboard">
 <form action="." method="POST">
   {% csrf_token %}
   {{ management_form }}
   {% for d, form in designers %}
-    <table>
-    <tr><a href="{% url dashboard_detail d.pk %}">{{ d }}</a></tr>
-    {{ form }}
-    </table>
+    <div class="designer">
+    <p><a href="{{ d.get_absolute_url }}">{{ d }}</a> <a href="{% url dashboard_detail d.pk %}">(admin)</a></p>
+      <div class="formgroup">
+      {{ form.as_p }}
+      </div>
+    </div>
   {% endfor %}
   <input type="submit" value="Save" />
 </form>

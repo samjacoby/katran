@@ -13,14 +13,13 @@
 
   <body>
     <div id="page">
-      <!-- Top-level Navigation Menu --> 
       <nav class="menu" id="top-menu">
         <ul>
         {% show_menu 0 0 0 1 %}
         {% prev_next_links %}
         </ul>
       </nav>
-      <!-- Second-level Navigation Menu --> 
+
       {% block sub-menu %}{% endblock %}
 
       <div class="all-content" id="{% block page-id %}{% endblock %}">
@@ -31,7 +30,6 @@
 
         {% block side-content %}{% endblock %}
 
-      </div><!-- /end .all-content --> 
       {% block footer-menu %}{% endblock %}
     </div>
   </body>

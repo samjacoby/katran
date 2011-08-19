@@ -1,4 +1,9 @@
+<div class="stamp-family">
 {{ stamps.management_form }}
 {% for form in stamps %}
-  {{ form }}
+  <div class="stamp" id="set_{{ form.instance.id }}">
+  <p>{{ form.instance.name }}</p>
+  {{ form.as_p }}
+  </div>
 {% endfor %}
+</div>

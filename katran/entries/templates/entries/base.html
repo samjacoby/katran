@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load extra_tags %}
 {% load placeholder_tags %}
+
+{% block page-id %}entries{% endblock %}
 
 {% block sub-menu %}
 <nav class="menu" id="sub-menu">
@@ -10,8 +12,6 @@
     </ul>
 </nav>
 {% endblock %}
-
-{% block page-id %}entries{% endblock %}
 
 {% block footer-menu %}
 <nav class="menu" id="footer-menu">

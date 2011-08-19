@@ -1,7 +1,7 @@
+from django import forms
 from django.forms.models import BaseFormSet, BaseModelFormSet, BaseInlineFormSet
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory, modelformset_factory
-
 from django.forms.formsets import DELETION_FIELD_NAME
 
 import stamps.models
@@ -60,7 +60,6 @@ class BaseDesignerFormset(BaseModelFormSet):
 #
 #            for nested in form.nested:
 #                nested.save(commit=commit)
- 
 class BaseFamilyFormset(BaseInlineFormSet): 
 
     def __init__(self, *args, **kwargs): 
@@ -150,6 +149,12 @@ class BaseFamilyFormset(BaseInlineFormSet):
             for nested in self.nested:
                 nested.save(commit=commit)
 
+class BaseStampFormset(BaseInlineFormSet):
+     def add_fields(self, form, index):
+         super(BaseStampFormset, self).add_fields(form, index)
+         #form.fields["my_field"] = forms.CharField()
+         print index
+
 class DesignerForm(ModelForm):
 
     class Meta:
@@ -162,6 +167,6 @@ class StampForm(ModelForm):
         model = stamps.models.Stamp
         exclude = ('order','footer','info')
 
-DesignerFormset = modelformset_factory(stamps.models.Designer, exclude=('info',), formset=BaseDesignerFormset, extra=0)
-FamilyFormset = inlineformset_factory(stamps.models.Designer, stamps.models.Family, formset=BaseFamilyFormset, extra=0)
-StampFormset = inlineformset_factory(stamps.models.Family, stamps.models.Stamp, exclude=('footer', 'info'), extra=0)
+DesignerFormset = modelformset_factory(stamps.models.Designer, exclude=('info','order'), formset=BaseDesignerFormset, extra=0)
+FamilyFormset = inlineformset_factory(stamps.models.Designer, stamps.models.Family, exclude=('order',), formset=BaseFamilyFormset, extra=0)
+StampFormset = inlineformset_factory(stamps.models.Family, stamps.models.Stamp, formset=BaseStampFormset, exclude=('footer', 'info', 'order'), extra=0)

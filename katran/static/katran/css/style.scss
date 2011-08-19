@@ -55,7 +55,7 @@ body {
     }
     #sponsor-list {
       margin-top: 1.5em;
-      width: 75%;
+      width: 70%;
     }
   }
 }
@@ -307,20 +307,26 @@ nav.menu {
 
 /* Administrative Dashboard */
 
+.msg { color: green; }
+
 #stamp-edit-controls {
   float: left;
 }
 
 #dashboard {
-  #stamp-meta {
-    li {
-      padding: 1em;
-      margin: 1em;
-    }
+  .helptext {
+    font-size: smaller;
+    color: gray;
+  }
+  .formgroup {
+    margin-left: 2em;
+  }
+  p {
+    margin: .7em 0 .7em 0;
   }
   .designer {
     padding: 1em;
-    margin: 1em;
+    margin: 1em 1em 1em 0;
     border: thin solid black;
     h3 {
       font-weight: 700;
@@ -332,19 +338,31 @@ nav.menu {
       font-size: 1.1em;
       display: inline;
    }
-    .family {
-      padding: 1em;
-      margin: 1em 0 1em 0;
-      background: #CFCFCF;
-      border: thin solid black;
-      .stamp {
-        padding: 1em;
-        margin: 1em;
-        border: thin dashed #DEDEDE;
-        background: white;
-      }
-    }
   } 
+  .family-container {
+    padding: 1em;
+    margin: 1em 0 1em 0;
+    background: #CFCFCF;
+    border: thin solid black;
+    .stamp {
+      padding: 1em;
+      margin: 1em;
+      border: thin dashed #DEDEDE;
+      background: white;
+    }
+  }
+  input[id$=order] {
+    //display: none;
+  }
+  label[for$=order] {
+    //display: none;
+  }
+  #stamp-meta {
+    li {
+      padding: 1em;
+      margin: 1em;
+    }
+  }
 }
 
 /* No Display */

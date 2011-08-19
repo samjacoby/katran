@@ -1,9 +1,8 @@
 $(function($) {
-  $(".designer" ).sortable({
-    item: 'ul',
+  $("form").sortable({
+    item: '.family',
     opacity: 0.6,
     cursor: "move",
-    containment: 'parent',
     axis: 'y',
     update: function(e, ui) {
               $.ajax({
@@ -12,21 +11,21 @@ $(function($) {
                 data: ({ 
                   id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
                   action: 'family',
-                  order: $(ui.item).prevAll().length,
+                  order: $(ui.item).prevAll('form .family').length,
                   }),
                 success: function(msg) { 
-                  alert(msg)
+                  msg = $('<span class="msg">Order updated.</span>').delay(3000).fadeOut('slow'); 
+                  $('#top-menu').append(msg);
                 }
               })            
             }
   });
 
-  $(".family" ).sortable({
-    item: 'li',
+  $(".stamp-family").sortable({
+    item: '.stamp',
     opacity: 0.6,
     cursor: "move",
     axis: 'y',
-    containment: 'parent',
     update: function(e, ui) {
               $.ajax({
                 url: "/dashboard/action/",
@@ -34,10 +33,11 @@ $(function($) {
                 data: ({ 
                   action: 'stamp',
                   id: $(ui.item).attr('id').replace(/[^\d]+/g, ''), 
-                  order: $(ui.item).prevAll().length,
+                  order: $(ui.item).prevAll('.stamp-family .stamp').length,
                   }),
                 success: function(msg) { 
-                  alert(msg)
+                  msg = $('<span class="msg">Order updated.</span>').delay(3000).fadeOut('slow'); 
+                  $('#top-menu').append(msg);
                 }
               })            
             }

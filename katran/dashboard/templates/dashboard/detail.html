@@ -5,17 +5,17 @@
 {% load dashboard_tags %}
 
 {% block main %}
-<div id="dashboard">
 <form action="." method="POST">
   {% csrf_token %}
   {{ families.management_form }}
-  <table>
   {% for family in families %}
-    <div class="formgroup">
-      {{ family }}
-    </div>
-    <div class="formgroup">
+    <div class="family" id="set_{{ family.instance.id }}">
+    <h3><a href="{{ family.instance.get_absolute_url }}">{{ family.instance }}</a> <a href="{% url admin:stamps_family_change family.instance.id %}">(admin)</a></h3>
+      <div class="family-container">
+      <p>{{ family.instance.name }}</p>
+      {{ family.as_p }}
       {% render_stamps forloop.counter0 %}
+      </div>
     </div>
   {% endfor %}
   </table>

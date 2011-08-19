@@ -37,6 +37,9 @@ class KModel(models.Model):
     name = models.CharField(max_length=100, help_text='Displayed through-out the site')
     sponsor  = models.ManyToManyField(Sponsor, null=True, blank=True)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         abstract = True
 
@@ -73,8 +76,6 @@ class Designer(KModel):
     # Custom Manager
     cobjects = DesignerManager()
     
-    def __unicode__(self):
-        return self.name
 
     def get_absolute_url(self):
         return reverse('designer', 
@@ -133,9 +134,14 @@ class Stamp(KModel):
     # Order with which stamp appears in family
     order = models.PositiveIntegerField( 'Order',  default=1 )                      
 
+    def __unicode__( self ):
+        return "%s - %s - %s. %s" % (self.family.designer.name, self.family.name, self.name, self.value)
+
     def get_absolute_url(self):
+        # If this stamp is a child of another, append the URL to the parent stamp's URL
         if self.parent and self.url_override:
-            return '%s/%s' % (self.parent.get_absolute_url(), self.url_override)
+            return '%s%s' % (self.parent.get_absolute_url(), self.url_override)
+        # If for whatever reason we just want to override the stamp URL, associate it with the family
         elif self.url_override:
             return reverse('stamp-detail-url',
                 kwargs = {'designer': self.family.designer.normalized_name, 
@@ -143,6 +149,7 @@ class Stamp(KModel):
                           'stamp': self.order, 
                           'url_override':self.url_override})
             
+        # This is the regular view
         return reverse('stamps.views.detail', 
                         kwargs = {'designer': self.family.designer.normalized_name, 
                                   'family': self.family.order,

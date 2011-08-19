@@ -62,6 +62,7 @@ SITE_ID = 1
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -169,6 +170,7 @@ INSTALLED_APPS = (
     'cms.plugins.googlemap',
     'sorl.thumbnail',
     'stamps',
+    'stamps.plugins.stamplink',
     'dashboard',
     'entries',
     'entries.plugins',

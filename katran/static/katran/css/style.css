@@ -43,7 +43,7 @@ body {
     width: 70%; }
   #stamps #side-content #sponsor-list {
     margin-top: 1.5em;
-    width: 75%; }
+    width: 70%; }
 
 #entries #side-content {
   float: left;
@@ -210,15 +210,22 @@ nav.menu ul#stamp-values li.selected a, nav.menu ul#stamp-families li.selected a
   color: #323133; }
 
 /* Administrative Dashboard */
+.msg {
+  color: green; }
+
 #stamp-edit-controls {
   float: left; }
 
-#dashboard #stamp-meta li {
-  padding: 1em;
-  margin: 1em; }
+#dashboard .helptext {
+  font-size: smaller;
+  color: gray; }
+#dashboard .formgroup {
+  margin-left: 2em; }
+#dashboard p {
+  margin: .7em 0 .7em 0; }
 #dashboard .designer {
   padding: 1em;
-  margin: 1em;
+  margin: 1em 1em 1em 0;
   border: thin solid black; }
   #dashboard .designer h3 {
     font-weight: 700;
@@ -229,16 +236,19 @@ nav.menu ul#stamp-values li.selected a, nav.menu ul#stamp-families li.selected a
     font-weight: 700;
     font-size: 1.1em;
     display: inline; }
-  #dashboard .designer .family {
+#dashboard .family-container {
+  padding: 1em;
+  margin: 1em 0 1em 0;
+  background: #CFCFCF;
+  border: thin solid black; }
+  #dashboard .family-container .stamp {
     padding: 1em;
-    margin: 1em 0 1em 0;
-    background: #CFCFCF;
-    border: thin solid black; }
-    #dashboard .designer .family .stamp {
-      padding: 1em;
-      margin: 1em;
-      border: thin dashed #DEDEDE;
-      background: white; }
+    margin: 1em;
+    border: thin dashed #DEDEDE;
+    background: white; }
+#dashboard #stamp-meta li {
+  padding: 1em;
+  margin: 1em; }
 
 /* No Display */
 .invisible {
